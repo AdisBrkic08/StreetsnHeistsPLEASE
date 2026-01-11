@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Electronic Arts
   productName: StreetsnHeists
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -713,7 +713,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: b6426d2c-d431-4e8a-b5bc-9c5cd22ba47f
   framebufferDepthMemorylessMode: 0
