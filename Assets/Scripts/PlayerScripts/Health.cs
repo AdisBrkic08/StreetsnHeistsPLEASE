@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
     private GameHUD hud;
     private bool isDead = false;
 
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -35,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (isDead) return;
+        FindFirstObjectByType<DamageMotionBlur>()?.TriggerDamageBlur();
 
         currentHealth -= amount;
 
