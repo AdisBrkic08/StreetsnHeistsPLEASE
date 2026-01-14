@@ -1018,7 +1018,7 @@ MonoBehaviour:
   normalTimeScale: 1
   transitionSpeed: 5
   car: {fileID: 1179460065}
-  steeringMultiplier: 4
+  steeringMultiplier: 1
   accelerationMultiplier: 1.3
   maxEnergy: 5
   drainRate: 1
