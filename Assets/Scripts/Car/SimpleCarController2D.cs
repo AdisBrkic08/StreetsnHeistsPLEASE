@@ -1,52 +1,89 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class SimpleCarController2D : MonoBehaviour
 {
-    public float acceleration = 30f;
-    public float maxSpeed = 8f;
-    public float turnSpeed = 200f;
-    public float driftFactor = 0.98f;
+    [Header("Base Handling")]
+    public float acceleration = 20f;
+    public float maxSpeed = 15f;
+    public float steeringPower = 200f;
+    public float linearDamping = 1f;  // renamed
 
-    private Rigidbody2D rb;
-    private float inputV;
-    private float inputH;
 
-    void Awake()
+    [Header("Handbrake Drift")]
+    public KeyCode handbrakeKey = KeyCode.Space;
+    public float handbrakeGrip = 0.25f;
+    public float driftBoost = 1.3f;
+    public float driftTurnMultiplier = 1.8f;
+
+    [Header("Speedbreaker Modifiers")]
+    [HideInInspector] public float steeringPowerMultiplier = 1f;
+    [HideInInspector] public float accelerationMultiplier = 1f;
+
+    Rigidbody2D rb;
+    float steerInput;
+    float accelInput;
+    bool handbraking;
+
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.linearDamping = linearDamping;  // smooth slowing of forward motion
+        rb.angularDamping = 2f;            // smooth angular rotation
+
     }
+
 
     void Update()
     {
-        inputV = Input.GetAxis("Vertical");   // W/S or Up/Down
-        inputH = Input.GetAxis("Horizontal"); // A/D or Left/Right
+        steerInput = Input.GetAxis("Horizontal");
+        accelInput = Input.GetAxis("Vertical");
+        handbraking = Input.GetKey(handbrakeKey);
     }
 
     void FixedUpdate()
     {
-        // Apply forward/backward acceleration
-        Vector2 forward = transform.up;
-        rb.AddForce(forward * (inputV * acceleration));
+        ApplyEngine();
+        ApplySteering();
+        LimitSpeed();
+        ApplyGrip();
+    }
 
-        // Cap top speed
+    void ApplyEngine()
+    {
+        float accel = accelInput * acceleration * accelerationMultiplier;
+
+        if (handbraking)
+            accel *= driftBoost;
+
+        rb.AddForce(transform.up * accel, ForceMode2D.Force);
+    }
+
+    void ApplySteering()
+    {
+        float speedFactor = rb.linearVelocity.magnitude / maxSpeed;
+        float grip = handbraking ? handbrakeGrip : 1f;
+
+        float turnPower = steeringPower * steeringPowerMultiplier;
+        if (handbraking)
+            turnPower *= driftTurnMultiplier;
+
+        rb.angularVelocity = -steerInput * turnPower * speedFactor * grip;
+    }
+
+    void ApplyGrip()
+    {
+        Vector2 forwardVel = transform.up * Vector2.Dot(rb.linearVelocity, transform.up);
+        Vector2 sideVel = transform.right * Vector2.Dot(rb.linearVelocity, transform.right);
+
+        float grip = handbraking ? handbrakeGrip : 1f;
+
+        rb.linearVelocity = forwardVel + sideVel * grip;
+    }
+
+    void LimitSpeed()
+    {
         if (rb.linearVelocity.magnitude > maxSpeed)
             rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-
-        // Steering responsiveness scaling
-        float speedFactor = Mathf.Lerp(0.5f, 1f, 1f - (rb.linearVelocity.magnitude / maxSpeed));
-        float rotationAmount = inputH * turnSpeed * speedFactor * Time.fixedDeltaTime;
-        rb.MoveRotation(rb.rotation - rotationAmount);
-
-        // Drift smoothing
-        rb.linearVelocity =
-            transform.up * Vector2.Dot(rb.linearVelocity, transform.up) +
-            transform.right * Vector2.Dot(rb.linearVelocity, transform.right) * driftFactor;
-
-        // Speed-based angular damping (replaces angularDrag)
-        if (rb.linearVelocity.magnitude > maxSpeed * 0.7f)
-            rb.angularDamping = 3f;
-        else
-            rb.angularDamping = 0.5f;
     }
 }
