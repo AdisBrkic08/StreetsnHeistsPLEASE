@@ -2,105 +2,132 @@
 
 public class CarInteraction : MonoBehaviour
 {
+    [Header("Car References")]
     public SimpleCarController2D carController;
-    private bool playerNearby = false;
-    private GameObject player;
-    private bool isPlayerDriving = false;
+    public CarBomb carBomb;
 
-    private CarLights headlights;
+    [Header("Settings")]
+    public KeyCode interactKey = KeyCode.E;
+    public Vector2 exitOffset = new Vector2(1.2f, 0f);
+
+    bool playerNearby;
+    bool isPlayerDriving;
+
+    GameObject player;
 
     void Start()
     {
         if (carController == null)
             carController = GetComponent<SimpleCarController2D>();
 
-        // Get headlights from children
-        headlights = GetComponentInChildren<CarLights>();
+        if (carBomb == null)
+            carBomb = GetComponent<CarBomb>();
 
         carController.enabled = false;
-        if (headlights) headlights.isDriving = false;
     }
 
     void Update()
     {
-        if (!isPlayerDriving && playerNearby && Input.GetKeyDown(KeyCode.E))
-            EnterCar();
-
-        else if (isPlayerDriving && Input.GetKeyDown(KeyCode.E))
+        // 🚗 EXIT — allowed anytime while driving
+        if (isPlayerDriving && Input.GetKeyDown(interactKey))
+        {
             ExitCar();
+            return;
+        }
+
+        // 🚶 ENTER — only if nearby
+        if (!isPlayerDriving && playerNearby && Input.GetKeyDown(interactKey))
+        {
+            EnterCar();
+        }
     }
 
     void EnterCar()
     {
+        if (player == null) return;
+
         isPlayerDriving = true;
 
-        // Disable player movement & sprite
-        player.GetComponent<PlayerController2D>().enabled = false;
-        var sr = player.GetComponent<SpriteRenderer>();
-        if (sr) sr.enabled = false;
+        // Disable player movement
+        PlayerController2D controller = player.GetComponent<PlayerController2D>();
+        if (controller != null)
+            controller.enabled = false;
 
-        // Disable the gun
-        player.GetComponent<PlayerShooter2D>().SetCanShoot(false);
+        // Disable shooting
+        PlayerShooter2D shooter = player.GetComponent<PlayerShooter2D>();
+        if (shooter != null)
+            shooter.canShoot = false;
 
+        // Hide player sprite
+        SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.enabled = false;
+
+        // Move player into car
         player.transform.position = transform.position;
 
         // Enable car
         carController.enabled = true;
 
-        // Enable headlights input
-        if (headlights) headlights.isDriving = true;
+        // Arm bomb if installed
+        if (carBomb != null && carBomb.bombInstalled)
+            carBomb.ArmBomb();
 
-        // Set camera
-        var cam = Camera.main.GetComponent<CameraFollow2D>();
-        if (cam) cam.target = transform;
-
-        var shake = Camera.main.GetComponent<CameraSpeedShake>();
-        if (shake) shake.SetCar(carController.GetComponent<Rigidbody2D>());
-
+        // Camera to car
+        CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
+        if (cam != null)
+            cam.target = transform;
     }
 
     void ExitCar()
     {
+        if (player == null) return;
+
         isPlayerDriving = false;
 
         // Disable car
         carController.enabled = false;
 
-        // Disable headlight input
-        if (headlights) headlights.isDriving = false;
+        // Restore player
+        SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.enabled = true;
 
-        // Re-enable player
-        var sr = player.GetComponent<SpriteRenderer>();
-        if (sr) sr.enabled = true;
-        player.GetComponent<PlayerController2D>().enabled = true;
+        PlayerController2D controller = player.GetComponent<PlayerController2D>();
+        if (controller != null)
+            controller.enabled = true;
 
-        player.transform.position = transform.position - transform.right * 1.2f;
-        player.GetComponent<PlayerShooter2D>().SetCanShoot(true);
+        PlayerShooter2D shooter = player.GetComponent<PlayerShooter2D>();
+        if (shooter != null)
+            shooter.canShoot = true;
 
+        // Place player beside car
+        Vector3 offset = transform.right * exitOffset.x + transform.up * exitOffset.y;
+        player.transform.position = transform.position + offset;
 
-        // Set camera
-        var cam = Camera.main.GetComponent<CameraFollow2D>();
-        if (cam) cam.target = player.transform;
-
-        var shake = Camera.main.GetComponent<CameraSpeedShake>();
-        if (shake) shake.ClearCar();
-
+        // Camera back to player
+        CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
+        if (cam != null)
+            cam.target = player.transform;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerNearby = true;
-            player = other.gameObject;
-        }
+        if (!other.CompareTag("Player")) return;
+
+        playerNearby = true;
+        player = other.gameObject;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        // 🚫 Do NOT clear player reference if driving
+        if (!isPlayerDriving)
         {
             playerNearby = false;
+            player = null;
         }
     }
 }
