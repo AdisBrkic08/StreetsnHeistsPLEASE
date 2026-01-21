@@ -988,7 +988,7 @@ MonoBehaviour:
   explosionRadius: 5
   explosionForce: 12
   damage: 100
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
 --- !u!1 &1227071088
 GameObject:
   m_ObjectHideFlags: 0
