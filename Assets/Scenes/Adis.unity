@@ -1205,16 +1205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4afa2fc7de6f29244a55df781b32bd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarHealth
-  maxHealth: 1000
+  maxHealth: 750
   currentHealth: 0
-  collisionDamageMultiplier: 5
-  minDamageSpeed: 3
+  criticalHealth: 20
+  explosionDelay: 5
+  smokeEffectPrefab: {fileID: 0}
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
-  explosionRadius: 3
-  explosionForce: 12
-  explosionDamage: 100
-  firePrefab: {fileID: 0}
-  fireHealthThreshold: 30
+  warningBeep: {fileID: 0}
 --- !u!1 &1227071088
 GameObject:
   m_ObjectHideFlags: 0

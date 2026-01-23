@@ -4,120 +4,102 @@ using System.Collections;
 public class CarHealth : MonoBehaviour
 {
     [Header("Health")]
-    public float maxHealth = 1000f;
-    public float currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
 
-    [Header("Damage Settings")]
-    public float collisionDamageMultiplier = 5f;
-    public float minDamageSpeed = 3f;
+    [Header("Critical State")]
+    public int criticalHealth = 20;
+    public float explosionDelay = 2.5f; // breathing time
+    private bool isCritical = false;
+    private bool isExploding = false;
 
-    [Header("Explosion")]
+    [Header("Effects")]
+    public GameObject smokeEffectPrefab;
     public GameObject explosionPrefab;
-    public float explosionRadius = 3f;
-    public float explosionForce = 12f;
-    public int explosionDamage = 100;
+    public AudioSource warningBeep;
 
-    [Header("Fire Effects")]
-    public GameObject firePrefab;   // optional
-    public float fireHealthThreshold = 30f;
-
-    private bool isDestroyed = false;
-    private Rigidbody2D rb;
+    private GameObject smokeInstance;
 
     void Start()
     {
         currentHealth = maxHealth;
-        rb = GetComponent<Rigidbody2D>();
+        Debug.Log($"[CarHealth] Spawned with health: {currentHealth}");
     }
 
-    // 💥 Collision damage
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void TakeDamage(int amount)
     {
-        if (isDestroyed) return;
-
-        float impactSpeed = collision.relativeVelocity.magnitude;
-
-        if (impactSpeed < minDamageSpeed) return;
-
-        float damage = impactSpeed * collisionDamageMultiplier;
-        TakeDamage(damage);
-    }
-
-    // 🔥 External damage (bullets, bombs, etc)
-    public void TakeDamage(float amount)
-    {
-        if (isDestroyed) return;
+        if (isExploding) return;
 
         currentHealth -= amount;
-        Debug.Log("🚗 Car Health: " + currentHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        if (currentHealth <= fireHealthThreshold && firePrefab != null)
-        {
-            if (!IsInvoking(nameof(SpawnFire)))
-                SpawnFire();
-        }
+        // 🧪 DEBUG LOG
+        Debug.Log($"[CarHealth] Health: {currentHealth}/{maxHealth}");
 
-        if (currentHealth <= 0)
+        if (!isCritical && currentHealth <= criticalHealth)
         {
-            Explode();
+            EnterCriticalState();
         }
     }
 
-    void SpawnFire()
+    void EnterCriticalState()
     {
-        Instantiate(firePrefab, transform.position, Quaternion.identity, transform);
+        isCritical = true;
+        Debug.Log("[CarHealth] CRITICAL! Explosion countdown started.");
+
+        // Smoke
+        if (smokeEffectPrefab != null)
+        {
+            smokeInstance = Instantiate(
+                smokeEffectPrefab,
+                transform.position,
+                Quaternion.identity,
+                transform
+            );
+        }
+
+        // Beeping warning
+        if (warningBeep != null)
+            warningBeep.Play();
+
+        StartCoroutine(ExplosionCountdown());
+    }
+
+    IEnumerator ExplosionCountdown()
+    {
+        yield return new WaitForSeconds(explosionDelay);
+        Explode();
     }
 
     void Explode()
     {
-        if (isDestroyed) return;
-        isDestroyed = true;
+        if (isExploding) return;
+        isExploding = true;
 
-        Debug.Log("💥 CAR EXPLODED");
+        Debug.Log("[CarHealth] BOOM! Car exploded.");
 
-        // Explosion VFX
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        // Explosion force + damage
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);
         foreach (Collider2D hit in hits)
         {
-            // Damage NPCs
-            NPCHealth npc = hit.GetComponent<NPCHealth>();
-            if (npc != null)
-            {
-                npc.TakeDamage(explosionDamage);
-            }
+            if (hit.CompareTag("Player"))
+                hit.GetComponent<PlayerHealth>()?.TakeDamage(100);
 
-            // Damage player
-            PlayerHealth player = hit.GetComponent<PlayerHealth>();
-            if (player != null)
-            {
-                player.TakeDamage(explosionDamage);
-            }
-
-            // Physics push
-            Rigidbody2D rb2 = hit.GetComponent<Rigidbody2D>();
-            if (rb2 != null)
-            {
-                Vector2 dir = (rb2.position - (Vector2)transform.position).normalized;
-                rb2.AddForce(dir * explosionForce, ForceMode2D.Impulse);
-            }
+            if (hit.CompareTag("NPC"))
+                hit.GetComponent<NPCHealth>()?.TakeDamage(100);
         }
 
-        // Disable car
-        GetComponent<Collider2D>().enabled = false;
-        if (rb != null) rb.simulated = false;
-
-        // Optional: destroy after delay
-        Destroy(gameObject, 2f);
+        Destroy(gameObject);
     }
 
-    // Debug visual
-    private void OnDrawGizmosSelected()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        if (collision.relativeVelocity.magnitude > 5f)
+        {
+            int dmg = Mathf.RoundToInt(collision.relativeVelocity.magnitude * 5f);
+            TakeDamage(dmg);
+        }
     }
 }
