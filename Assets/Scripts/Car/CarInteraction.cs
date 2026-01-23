@@ -13,6 +13,8 @@ public class CarInteraction : MonoBehaviour
 
     bool playerNearby;
     bool isPlayerDriving;
+    [HideInInspector] public bool playerInRange;
+
 
     GameObject player;
 
