@@ -50,82 +50,89 @@ public class CarInteraction : MonoBehaviour
 
     void EnterCar()
     {
-        if (player == null) return;
-
         isPlayerDriving = true;
 
-        // Disable player controls
-        PlayerController2D controller = player.GetComponent<PlayerController2D>();
-        if (controller != null)
-            controller.enabled = false;
-
-        PlayerShooter2D shooter = player.GetComponent<PlayerShooter2D>();
-        if (shooter != null)
-            shooter.canShoot = false;
+        // Disable player scripts
+        player.GetComponent<PlayerController2D>().enabled = false;
+        player.GetComponent<PlayerShooter2D>().SetCanShoot(false);
 
         // Hide player sprite
         SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-        if (sr != null)
-            sr.enabled = false;
+        if (sr) sr.enabled = false;
+
+        // 🔒 Freeze player physics
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        if (rb)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.simulated = false;   // ★ THIS kills the ghost clone
+        }
 
         // Move player into car
         player.transform.position = transform.position;
 
-        // Enable car controller
+        // Enable car
         carController.enabled = true;
 
-        // Arm bomb if installed
-        if (carBomb != null && carBomb.bombInstalled)
-            carBomb.ArmBomb();
-
-        // Enable lights input
-        if (carLights != null)
-            carLights.isDriving = true;
-
-        // Switch camera
+        // Camera follows car
         CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
-        if (cam != null)
-            cam.target = transform;
+        if (cam) cam.target = transform;
+
+        void SetPlayerVisible(GameObject player, bool visible)
+        {
+            foreach (var r in player.GetComponentsInChildren<Renderer>())
+            {
+                r.enabled = visible;
+            }
+        }
+
+        SetPlayerVisible(player, false);
+
+
     }
+
 
     void ExitCar()
     {
-        if (player == null) return;
-
         isPlayerDriving = false;
 
-        // Disable car
         carController.enabled = false;
 
-        // Restore player controls
+        // Restore player
         SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-        if (sr != null)
-            sr.enabled = true;
+        if (sr) sr.enabled = true;
 
-        PlayerController2D controller = player.GetComponent<PlayerController2D>();
-        if (controller != null)
-            controller.enabled = true;
+        PlayerController2D pc = player.GetComponent<PlayerController2D>();
+        if (pc) pc.enabled = true;
 
         PlayerShooter2D shooter = player.GetComponent<PlayerShooter2D>();
-        if (shooter != null)
-            shooter.canShoot = true;
+        if (shooter) shooter.SetCanShoot(true);
+
+        // 🔓 Restore physics
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        if (rb)
+            rb.simulated = true;
 
         // Place player beside car
-        Vector3 offset = transform.right * exitOffset.x + transform.up * exitOffset.y;
-        player.transform.position = transform.position + offset;
+        player.transform.position = transform.position - transform.right * 1.2f;
 
-        // Switch camera back
+        // Camera back to player
         CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
-        if (cam != null)
-            cam.target = player.transform;
+        if (cam) cam.target = player.transform;
 
-        // Disable lights input
-        if (carLights != null)
+        void SetPlayerVisible(GameObject player, bool visible)
         {
-            carLights.isDriving = false; // Prevent toggling when not driving
-            carLights.lightsOn = false;  // Optionally turn lights off
+            foreach (var r in player.GetComponentsInChildren<Renderer>())
+            {
+                r.enabled = visible;
+            }
         }
+
+        SetPlayerVisible(player, true);
+
     }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {

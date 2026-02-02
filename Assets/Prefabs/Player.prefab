@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 3308146849342827781}
   - component: {fileID: 4343208542589971407}
   m_Layer: 0
-  m_Name: GunHolder
+  m_Name: weaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +313,7 @@ MonoBehaviour:
   guns:
   - {fileID: 5028943683387998450}
   weaponHolder: {fileID: 3438374862286612367}
-  currentGun: {fileID: 0}
+  currentGun: {fileID: 5028943683387998450}
 --- !u!1 &5418707421728425051
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,8 +531,16 @@ PrefabInstance:
       value: Shotgun
       objectReference: {fileID: 0}
     - target: {fileID: 7282352444932343455, guid: 7c5926bc10c34a34e8ef43f4a51d4750, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282352444932343455, guid: 7c5926bc10c34a34e8ef43f4a51d4750, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282352444932343455, guid: 7c5926bc10c34a34e8ef43f4a51d4750, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

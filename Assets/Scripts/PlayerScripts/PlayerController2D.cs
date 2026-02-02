@@ -1,5 +1,6 @@
-// PlayerController2D.cs
+﻿// PlayerController2D.cs
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController2D : MonoBehaviour
@@ -7,23 +8,29 @@ public class PlayerController2D : MonoBehaviour
     public float moveSpeed = 4f;
     public float sprintMultiplier = 1.6f;
     public bool useAnalog = false; // set true if using gamepad
+
     Rigidbody2D rb;
     Vector2 input;
 
-    void Awake() => rb = GetComponent<Rigidbody2D>();
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        // Using UnityEngine.Input for simplicity. Replace with new InputSystem as desired.
+        // Movement input
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         input = new Vector2(h, v).normalized;
 
         if (useAnalog)
         {
-            // if you'd read analog stick, do not normalize to preserve magnitude
+            // Optional analog input
             // input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
+
+        RotateTowardsMouse();
     }
 
     void FixedUpdate()
@@ -31,8 +38,19 @@ public class PlayerController2D : MonoBehaviour
         float speed = moveSpeed * (Input.GetKey(KeyCode.LeftShift) ? sprintMultiplier : 1f);
         Vector2 target = rb.position + input * speed * Time.fixedDeltaTime;
         rb.MovePosition(target);
-        // Optional: rotate sprite to face movement
-        if (input.sqrMagnitude > 0.001f)
-            transform.up = input;
+    }
+
+    // --------------------------------
+    // Mouse-based player rotation
+    // --------------------------------
+    void RotateTowardsMouse()
+    {
+        if (Mouse.current == null) return;
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 direction = mousePos - transform.position;
+
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(0f, 0f, targetAngle);
     }
 }
