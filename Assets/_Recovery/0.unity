@@ -1814,17 +1814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4549741e384b6b45961dc641577e281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter2D
---- !u!114 &1422317482 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7717267164478625247, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-  m_PrefabInstance: {fileID: 6337278843166967351}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422317468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e93fd3c0ba97ce46a25b81cdfef838e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TargetLockOn
 --- !u!4 &1487747529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 541091069269442408, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
@@ -2641,10 +2630,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 838126405611276241, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2223056365846216046, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.6
@@ -2689,18 +2674,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3840219755455455365, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: zTarget
-      value: 
-      objectReference: {fileID: 1774570289}
-    - target: {fileID: 3840219755455455365, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3840219755455455365, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: targetLockOn
-      value: 
-      objectReference: {fileID: 1422317482}
     - target: {fileID: 7332358904163971387, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: damageFlash
       value: 
@@ -2711,7 +2684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7716052516536071900, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: weapons.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7716052516536071900, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: 'weapons.Array.data[1]'
@@ -2721,22 +2694,6 @@ PrefabInstance:
       propertyPath: targetIconPrefab
       value: 
       objectReference: {fileID: 1774570288}
-    - target: {fileID: 8883346631179450813, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.7940683
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883346631179450813, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2728423
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883346631179450813, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8883346631179450813, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.9645
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
