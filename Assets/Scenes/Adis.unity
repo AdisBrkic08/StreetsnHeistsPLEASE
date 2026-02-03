@@ -142,18 +142,6 @@ MonoBehaviour:
   playerMoney: {fileID: 1422317476}
   playerHealth: {fileID: 1422317478}
   gameTime: 720
---- !u!114 &312055252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312055245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e6e52824f3e4342b53d7015f128a6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageEffectController
 --- !u!224 &312055253 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5410371988321220972, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
@@ -370,6 +358,14 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.newSize.y
       value: 0.16
       objectReference: {fileID: 0}
+    - target: {fileID: 1925094605104320740, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 1925094605104320740, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.56
+      objectReference: {fileID: 0}
     - target: {fileID: 3330420791715517998, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_Name
       value: Car (1)
@@ -445,7 +441,7 @@ PrefabInstance:
     - target: {fileID: 6170680207481823816, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 13e0e13f4d6469046a1f5b04b26d8f85, type: 3}
+      objectReference: {fileID: 2183520773145332781, guid: 1ecbed9bcb3a54f449c40abc5f177a0f, type: 3}
     - target: {fileID: 6170680207481823816, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -1098,7 +1094,8 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6564397920485738745, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5410371988321220972, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
@@ -1117,9 +1114,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 45962402154057429, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
       insertIndex: -1
       addedObject: {fileID: 312055251}
-    - targetCorrespondingSourceObject: {fileID: 45962402154057429, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 312055252}
     - targetCorrespondingSourceObject: {fileID: 45962402154057429, guid: 69fc49061f8e80f4792d15d6fa017738, type: 3}
       insertIndex: -1
       addedObject: {fileID: 312055258}
@@ -2665,6 +2659,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2223056365846216046, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7367272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223056365846216046, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7367272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223056365846216046, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7367272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223056365846216046, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.6
       objectReference: {fileID: 0}
@@ -2708,6 +2714,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2527607913282159407, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8868272330977153355, guid: 1ed4bfcc2a5a6bc498ba96a17eeac357, type: 3}
+    - target: {fileID: 3308146849342827781, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.31
+      objectReference: {fileID: 0}
     - target: {fileID: 3438374862286612367, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Name
       value: Grip
@@ -2723,11 +2737,11 @@ PrefabInstance:
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: 'weaponSprites.Array.data[0]'
       value: 
-      objectReference: {fileID: 5815893537436386463, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
+      objectReference: {fileID: -9068242883359480487, guid: 9262f9ec75cd4204ba9d6cd333858204, type: 3}
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: 'weaponSprites.Array.data[1]'
       value: 
-      objectReference: {fileID: 3490124981700210391, guid: ed919143d13b9cd4d83171f06570f308, type: 3}
+      objectReference: {fileID: 3605221731655701584, guid: 2b9591f0927e0f44b9a8324e0d9cd8a4, type: 3}
     - target: {fileID: 7332358904163971387, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: damageFlash
       value: 
