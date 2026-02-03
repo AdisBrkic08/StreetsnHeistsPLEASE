@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3031175629319837289
+--- !u!1 &4551052033371160316
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9017858361020593214}
-  - component: {fileID: 8031991369438468376}
-  - component: {fileID: 8616326936029680030}
+  - component: {fileID: 4085906442018281753}
+  - component: {fileID: 3892341762141796311}
+  m_Layer: 7
+  m_Name: Headlights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4085906442018281753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551052033371160316}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.004363368, w: 0.9999905}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7408420301241953803}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.5}
+--- !u!114 &3892341762141796311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551052033371160316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 491591116d6979e4484118c32bcd0f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarProceduralHeadlight
+  length: 8
+  angle: 90
+  segments: 20
+  centerIntensity: 0.5
+  edgeIntensity: 0
+  lightColor: {r: 1, g: 0.95, b: 0.8, a: 0.35}
+  toggleKey: 108
+  lightsOn: 0
+  fadeSpeed: 5
+  isDriving: 1
+--- !u!1 &6106870199717650312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6486902580438683807}
+  - component: {fileID: 3762918246302052773}
+  - component: {fileID: 2854017400548533744}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -18,28 +72,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9017858361020593214
+--- !u!4 &6486902580438683807
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3031175629319837289}
+  m_GameObject: {fileID: 6106870199717650312}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.01, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3409835104916496138}
+  m_Father: {fileID: 7408420301241953803}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8031991369438468376
+--- !u!61 &3762918246302052773
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3031175629319837289}
+  m_GameObject: {fileID: 6106870199717650312}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -79,19 +133,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8616326936029680030
+--- !u!114 &2854017400548533744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3031175629319837289}
+  m_GameObject: {fileID: 6106870199717650312}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 191479a805528a748a242bf610b2d442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarEnterTrigger
---- !u!1 &3330420791715517998
+--- !u!1 &9141564163182381832
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,46 +153,69 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3409835104916496138}
-  - component: {fileID: 6170680207481823816}
-  - component: {fileID: 4883998263752174070}
-  - component: {fileID: 1925094605104320740}
-  - component: {fileID: 8712469997009121983}
-  - component: {fileID: 1663928978446942241}
-  - component: {fileID: 5193308844246773390}
-  - component: {fileID: 1989523889056554596}
-  - component: {fileID: 9016621216072688973}
+  - component: {fileID: 7408420301241953803}
+  - component: {fileID: 2808460911998337677}
+  - component: {fileID: 5194277984580339377}
+  - component: {fileID: 2043388694965900637}
+  - component: {fileID: 8308077003980736082}
+  - component: {fileID: 2080615626035113240}
+  - component: {fileID: 8461619363487072915}
+  - component: {fileID: 2534522299571833866}
+  - component: {fileID: 5013526990603866183}
+  - component: {fileID: 8241077401977772838}
   m_Layer: 7
-  m_Name: Car (1)
+  m_Name: EnemyCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3409835104916496138
+--- !u!4 &7408420301241953803
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.04, y: -2.19, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -9.87, y: 24.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9103171680035483530}
-  - {fileID: 9017858361020593214}
+  - {fileID: 4085906442018281753}
+  - {fileID: 6486902580438683807}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6170680207481823816
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!195 &2808460911998337677
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141564163182381832}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 1.28
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2.56
+  m_BaseOffset: 1.28
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!212 &5194277984580339377
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -179,8 +256,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2183520773145332781, guid: 1ecbed9bcb3a54f449c40abc5f177a0f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 13e0e13f4d6469046a1f5b04b26d8f85, type: 3}
+  m_Color: {r: 0.0076341587, g: 0.8584906, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -190,14 +267,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &4883998263752174070
+--- !u!50 &2043388694965900637
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -217,13 +294,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &1925094605104320740
+--- !u!114 &8308077003980736082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141564163182381832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0f6feb47b83384aa71797c754b5bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoliceVehicularPursuit
+  target: {fileID: 0}
+  maxSteerInput: 1
+  steeringSensitivity: 2
+  slowingAngle: 60
+  acceleration: 30
+  maxSpeed: 15
+  steeringPower: 200
+--- !u!61 &2080615626035113240
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -255,7 +351,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.96, y: 2.24}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -263,71 +359,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2.1846743}
   m_EdgeRadius: 0
---- !u!114 &8712469997009121983
+--- !u!114 &8461619363487072915
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e82caa5ed4595b740b3624411b4c1ff7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCarController2D
-  acceleration: 30
-  maxSpeed: 8
-  steeringPower: 200
-  linearDamping: 1
-  handbrakeKey: 32
-  handbrakeGrip: 0.25
-  driftBoost: 1.3
-  driftTurnMultiplier: 1.8
-  speedbreakerKey: 304
-  slowTimeScale: 0.3
-  transitionSpeed: 5
-  speedbreakerSteeringMultiplier: 1.8
-  speedbreakerAccelerationMultiplier: 1.3
-  maxSpeedbreakerEnergy: 5
-  speedbreakerDrainRate: 1
-  speedbreakerRechargeRate: 0.7
-  speedbreakerCooldownTime: 4
-  nitrousKey: 306
-  nitrousMultiplier: 1.8
-  maxNitrous: 5
-  nitrousDrainRate: 1
-  nitrousRechargeRate: 0.5
-  currentNitrous: 0
-  currentSpeedbreakerEnergy: 0
-  speedbreakerActive: 0
-  speedbreakerLocked: 0
-  steeringPowerMultiplier: 1
-  accelerationMultiplier: 1
---- !u!114 &1663928978446942241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af2c5ea44fe32114c8ba1e9bdb3497e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarInteraction
-  carController: {fileID: 8712469997009121983}
-  carBomb: {fileID: 1989523889056554596}
-  carLights: {fileID: 2885252794079835666}
+  carController: {fileID: 0}
+  carBomb: {fileID: 5013526990603866183}
+  carLights: {fileID: 3892341762141796311}
   interactKey: 101
   exitOffset: {x: 1.2, y: 0}
   playerInRange: 0
---- !u!114 &5193308844246773390
+--- !u!114 &2534522299571833866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a78ccd547e8994386eddadd1c7bf87, type: 3}
@@ -337,20 +393,20 @@ MonoBehaviour:
   slowTimeScale: 0.3
   normalTimeScale: 1
   transitionSpeed: 5
-  car: {fileID: 8712469997009121983}
+  car: {fileID: 0}
   steeringMultiplier: 1
   accelerationMultiplier: 1.3
   maxEnergy: 5
   drainRate: 1
   rechargeRate: 0.7
   cooldownTime: 4
---- !u!114 &1989523889056554596
+--- !u!114 &5013526990603866183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 947e884adf623a147bb2d780491e67f7, type: 3}
@@ -364,13 +420,13 @@ MonoBehaviour:
   explosionForce: 12
   damage: 100
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
---- !u!114 &9016621216072688973
+--- !u!114 &8241077401977772838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330420791715517998}
+  m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4afa2fc7de6f29244a55df781b32bd86, type: 3}
@@ -383,57 +439,3 @@ MonoBehaviour:
   smokeEffectPrefab: {fileID: 0}
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
   warningBeep: {fileID: 0}
---- !u!1 &3806142655513727355
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9103171680035483530}
-  - component: {fileID: 2885252794079835666}
-  m_Layer: 7
-  m_Name: Headlights
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9103171680035483530
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3806142655513727355}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.004363368, w: 0.9999905}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3409835104916496138}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.5}
---- !u!114 &2885252794079835666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3806142655513727355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491591116d6979e4484118c32bcd0f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarProceduralHeadlight
-  length: 8
-  angle: 90
-  segments: 20
-  centerIntensity: 0.5
-  edgeIntensity: 0
-  lightColor: {r: 1, g: 0.95, b: 0.8, a: 0.35}
-  toggleKey: 108
-  lightsOn: 0
-  fadeSpeed: 5
-  isDriving: 1
