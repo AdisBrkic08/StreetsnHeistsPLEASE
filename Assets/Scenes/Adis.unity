@@ -2708,6 +2708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3308146849342827781, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.12
+      objectReference: {fileID: 0}
     - target: {fileID: 3438374862286612367, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Name
       value: Grip
@@ -2717,17 +2721,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1880005605}
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: weapons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: 'weapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8327407018443813883, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: 'weapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 185489557588661906, guid: ed919143d13b9cd4d83171f06570f308, type: 3}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: weaponSprites.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: 'weaponSprites.Array.data[0]'
       value: 
-      objectReference: {fileID: 5815893537436386463, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
+      objectReference: {fileID: -9068242883359480487, guid: 9262f9ec75cd4204ba9d6cd333858204, type: 3}
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: 'weaponSprites.Array.data[1]'
       value: 
-      objectReference: {fileID: 3490124981700210391, guid: ed919143d13b9cd4d83171f06570f308, type: 3}
+      objectReference: {fileID: 3605221731655701584, guid: 2b9591f0927e0f44b9a8324e0d9cd8a4, type: 3}
     - target: {fileID: 7332358904163971387, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: damageFlash
       value: 
