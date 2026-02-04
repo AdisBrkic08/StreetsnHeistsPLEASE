@@ -158,9 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6974091ca63716f4db54589ece7fec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSwap
-  weapons:
-  - {fileID: 8327407018443813883, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
-  - {fileID: 185489557588661906, guid: ed919143d13b9cd4d83171f06570f308, type: 3}
+  currentWeaponIndex: 0
+  guns: []
+  weaponHolder: {fileID: 0}
+  currentGun: {fileID: 0}
 --- !u!58 &2956197866335938549
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -338,7 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6974091ca63716f4db54589ece7fec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  weapons: []
+  currentWeaponIndex: 0
+  guns:
+  - {fileID: 8327407018443813883, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
+  - {fileID: 185489557588661906, guid: ed919143d13b9cd4d83171f06570f308, type: 3}
+  weaponHolder: {fileID: 7842838162990922905}
+  currentGun: {fileID: 8327407018443813883, guid: 1a3b496503544084da5f53dbd4f3e9bb, type: 3}
 --- !u!1 &5418707421728425051
 GameObject:
   m_ObjectHideFlags: 0

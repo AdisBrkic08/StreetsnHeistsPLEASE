@@ -1,49 +1,55 @@
 using UnityEngine;
 
-public class WeaponSwap : MonoBehaviour
+public class WeaponSwape : MonoBehaviour
 {
-    [SerializeField] GameObject[] weapons;
-    [SerializeField] Sprite[] weaponSprites;
-    [SerializeField] GameObject weaponGripObject;
-    SpriteRenderer currentWeaponSprite;
+    int totalWeapons = 1;
+    public int currentWeaponIndex;
 
-    private GameObject currentWeapon;
-    private int currentWeaponIndex = 0;
+    public GameObject[] guns;
+    public GameObject weaponHolder;
+    public GameObject currentGun;
 
-    bool switchDebounce = false;
     void Start()
     {
-        currentWeaponSprite = weaponGripObject.GetComponent<SpriteRenderer>();
-    }
+        totalWeapons = weaponHolder.transform.childCount;
+        guns = new GameObject[totalWeapons];
 
-    void switchWeapon(int number)
-    {
-
-        try
+        for (int i = 0; i < totalWeapons; i++)
         {
-            currentWeaponIndex = currentWeaponIndex + number;
-            currentWeapon = weapons[currentWeaponIndex];
-        }
-        catch
-        {
-            currentWeaponIndex = currentWeaponIndex + -number;
+            guns[i] = weaponHolder.transform.GetChild(i).gameObject;
+            guns[i].SetActive(false);
         }
 
-        Debug.Log("current weapon: " + weapons[currentWeaponIndex]);
-        Debug.Log("current sprite: " + weaponSprites[currentWeaponIndex]);
-
-        currentWeaponSprite.sprite = weaponSprites[currentWeaponIndex];
+        guns[0].SetActive(true);
+        currentGun = guns[0];
+        currentWeaponIndex = 0;
     }
 
+    // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (currentWeaponIndex < totalWeapons - 1)
+            {
+                guns[currentWeaponIndex].SetActive(false);
+                currentWeaponIndex += 1;
+                guns[currentWeaponIndex].SetActive(false);
+                currentGun = guns[currentWeaponIndex];
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            switchWeapon(-1);
-        } 
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            switchWeapon(+1);
+            if (currentWeaponIndex > 0)
+            {
+                guns[currentWeaponIndex].SetActive(false);
+                if (currentWeaponIndex > 0) { currentWeaponIndex -= 1; }
+                guns[currentWeaponIndex].SetActive(false);
+
+                Debug.Log("current weapon index: " + currentWeaponIndex);
+            }
         }
+
     }
 }
