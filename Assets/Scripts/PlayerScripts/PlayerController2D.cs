@@ -11,11 +11,15 @@ public class PlayerController2D : MonoBehaviour
 
     Rigidbody2D rb;
     Vector2 input;
+    Animator anim;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
+
 
     void Update()
     {
@@ -23,6 +27,11 @@ public class PlayerController2D : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         input = new Vector2(h, v).normalized;
+      
+        bool isMoving = input.sqrMagnitude > 0.01f;
+
+        anim.SetBool("isWalking", isMoving);
+
 
         if (useAnalog)
         {

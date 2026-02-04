@@ -10,6 +10,8 @@ public class PlayerShooter2D : MonoBehaviour
     public float fireRate = 0.2f;      // time between shots
     public int maxAmmo = 7;
     public float reloadTime = 1.5f;
+    Animator anim;
+
 
     [Header("Recoil")]
     public float recoilForce = 2f;
@@ -30,7 +32,9 @@ public class PlayerShooter2D : MonoBehaviour
     void Start()
     {
         currentAmmo = maxAmmo;
+        anim = GetComponent<Animator>();
     }
+
 
     void Update()
     {
@@ -59,6 +63,10 @@ public class PlayerShooter2D : MonoBehaviour
 
     void Shoot()
     {
+
+        if (anim != null)
+            anim.SetTrigger("shoot");
+
         Vector2 shootDirection = GetShootDirection();
 
         // Spawn bullet
@@ -70,6 +78,7 @@ public class PlayerShooter2D : MonoBehaviour
         Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
         if (playerRb != null)
             playerRb.AddForce(-shootDirection * recoilForce, ForceMode2D.Impulse);
+
 
 
         currentAmmo--;
