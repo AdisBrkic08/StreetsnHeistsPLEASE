@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraFollow2D : MonoBehaviour
 {
-    public Transform target;
     public float smoothTime = 0.08f;
+    public Transform target;
     Vector3 velocity;
 
     void LateUpdate()

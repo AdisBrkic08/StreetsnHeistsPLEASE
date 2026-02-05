@@ -8,6 +8,7 @@ public class CarInteraction : MonoBehaviour
     public CarLights carLights; // Reference to lights script
 
     [Header("Settings")]
+    [SerializeField] GameObject playerChar;
     public KeyCode interactKey = KeyCode.E;
     public Vector2 exitOffset = new Vector2(1.2f, 0f);
 
@@ -45,6 +46,12 @@ public class CarInteraction : MonoBehaviour
         if (!isPlayerDriving && playerNearby && Input.GetKeyDown(interactKey))
         {
             EnterCar();
+        }
+
+        // Always move the player to the vehicle (police pursuit purposes)
+        if (isPlayerDriving)
+        {
+            player.transform.position = transform.position;
         }
     }
 
