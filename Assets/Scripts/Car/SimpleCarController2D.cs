@@ -42,7 +42,7 @@ public class SimpleCarController2D : MonoBehaviour
     [HideInInspector] public float steeringPowerMultiplier = 1f;
     [HideInInspector] public float accelerationMultiplier = 1f;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
     float steerInput;
     float accelInput;
     bool handbraking;

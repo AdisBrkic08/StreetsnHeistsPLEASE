@@ -16,11 +16,13 @@ public class CarInteraction : MonoBehaviour
     bool isPlayerDriving;
     [HideInInspector] public bool playerInRange;
 
-
+    // Other
+    private PlayerDriving playerDrivingScript;
     GameObject player;
 
     void Start()
     {
+        playerDrivingScript = FindObjectOfType<PlayerDriving>();
         if (carController == null)
             carController = GetComponent<SimpleCarController2D>();
 
@@ -58,6 +60,7 @@ public class CarInteraction : MonoBehaviour
     void EnterCar()
     {
         isPlayerDriving = true;
+        playerDrivingScript.isDriving = true;
 
         // Disable player scripts
         player.GetComponent<PlayerController2D>().enabled = false;
@@ -103,6 +106,7 @@ public class CarInteraction : MonoBehaviour
     void ExitCar()
     {
         isPlayerDriving = false;
+        playerDrivingScript.isDriving = false;
 
         carController.enabled = false;
 

@@ -10,11 +10,15 @@ public class PoliceVehicularPursuit : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Transform target;
     [SerializeField] private GameObject policeOfficer;
+    [SerializeField] private float exitCarDistance = 5.5f; // Distance when the officer should hop out and chase the player (if the player is on foot)
 
     [Header("Driving")]
     [SerializeField] private float maxSteerInput = 1f;
     [SerializeField] private float steeringSensitivity = 2f;
     [SerializeField] private float slowingAngle = 60f;
+
+    // Scripts
+    private PlayerDriving playerDrivingScript; // Code for variables to see e.g whether the player is driving or not
 
     //[Header("Other")]
     private Rigidbody2D rb;
@@ -32,6 +36,8 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
     void Awake()
     {
+        playerDrivingScript = FindObjectOfType<PlayerDriving>();
+
         rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -51,7 +57,7 @@ public class PoliceVehicularPursuit : MonoBehaviour
         Debug.Log("Distance: " + distance);
         //Debug.Log("Police car's current speed: " + currentSpeed);
 
-        if (distance < 5.5) // If the target is nearby, officer jump out and chase
+        if (distance < exitCarDistance && playerDrivingScript.isDriving == false) // If the target is nearby, officer jump out and chase
         {
             Instantiate(policeOfficer, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
             rb.simulated = false;
