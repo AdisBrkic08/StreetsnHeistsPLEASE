@@ -1,3 +1,4 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +16,15 @@ public class NavmeshFollow : MonoBehaviour
 
     void Update()
     {
+        if (target == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                target = player.transform;
+            }
+        }
+
         agent.SetDestination(target.position); // Move to target position
     }
 }
