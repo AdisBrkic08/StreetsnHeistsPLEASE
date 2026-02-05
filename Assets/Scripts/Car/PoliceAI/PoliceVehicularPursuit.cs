@@ -5,20 +5,30 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PoliceVehicularPursuit : MonoBehaviour
 {
+    [SerializeField] private MonoBehaviour pursuitScript;
+
     [Header("Target")]
     [SerializeField] private Transform target;
+    [SerializeField] private GameObject policeOfficer;
 
     [Header("Driving")]
     [SerializeField] private float maxSteerInput = 1f;
     [SerializeField] private float steeringSensitivity = 2f;
     [SerializeField] private float slowingAngle = 60f;
 
+    //[Header("Other")]
     private Rigidbody2D rb;
     private NavMeshAgent agent;
+
+    private int direction;
+    private float distance;
+    private bool drivable = true;
 
     // Car inputs (AI-controlled)
     float steerInput;
     float accelInput = 1f; // Police always tries to accelerate
+
+    float currentSpeed;
 
     void Awake()
     {
@@ -33,6 +43,21 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
     void Update()
     {
+        if (drivable == false) return; 
+
+        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
+        currentSpeed = rb.linearVelocity.magnitude;
+
+        Debug.Log("Distance: " + distance);
+        //Debug.Log("Police car's current speed: " + currentSpeed);
+
+        if (distance < 5.5) // If the target is nearby, officer jump out and chase
+        {
+            Instantiate(policeOfficer, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
+            rb.simulated = false;
+            pursuitScript.enabled = false;
+        }
+
         if (!target) return;
 
         // Update agent destination
@@ -46,7 +71,17 @@ public class PoliceVehicularPursuit : MonoBehaviour
     {
         agent.nextPosition = rb.position; // sync NavMesh
 
-        ApplyEngine();
+        // Uncomment to enable a slight reverse in case the car is stuck. add "direction" to parameter of ApplyEngine method as well.
+        //if (currentSpeed > 0)
+        //{
+        //    direction = 1;
+        //} 
+        //else
+        //{
+        //    direction = 1;
+        //}
+
+        ApplyEngine(1);
         ApplySteering();
         LimitSpeed();
     }
@@ -86,10 +121,10 @@ public class PoliceVehicularPursuit : MonoBehaviour
     public float maxSpeed = 15f;
     public float steeringPower = 200f;
 
-    void ApplyEngine()
+    void ApplyEngine(int dir)
     {
         Vector2 forward = rb.transform.up; // car's local forward
-        rb.AddForce(forward * accelInput * acceleration, ForceMode2D.Force);
+        rb.AddForce(forward * (accelInput * dir) * acceleration, ForceMode2D.Force);
     }
 
 
