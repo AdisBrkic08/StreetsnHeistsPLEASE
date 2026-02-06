@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,12 +28,37 @@ public class PoliceVehicularPursuit : MonoBehaviour
     private int direction;
     private float distance;
     private bool drivable = true;
+    private bool start = true;
+    private bool reverse = false;
+    private bool accelerating = true; // Used to correctly execute the reverse coroutine, the variable should not be taken literally
+    private float reverseTime = 0.5f;
+    private float reversePower = 5f;
 
     // Car inputs (AI-controlled)
     float steerInput;
     float accelInput = 1f; // Police always tries to accelerate
 
+    // Speed
     float currentSpeed;
+
+    // Coroutines
+
+    IEnumerator Reverse()
+    {
+        reverse = true;
+        start = true;
+        accelerating = true;
+
+        ApplyEngine(-reversePower);
+
+        Debug.Log("REVERSE");
+
+        yield return new WaitForSeconds(reverseTime);
+
+        reverse = false;
+
+        ApplyEngine(reversePower);
+    }
 
     void Awake()
     {
@@ -54,8 +80,8 @@ public class PoliceVehicularPursuit : MonoBehaviour
         distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
         currentSpeed = rb.linearVelocity.magnitude;
 
-        Debug.Log("Distance: " + distance);
-        //Debug.Log("Police car's current speed: " + currentSpeed);
+        //Debug.Log("Distance: " + distance);
+        //Debug.Log("Speed: " + currentSpeed);
 
         if (distance < exitCarDistance && playerDrivingScript.isDriving == false) // If the target is nearby, officer jump out and chase
         {
@@ -75,21 +101,30 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (reverse) return;
+
         agent.nextPosition = rb.position; // sync NavMesh
 
         // Uncomment to enable a slight reverse in case the car is stuck. add "direction" to parameter of ApplyEngine method as well.
-        //if (currentSpeed > 0)
-        //{
-        //    direction = 1;
-        //} 
-        //else
-        //{
-        //    direction = 1;
-        //}
+        if (currentSpeed <= 0.21 && start == false && reverse == false && accelerating == false)
+        {
+            Debug.Log("Speed: " + currentSpeed);
+            Debug.Log("Start: " + start);
+            Debug.Log("Reverse: " + reverse);
+            Debug.Log("Accelerating: " + accelerating);
+            StartCoroutine(Reverse());
+        }
 
         ApplyEngine(1);
         ApplySteering();
         LimitSpeed();
+
+        start = false;
+
+        if (currentSpeed >= maxSpeed / 2)
+        {
+            accelerating = false;
+        }
     }
 
 
@@ -127,7 +162,7 @@ public class PoliceVehicularPursuit : MonoBehaviour
     public float maxSpeed = 15f;
     public float steeringPower = 200f;
 
-    void ApplyEngine(int dir)
+    void ApplyEngine(float dir)
     {
         Vector2 forward = rb.transform.up; // car's local forward
         rb.AddForce(forward * (accelInput * dir) * acceleration, ForceMode2D.Force);

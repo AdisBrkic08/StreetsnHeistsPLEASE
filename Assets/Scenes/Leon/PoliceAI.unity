@@ -1810,7 +1810,7 @@ PrefabInstance:
       objectReference: {fileID: 1130119869}
     - target: {fileID: 8308077003980736082, guid: 0d3cad15d40bd6a49a0b0c1de6dd9e19, type: 3}
       propertyPath: steeringPower
-      value: 300
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 8308077003980736082, guid: 0d3cad15d40bd6a49a0b0c1de6dd9e19, type: 3}
       propertyPath: steeringSensitivity
