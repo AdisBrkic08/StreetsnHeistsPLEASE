@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - NPC
+  - PlayerVehicle
   layers:
   - Default
   - TransparentFX
