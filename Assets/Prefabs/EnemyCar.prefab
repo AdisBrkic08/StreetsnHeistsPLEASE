@@ -306,7 +306,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0f6feb47b83384aa71797c754b5bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoliceVehicularPursuit
+  pursuitScript: {fileID: 0}
   target: {fileID: 0}
+  policeOfficer: {fileID: 0}
+  exitCarDistance: 5.5
   maxSteerInput: 1
   steeringSensitivity: 2
   slowingAngle: 60
@@ -374,6 +377,7 @@ MonoBehaviour:
   carController: {fileID: 0}
   carBomb: {fileID: 5013526990603866183}
   carLights: {fileID: 3892341762141796311}
+  playerChar: {fileID: 0}
   interactKey: 101
   exitOffset: {x: 1.2, y: 0}
   playerInRange: 0

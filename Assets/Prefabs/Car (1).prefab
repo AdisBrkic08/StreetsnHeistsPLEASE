@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 9016621216072688973}
   m_Layer: 7
   m_Name: Car (1)
-  m_TagString: Untagged
+  m_TagString: PlayerVehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -318,6 +318,7 @@ MonoBehaviour:
   carController: {fileID: 8712469997009121983}
   carBomb: {fileID: 1989523889056554596}
   carLights: {fileID: 2885252794079835666}
+  playerChar: {fileID: 0}
   interactKey: 101
   exitOffset: {x: 1.2, y: 0}
   playerInRange: 0

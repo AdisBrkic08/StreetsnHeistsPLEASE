@@ -105,13 +105,12 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
         agent.nextPosition = rb.position; // sync NavMesh
 
-        // Uncomment to enable a slight reverse in case the car is stuck. add "direction" to parameter of ApplyEngine method as well.
         if (currentSpeed <= 0.21 && start == false && reverse == false && accelerating == false)
         {
-            Debug.Log("Speed: " + currentSpeed);
-            Debug.Log("Start: " + start);
-            Debug.Log("Reverse: " + reverse);
-            Debug.Log("Accelerating: " + accelerating);
+            //Debug.Log("Speed: " + currentSpeed);
+            //Debug.Log("Start: " + start);
+            //Debug.Log("Reverse: " + reverse);
+            //Debug.Log("Accelerating: " + accelerating);
             StartCoroutine(Reverse());
         }
 
