@@ -49,4 +49,14 @@ public class PlayerMoney : MonoBehaviour
         if (hud != null)
             hud.UpdateHUDNow();
     }
+    void SaveMoney()
+    {
+        PlayerPrefs.SetInt("PlayerMoney", money);
+        PlayerPrefs.Save();
+    }
+
+    void LoadMoney()
+    {
+        money = PlayerPrefs.GetInt("PlayerMoney", money);
+    }
 }

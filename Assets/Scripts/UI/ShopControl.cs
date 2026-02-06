@@ -1,103 +1,114 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-
-public class BuyItem : MonoBehaviour
+public class WeaponShop : MonoBehaviour
 {
-    int moneyAmount;
-    int isAxeSold;
-    int isSeedSold;
-    int isPickaxeSold;
-    int isCanSold;
+    public PlayerMoney playerMoney;
 
+    [Header("Prices")]
+    public int smgPrice = 300;
+    public int akPrice = 600;
+    public int shotgunPrice = 500;
 
-    public Text moneyAmountText;
-    public Text axePrice;
-    public Text seedPrice;
-    public Text pickaxePrice;
-    public Text canPrice;
+    [Header("Buttons")]
+    public Button smgButton;
+    public Button akButton;
+    public Button shotgunButton;
 
+    [Header("Labels")]
+    public Text smgText;
+    public Text akText;
+    public Text shotgunText;
 
-
-    public Button buyButtonAxe;
-    public Button buyButtonSeed;
-    public Button buyButtonPickaxe;
-    public Button buyButtonCan;
+    bool smgBought;
+    bool akBought;
+    bool shotgunBought;
 
     void Start()
     {
-        moneyAmount = PlayerPrefs.GetInt("MoneyAmount");
+        if (playerMoney == null)
+            playerMoney = FindFirstObjectByType<PlayerMoney>();
+
+        LoadWeapons();
+        UpdateUI();
     }
 
     void Update()
     {
-           moneyAmountText.text = "Money: " + moneyAmount.ToString() + "$";  
+        UpdateButtons();
+    }
 
-        isAxeSold = PlayerPrefs.GetInt("isAxeSold");
+    void UpdateButtons()
+    {
+        smgButton.interactable = !smgBought && playerMoney.money >= smgPrice;
+        akButton.interactable = !akBought && playerMoney.money >= akPrice;
+        shotgunButton.interactable = !shotgunBought && playerMoney.money >= shotgunPrice;
+    }
 
-        if (moneyAmount > 50 && isAxeSold == 0)
+    // ---------------- BUY ----------------
+
+    public void BuySMG()
+    {
+        if (TryBuy(smgPrice))
         {
-            buyButtonAxe.interactable = true;
-        }
-
-        isSeedSold = PlayerPrefs.GetInt("isSeedSold");
-
-        if (moneyAmount > 10 && isSeedSold == 0)
-        {
-            buyButtonSeed.interactable = true;
-        }
-
-        isPickaxeSold = PlayerPrefs.GetInt("isPickaxeSold");
-
-        if (moneyAmount > 75 && isPickaxeSold == 0)
-        {
-            buyButtonPickaxe.interactable = true;
-        }
-
-        isCanSold = PlayerPrefs.GetInt("isCanSold");
-
-        if (moneyAmount > 25 && isCanSold == 0)
-        {
-            buyButtonCan.interactable = true;
+            smgBought = true;
+            SaveWeapons();
+            UpdateUI();
         }
     }
-    public void buyAxe()
+
+    public void BuyAK()
     {
-        moneyAmount -= 50;
-        PlayerPrefs.SetInt("IsAxeSold", 1);
-        axePrice.text = "Sold";
-        buyButtonAxe.gameObject.SetActive(false);
-    }
-    public void buySeed()
-    {
-        moneyAmount -= 10;
-        PlayerPrefs.SetInt("IsSeedSold", 1);
-        seedPrice.text = "Sold";
-        buyButtonSeed.gameObject.SetActive(false);
-    }
-    public void buyPickaxe()
-    {
-        moneyAmount -= 75;
-        PlayerPrefs.SetInt("IsPickaxeSold", 1);
-        pickaxePrice.text = "Sold";
-        buyButtonPickaxe.gameObject.SetActive(false);
-    }
-    public void buyCan()
-    {
-        moneyAmount -= 25;
-        PlayerPrefs.SetInt("IsCanSold", 1);
-        canPrice.text = "Sold";
-        buyButtonCan.gameObject.SetActive(false);
+        if (TryBuy(akPrice))
+        {
+            akBought = true;
+            SaveWeapons();
+            UpdateUI();
+        }
     }
 
-
-    public void exitShop()
+    public void BuyShotgun()
     {
-        PlayerPrefs.SetInt("MoneyAmount", moneyAmount);
-        SceneManager.LoadScene("Gameplay");
+        if (TryBuy(shotgunPrice))
+        {
+            shotgunBought = true;
+            SaveWeapons();
+            UpdateUI();
+        }
     }
-   
+
+    // ---------------- CORE ----------------
+
+    bool TryBuy(int price)
+    {
+        if (playerMoney.money < price)
+            return false;
+
+        playerMoney.AddMoney(-price);
+        return true;
+    }
+
+    // ---------------- SAVE / LOAD ----------------
+
+    void SaveWeapons()
+    {
+        PlayerPrefs.SetInt("SMG", smgBought ? 1 : 0);
+        PlayerPrefs.SetInt("AK", akBought ? 1 : 0);
+        PlayerPrefs.SetInt("Shotgun", shotgunBought ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    void LoadWeapons()
+    {
+        smgBought = PlayerPrefs.GetInt("SMG", 0) == 1;
+        akBought = PlayerPrefs.GetInt("AK", 0) == 1;
+        shotgunBought = PlayerPrefs.GetInt("Shotgun", 0) == 1;
+    }
+
+    void UpdateUI()
+    {
+        if (smgBought) smgText.text = "Owned";
+        if (akBought) akText.text = "Owned";
+        if (shotgunBought) shotgunText.text = "Owned";
+    }
 }

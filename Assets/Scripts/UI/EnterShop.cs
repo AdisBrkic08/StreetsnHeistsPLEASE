@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnterShop : MonoBehaviour
+public class ShopUI : MonoBehaviour
 {
+    public GameObject shopCanvas;
 
-    [SerializeField] float timeTillload = 1f;
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void ExitShop()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Invoke("LoadLevel", timeTillload);
-        }
-    }
+        // Hide shop UI
+        if (shopCanvas != null)
+            shopCanvas.SetActive(false);
 
-    void LoadLevel()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        // Resume game
+        Time.timeScale = 1f;
+
+        Debug.Log("Exited shop");
+        SceneManager.LoadScene("Adis");
     }
+    
+
 }

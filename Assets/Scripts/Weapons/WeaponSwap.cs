@@ -9,31 +9,42 @@ public class WeaponSwap : MonoBehaviour
 
     private GameObject currentWeapon;
     private int currentWeaponIndex = 0;
+    bool[] unlocked;
 
     bool switchDebounce = false;
     void Start()
     {
         currentWeaponSprite = weaponGripObject.GetComponent<SpriteRenderer>();
+      
+            unlocked = new bool[weapons.Length];
+
+            // Pistol always unlocked
+            unlocked[0] = true;
+
     }
 
-    void switchWeapon(int number)
+    public void switchWeapon(int number)
     {
+        // Move index
+        currentWeaponIndex += number;
 
-        try
-        {
-            currentWeaponIndex = currentWeaponIndex + number;
-            currentWeapon = weapons[currentWeaponIndex];
-        }
-        catch
-        {
-            currentWeaponIndex = currentWeaponIndex + -number;
-        }
+        // Wrap around
+        if (currentWeaponIndex < 0)
+            currentWeaponIndex = weapons.Length - 1;
 
-        Debug.Log("current weapon: " + weapons[currentWeaponIndex]);
-        Debug.Log("current sprite: " + weaponSprites[currentWeaponIndex]);
+        if (currentWeaponIndex >= weapons.Length)
+            currentWeaponIndex = 0;
 
+        // Set weapon
+        currentWeapon = weapons[currentWeaponIndex];
+
+        Debug.Log("Current weapon: " + weapons[currentWeaponIndex].name);
+        Debug.Log("Current sprite: " + weaponSprites[currentWeaponIndex].name);
+
+        // Change grip sprite
         currentWeaponSprite.sprite = weaponSprites[currentWeaponIndex];
     }
+
 
     void Update()
     {
@@ -46,4 +57,14 @@ public class WeaponSwap : MonoBehaviour
             switchWeapon(+1);
         }
     }
+
+    public void UnlockWeapon(int index)
+    {
+        if (index < 0 || index >= weapons.Length) return;
+
+        unlocked[index] = true;
+
+        Debug.Log("Unlocked weapon: " + weapons[index].name);
+    }
+
 }
