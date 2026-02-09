@@ -32,7 +32,8 @@ Transform:
   m_LocalPosition: {x: -6.96084, y: 23.90485, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5706506003612450153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5306367445009291332
@@ -128,6 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavmeshFollow
   target: {fileID: 0}
+  bulletPrefab: {fileID: 4788338419311558225, guid: 336f22e03243bb34d88dde94a0692fb7, type: 3}
+  firePoint: {fileID: 5706506003612450153}
+  fireRate: 1
+  bulletSpeed: 10
 --- !u!114 &869798504957931471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +146,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   bulletPrefab: {fileID: 4788338419311558225, guid: 336f22e03243bb34d88dde94a0692fb7, type: 3}
+--- !u!1 &3581335403097730832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5706506003612450153}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5706506003612450153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581335403097730832}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9182498000709251207}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
