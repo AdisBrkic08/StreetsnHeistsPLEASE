@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 6294a32e7229f1c4e834a0898397c3c3
+guid: cd19236172d01b845b08fcc981165a27
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 420969942483514488
-    second: PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon
-      Icons_0
+      213: 2828077047651648745
+    second: Smoke_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -101,24 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon
-        Icons_0
+      name: Smoke_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 391
-        height: 521
+        width: 1000
+        height: 1000
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 874b8daaee597d500800000000000000
-      internalID: 420969942483514488
+      spriteID: 9e446be47195f3720800000000000000
+      internalID: 2828077047651648745
       vertices: []
       indices: 
       edges: []
@@ -127,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3fa7cc5cb60a8234c87738f0df05940a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -137,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon Icons_0: 420969942483514488
+      Smoke_0: 2828077047651648745
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

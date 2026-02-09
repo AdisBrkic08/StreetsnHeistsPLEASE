@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 6294a32e7229f1c4e834a0898397c3c3
+guid: 36490b7ed2d56d24d9c3b8cc1c1a6cca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 420969942483514488
-    second: PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon
-      Icons_0
+      213: -5262111214504444646
+    second: PistolIcon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -101,14 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon
-        Icons_0
+      name: PistolIcon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 391
-        height: 521
+        width: 511
+        height: 489
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 874b8daaee597d500800000000000000
-      internalID: 420969942483514488
+      spriteID: a1dfcd2fab939f6b0800000000000000
+      internalID: -5262111214504444646
       vertices: []
       indices: 
       edges: []
@@ -127,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3fa7cc5cb60a8234c87738f0df05940a
+    spriteID: 5a8ff7300ece9b640aa9eb587c69c373
     internalID: 0
     vertices: []
     indices: 
@@ -137,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PC _ Computer - Grand Theft Auto_ San Andreas - Miscellaneous - Weapon Icons_0: 420969942483514488
+      PistolIcon_0: -5262111214504444646
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
