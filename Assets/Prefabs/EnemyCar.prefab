@@ -1,150 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4551052033371160316
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4085906442018281753}
-  - component: {fileID: 3892341762141796311}
-  m_Layer: 7
-  m_Name: Headlights
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4085906442018281753
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4551052033371160316}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.004363368, w: 0.9999905}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7408420301241953803}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.5}
---- !u!114 &3892341762141796311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4551052033371160316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491591116d6979e4484118c32bcd0f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarProceduralHeadlight
-  length: 8
-  angle: 90
-  segments: 20
-  centerIntensity: 0.5
-  edgeIntensity: 0
-  lightColor: {r: 1, g: 0.95, b: 0.8, a: 0.35}
-  toggleKey: 108
-  lightsOn: 0
-  fadeSpeed: 5
-  isDriving: 1
---- !u!1 &6106870199717650312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6486902580438683807}
-  - component: {fileID: 3762918246302052773}
-  - component: {fileID: 2854017400548533744}
-  m_Layer: 0
-  m_Name: Trigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6486902580438683807
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106870199717650312}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -0.12, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7408420301241953803}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &3762918246302052773
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106870199717650312}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &2854017400548533744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6106870199717650312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 191479a805528a748a242bf610b2d442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarEnterTrigger
 --- !u!1 &9141564163182381832
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,12 +12,9 @@ GameObject:
   - component: {fileID: 2808460911998337677}
   - component: {fileID: 5194277984580339377}
   - component: {fileID: 2043388694965900637}
+  - component: {fileID: 5201269944641686507}
   - component: {fileID: 8308077003980736082}
   - component: {fileID: 2080615626035113240}
-  - component: {fileID: 8461619363487072915}
-  - component: {fileID: 2534522299571833866}
-  - component: {fileID: 5013526990603866183}
-  - component: {fileID: 8241077401977772838}
   m_Layer: 7
   m_Name: EnemyCar
   m_TagString: Untagged
@@ -182,9 +34,7 @@ Transform:
   m_LocalPosition: {x: -9.87, y: 24.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4085906442018281753}
-  - {fileID: 6486902580438683807}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!195 &2808460911998337677
@@ -195,7 +45,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9141564163182381832}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: -334000983
   m_Radius: 1.28
   m_Speed: 3.5
   m_Acceleration: 8
@@ -256,8 +106,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 13e0e13f4d6469046a1f5b04b26d8f85, type: 3}
-  m_Color: {r: 0.0076341587, g: 0.8584906, b: 0, a: 1}
+  m_Sprite: {fileID: 6485466130718521512, guid: 22a9398247a059841b0b49f0c0781556, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -294,6 +144,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &5201269944641686507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9141564163182381832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: a98c17ec
 --- !u!114 &8308077003980736082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,16 +172,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0f6feb47b83384aa71797c754b5bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoliceVehicularPursuit
-  pursuitScript: {fileID: 0}
+  pursuitScript: {fileID: 8308077003980736082}
   target: {fileID: 0}
-  policeOfficer: {fileID: 0}
+  policeOfficer: {fileID: 1891809445460552584, guid: c5202ee541d197d4ba639e20e7c03179, type: 3}
   exitCarDistance: 5.5
   maxSteerInput: 1
-  steeringSensitivity: 2
-  slowingAngle: 60
-  acceleration: 30
-  maxSpeed: 15
-  steeringPower: 200
+  steeringSensitivity: 0.1
+  slowingAngle: 5
+  acceleration: 50
+  maxSpeed: 5
+  steeringPower: 130
 --- !u!61 &2080615626035113240
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -354,7 +220,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 1.05, y: 2.21}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -362,84 +228,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2.1846743}
   m_EdgeRadius: 0
---- !u!114 &8461619363487072915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9141564163182381832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af2c5ea44fe32114c8ba1e9bdb3497e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarInteraction
-  carController: {fileID: 0}
-  carBomb: {fileID: 5013526990603866183}
-  carLights: {fileID: 3892341762141796311}
-  playerChar: {fileID: 0}
-  interactKey: 101
-  exitOffset: {x: 1.2, y: 0}
-  playerInRange: 0
---- !u!114 &2534522299571833866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9141564163182381832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a78ccd547e8994386eddadd1c7bf87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Speedbreaker
-  speedbreakerKey: 304
-  slowTimeScale: 0.3
-  normalTimeScale: 1
-  transitionSpeed: 5
-  car: {fileID: 0}
-  steeringMultiplier: 1
-  accelerationMultiplier: 1.3
-  maxEnergy: 5
-  drainRate: 1
-  rechargeRate: 0.7
-  cooldownTime: 4
---- !u!114 &5013526990603866183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9141564163182381832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 947e884adf623a147bb2d780491e67f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarBomb
-  bombInstalled: 0
-  bombArmed: 0
-  detonateKey: 308
-  detonationDelay: 3
-  explosionRadius: 5
-  explosionForce: 12
-  damage: 100
-  explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
---- !u!114 &8241077401977772838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9141564163182381832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4afa2fc7de6f29244a55df781b32bd86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarHealth
-  maxHealth: 750
-  currentHealth: 0
-  criticalHealth: 20
-  explosionDelay: 5
-  smokeEffectPrefab: {fileID: 0}
-  explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
-  warningBeep: {fileID: 0}

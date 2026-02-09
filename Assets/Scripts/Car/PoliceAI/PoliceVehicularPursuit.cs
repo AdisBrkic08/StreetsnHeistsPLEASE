@@ -75,7 +75,16 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
     void Update()
     {
-        if (drivable == false) return; 
+        if (drivable == false) return;
+
+        if (!target)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                target = player.transform;
+            }
+        }
 
         distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
         currentSpeed = rb.linearVelocity.magnitude;
@@ -89,8 +98,6 @@ public class PoliceVehicularPursuit : MonoBehaviour
             rb.simulated = false;
             pursuitScript.enabled = false;
         }
-
-        if (!target) return;
 
         // Update agent destination
         agent.SetDestination(target.position);
