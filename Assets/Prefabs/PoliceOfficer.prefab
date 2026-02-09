@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5306367445009291332}
   - component: {fileID: 2761858986165322264}
   - component: {fileID: 567447305582917910}
+  - component: {fileID: 869798504957931471}
   m_Layer: 0
   m_Name: PoliceOfficer
   m_TagString: Untagged
@@ -127,3 +128,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavmeshFollow
   target: {fileID: 0}
+--- !u!114 &869798504957931471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891809445460552584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d40707020d985498c4b29a1ad82237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  bulletPrefab: {fileID: 4788338419311558225, guid: 336f22e03243bb34d88dde94a0692fb7, type: 3}
