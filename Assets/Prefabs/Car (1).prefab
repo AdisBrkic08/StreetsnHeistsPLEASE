@@ -130,6 +130,7 @@ Transform:
   m_Children:
   - {fileID: 9103171680035483530}
   - {fileID: 9017858361020593214}
+  - {fileID: 6756468497758772588}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6170680207481823816
@@ -379,11 +380,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarHealth
   maxHealth: 750
   currentHealth: 0
-  criticalHealth: 20
-  explosionDelay: 5
-  smokeEffectPrefab: {fileID: 0}
+  smokePrefab: {fileID: 0}
+  smokePoint: {fileID: 0}
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
-  warningBeep: {fileID: 0}
 --- !u!1 &3806142655513727355
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,3 +437,34 @@ MonoBehaviour:
   lightsOn: 0
   fadeSpeed: 5
   isDriving: 1
+--- !u!1 &6090477750730779221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6756468497758772588}
+  m_Layer: 0
+  m_Name: SmokePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6756468497758772588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090477750730779221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: -0.004999995, y: -0.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3409835104916496138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}

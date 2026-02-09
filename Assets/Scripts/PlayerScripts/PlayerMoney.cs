@@ -3,60 +3,41 @@ using System.Collections;
 
 public class PlayerMoney : MonoBehaviour
 {
-    public int money = 500;
-    private GameHUD hud;
-    private Coroutine smoothUpdateRoutine;
+    public int money = 0;
 
-    void Start()
+    bool isAnimating = false;
+
+    public bool SpendMoney(int amount)
     {
-        hud = Object.FindFirstObjectByType<GameHUD>();
-        if (hud != null)
-            hud.UpdateHUDNow(); // initial sync
+        if (money < amount)
+            return false;
+
+        if (!isAnimating)
+            StartCoroutine(AnimateSpend(amount));
+
+        return true;
     }
 
-    public void AddMoney(int amount)
+    IEnumerator AnimateSpend(int amount)
     {
-        if (amount == 0) return;
+        isAnimating = true;
 
-        int target = money + amount;
-        if (target < 0) target = 0;
+        int target = money - amount;
 
-        // stop previous animation if still running
-        if (smoothUpdateRoutine != null)
-            StopCoroutine(smoothUpdateRoutine);
-
-        smoothUpdateRoutine = StartCoroutine(SmoothMoneyIncrease(target));
-    }
-
-    private IEnumerator SmoothMoneyIncrease(int targetValue)
-    {
-        int start = money;
-        float duration = 0.5f; // animation duration
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        while (money > target)
         {
-            elapsed += Time.deltaTime;
-            money = Mathf.RoundToInt(Mathf.Lerp(start, targetValue, elapsed / duration));
-
-            if (hud != null)
-                hud.UpdateHUDNow();
-
-            yield return null;
+            money--;
+            yield return new WaitForSeconds(0.01f); // Speed of animation
         }
 
-        money = targetValue;
-        if (hud != null)
-            hud.UpdateHUDNow();
-    }
-    void SaveMoney()
-    {
-        PlayerPrefs.SetInt("PlayerMoney", money);
-        PlayerPrefs.Save();
+        money = target;
+
+        isAnimating = false;
     }
 
-    void LoadMoney()
+    // Optional instant add
+    public void AddMoney(int amount)
     {
-        money = PlayerPrefs.GetInt("PlayerMoney", money);
+        money += amount;
     }
 }

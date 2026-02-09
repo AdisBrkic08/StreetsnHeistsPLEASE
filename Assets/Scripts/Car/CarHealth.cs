@@ -102,4 +102,11 @@ public class CarHealth : MonoBehaviour
             TakeDamage(dmg);
         }
     }
+    public void FullRepair()
+    {
+        currentHealth = maxHealth;
+
+        Debug.Log("Car fully repaired");
+    }
+
 }
