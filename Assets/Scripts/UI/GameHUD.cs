@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class GameHUD : MonoBehaviour
 {
@@ -13,16 +14,21 @@ public class GameHUD : MonoBehaviour
     public PlayerHealth playerHealth;
 
     [Header("Settings")]
-    public float gameTime = 12 * 60f; // Start at 12:00 (in minutes)
+    public float gameTime = 12 * 60f;
+
+    // Animated cash
+    int displayedCash = 0;
+    Coroutine cashRoutine;
 
     void Start()
     {
-        // ✅ Updated for Unity 2023+: use FindFirstObjectByType instead of deprecated FindObjectOfType
         if (playerMoney == null)
-            playerMoney = Object.FindFirstObjectByType<PlayerMoney>();
+            playerMoney = FindFirstObjectByType<PlayerMoney>();
 
         if (playerHealth == null)
-            playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
+            playerHealth = FindFirstObjectByType<PlayerHealth>();
+
+        displayedCash = playerMoney.money;
     }
 
     void Update()
@@ -33,44 +39,68 @@ public class GameHUD : MonoBehaviour
 
     void UpdateHUD()
     {
-        // 💰 Update money display
+        // 💰 Smooth cash animation
         if (playerMoney != null)
-            cashText.text = "$" + playerMoney.money.ToString("000000");
-        else
-            cashText.text = "$000000";
+        {
+            if (displayedCash != playerMoney.money)
+            {
+                if (cashRoutine != null)
+                    StopCoroutine(cashRoutine);
 
-        // ❤️ Update health display
+                cashRoutine = StartCoroutine(AnimateCash(displayedCash, playerMoney.money));
+            }
+        }
+
+        // ❤️ Health
         if (playerHealth != null)
             healthText.text = "HEALTH: " + playerHealth.currentHealth.ToString("000");
         else
             healthText.text = "HEALTH: ---";
     }
-    public void UpdateHUDNow()
-    {
-        // Instantly refresh money display
-        if (playerMoney != null)
-            cashText.text = "$" + playerMoney.money.ToString("000000");
 
-        // Instantly refresh health display
-        if (playerHealth != null)
-            healthText.text = "HEALTH: " + playerHealth.currentHealth.ToString("000");
+    IEnumerator AnimateCash(int from, int to)
+    {
+        float duration = 0.4f;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+
+            displayedCash = Mathf.RoundToInt(
+                Mathf.Lerp(from, to, t / duration)
+            );
+
+            cashText.text = "$" + displayedCash.ToString("000000");
+
+            yield return null;
+        }
+
+        displayedCash = to;
+        cashText.text = "$" + displayedCash.ToString("000000");
     }
 
+    public void UpdateHUDNow()
+    {
+        if (playerMoney != null)
+            cashText.text = "$" + playerMoney.money.ToString("000000");
+    }
 
     void UpdateTimeDisplay()
     {
-        // ⏰ Simple in-game clock
         gameTime += Time.deltaTime;
+
         int hours = (int)(gameTime / 60) % 24;
         int minutes = (int)(gameTime % 60);
+
         timeText.text = $"{hours:00}:{minutes:00}";
     }
 
-    // Optional external calls
     public void SetHealth(int newHealth)
     {
         if (playerHealth != null)
-            playerHealth.currentHealth = Mathf.Clamp(newHealth, 0, playerHealth.maxHealth);
+            playerHealth.currentHealth =
+                Mathf.Clamp(newHealth, 0, playerHealth.maxHealth);
     }
 
     public void AddCash(int amount)
