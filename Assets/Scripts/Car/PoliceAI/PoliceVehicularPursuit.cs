@@ -26,13 +26,13 @@ public class PoliceVehicularPursuit : MonoBehaviour
     private NavMeshAgent agent;
 
     private int direction;
-    private float distance;
     private bool drivable = true;
     private bool start = true;
     private bool reverse = false;
     private bool accelerating = true; // Used to correctly execute the reverse coroutine, the variable should not be taken literally
     private float reverseTime = 0.5f;
     private float reversePower = 5f;
+    private float distance;
 
     // Car inputs (AI-controlled)
     float steerInput;
