@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mono.Cecil;
+using UnityEngine;
 
 public class CarInteraction : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class CarInteraction : MonoBehaviour
     public SimpleCarController2D carController;
     public CarBomb carBomb;
     public CarLights carLights; // Reference to lights script
+    public DrivingStyleSystem styleSystem;
+
 
     [Header("Settings")]
     [SerializeField] GameObject playerChar;
@@ -22,18 +25,23 @@ public class CarInteraction : MonoBehaviour
 
     void Start()
     {
-        playerDrivingScript = FindObjectOfType<PlayerDriving>();
+        playerDrivingScript = FindFirstObjectByType<PlayerDriving>();
+
         if (carController == null)
             carController = GetComponent<SimpleCarController2D>();
 
         if (carBomb == null)
             carBomb = GetComponent<CarBomb>();
 
+        if (!styleSystem)
+            styleSystem = GetComponent<DrivingStyleSystem>();
+
         if (carLights != null)
-            carLights.lightsOn = false; // Ensure lights start OFF
+            carLights.lightsOn = false;
 
         carController.enabled = false;
     }
+
 
     void Update()
     {
@@ -141,6 +149,7 @@ public class CarInteraction : MonoBehaviour
         }
 
         SetPlayerVisible(player, true);
+
 
     }
 
