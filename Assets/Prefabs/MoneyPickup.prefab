@@ -168,5 +168,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a75f5c8f16feff4fb0cab487555581b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyPickup
-  moneyValue: 50
+  value: 100
   lifetime: 10
