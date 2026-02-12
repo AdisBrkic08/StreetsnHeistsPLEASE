@@ -15,7 +15,7 @@ public class ShopUI : MonoBehaviour
         Time.timeScale = 1f;
 
         Debug.Log("Exited shop");
-        SceneManager.LoadScene("Adis");
+        SceneManager.LoadScene("MainGame");
     }
     
 

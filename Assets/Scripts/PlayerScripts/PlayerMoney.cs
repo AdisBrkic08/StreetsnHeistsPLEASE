@@ -3,9 +3,43 @@ using System.Collections;
 
 public class PlayerMoney : MonoBehaviour
 {
-    public int money = 0;
+    public int money;
 
     bool isAnimating = false;
+
+    // ⚠️ TURN THIS ONCE, THEN SET TO false AFTER TESTING
+    public bool resetSave = true;
+
+    void Awake()
+    {
+        // Reset old corrupted save (TEMP)
+        if (resetSave)
+        {
+            PlayerPrefs.DeleteKey("PlayerMoney");
+            PlayerPrefs.Save();
+            Debug.Log("PLAYER MONEY RESET");
+        }
+
+        // Load money
+        money = PlayerPrefs.GetInt("PlayerMoney", 0);
+
+        Debug.Log("Loaded money: " + money);
+
+        UpdateUI();
+    }
+
+    public void AddMoney(int amount)
+    {
+        Debug.Log("AddMoney called: +" + amount +
+                  " | Before: " + money);
+
+        money += amount;
+
+        Debug.Log("After: " + money);
+
+        SaveMoney();
+        UpdateUI();
+    }
 
     public bool SpendMoney(int amount)
     {
@@ -27,17 +61,29 @@ public class PlayerMoney : MonoBehaviour
         while (money > target)
         {
             money--;
-            yield return new WaitForSeconds(0.01f); // Speed of animation
+            UpdateUI();
+            yield return new WaitForSeconds(0.01f);
         }
 
         money = target;
 
+        SaveMoney();
+        UpdateUI();
+
         isAnimating = false;
     }
 
-    // Optional instant add
-    public void AddMoney(int amount)
+    void SaveMoney()
     {
-        money += amount;
+        PlayerPrefs.SetInt("PlayerMoney", money);
+        PlayerPrefs.Save();
+
+        Debug.Log("Money saved: " + money);
+    }
+
+    void UpdateUI()
+    {
+        // Example:
+        // moneyText.text = "$" + money;
     }
 }

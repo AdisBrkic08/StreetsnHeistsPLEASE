@@ -108,4 +108,5 @@ public class GameHUD : MonoBehaviour
         if (playerMoney != null)
             playerMoney.AddMoney(amount);
     }
+
 }

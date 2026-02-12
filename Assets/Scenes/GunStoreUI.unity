@@ -221,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: -7944080258382921267, guid: 7ced4a445d285bd448629a5201b66147, type: 3}
     - target: {fileID: 7443431652453109789, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: money
-      value: 50000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7717267164478625247, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Enabled
@@ -232,6 +232,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+--- !u!1 &795608467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8523832944560493495, guid: 7c1a95884d2fb1247a71239949253ea9, type: 3}
+  m_PrefabInstance: {fileID: 877575221}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &877575221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,7 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcc9b457a03fce41bcbb9f680146740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopUI
-  shopCanvas: {fileID: 0}
+  shopCanvas: {fileID: 795608467}
 --- !u!4 &1893328983
 Transform:
   m_ObjectHideFlags: 0

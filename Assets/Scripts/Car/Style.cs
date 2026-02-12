@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DrivingStyleSystem : MonoBehaviour
 {
     [Header("Style Settings")]
-    public float speedThreshold = 6f;     // Speed to start earning
-    public int cashPerSecond = 5;         // Reward rate
+    public float speedThreshold = 6f;
+    public int cashPerSecond = 5;
 
     [Header("References")]
     public PlayerMoney playerMoney;
     public GameHUD hud;
 
     Rigidbody2D rb;
-
     float earnTimer;
 
     void Start()
@@ -19,24 +19,31 @@ public class DrivingStyleSystem : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         if (playerMoney == null)
-            playerMoney = FindAnyObjectByType<PlayerMoney>();
+            playerMoney = FindFirstObjectByType<PlayerMoney>();
 
         if (hud == null)
-            hud = FindAnyObjectByType<GameHUD>();
+            hud = FindFirstObjectByType<GameHUD>();
     }
 
     void Update()
     {
-        if (rb == null || playerMoney == null) return;
+        // Only earn in gameplay scene
+        if (SceneManager.GetActiveScene().name != "MainGame")
+            return;
 
-        float speed = rb.linearVelocity.magnitude;
+        // Stop if paused
+        if (Time.timeScale == 0f)
+            return;
 
-        // Only earn when going fast
+        if (rb == null || playerMoney == null)
+            return;
+
+        float speed = Mathf.Min(rb.linearVelocity.magnitude, 20f);
+
         if (speed >= speedThreshold)
         {
             earnTimer += Time.deltaTime;
 
-            // Every 1 second → give money
             if (earnTimer >= 1f)
             {
                 GiveCash();
@@ -55,7 +62,5 @@ public class DrivingStyleSystem : MonoBehaviour
 
         if (hud != null)
             hud.UpdateHUDNow();
-
-        Debug.Log("STYLE CASH +$" + cashPerSecond);
     }
 }
