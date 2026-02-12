@@ -23,6 +23,8 @@ public class DamageObject : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log(other.name);
+
         if (continuousDamage && other.CompareTag("Player"))
         {
             if (Time.time >= nextDamageTime)
