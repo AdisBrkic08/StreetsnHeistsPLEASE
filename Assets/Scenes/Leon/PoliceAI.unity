@@ -1663,6 +1663,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: handSprites.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: 'handSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: -5262111214504444646, guid: 36490b7ed2d56d24d9c3b8cc1c1a6cca, type: 3}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: 'handSprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: 971620415650262207, guid: 97a7a2dcb385ac04c8d3e41f4f1df401, type: 3}
+    - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: 'handSprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: 21300000, guid: e9b6fb86689a10c45a96eb05a54b1080, type: 3}
     - target: {fileID: 5418707421728425051, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Layer
       value: 3
