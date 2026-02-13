@@ -9149,6 +9149,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -8868272330977153355, guid: 1ed4bfcc2a5a6bc498ba96a17eeac357, type: 3}
+    - target: {fileID: 3308146849342827781, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308146849342827781, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 3438374862286612367, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -9157,6 +9165,10 @@ PrefabInstance:
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1067937665}
+    - target: {fileID: 3840219755455455365, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 4788338419311558225, guid: 4d9d4a1cc0ce96b4e9bda6664c4b5173, type: 3}
     - target: {fileID: 4343208542589971407, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -9228,6 +9240,10 @@ PrefabInstance:
     - target: {fileID: 7443431652453109789, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: resetSave
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472136483948026767, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
       objectReference: {fileID: 0}
     - target: {fileID: 7717267164478625247, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: targetIconPrefab
