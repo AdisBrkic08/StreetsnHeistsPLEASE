@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - NPC
   - PlayerVehicle
+  - PoliceVehicle
   layers:
   - Default
   - TransparentFX

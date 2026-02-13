@@ -419,7 +419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
-      value: 750
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: smokePoint
@@ -113078,7 +113078,7 @@ Transform:
   m_GameObject: {fileID: 1828743679}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.88, y: 4.51, z: 0}
+  m_LocalPosition: {x: 5.88, y: 1.99, z: 0}
   m_LocalScale: {x: 3.4711623, y: 2.8220718, z: 3.3865}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -125847,6 +125847,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1495227815}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: orthographic size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8033653891324684638, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

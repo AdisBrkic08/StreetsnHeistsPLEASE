@@ -20,10 +20,14 @@ public class CarHealth : MonoBehaviour
 
     private GameObject smokeInstance;
 
+    [Header("Explosion Settings")]
+    public float explosionRadius = 2.5f;
+    public int explosionDamage = 100;
+    public float ejectOffset = 1f; // How far player is ejected
+
     void Start()
     {
         currentHealth = maxHealth;
-
         Debug.Log($"[CarHealth] Spawned with health: {currentHealth}");
     }
 
@@ -124,22 +128,59 @@ public class CarHealth : MonoBehaviour
 
         RemoveSmoke();
 
+        // Spawn explosion effect
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);
+        // =========================
+        // Step 1: Find player anywhere
+        // =========================
+        PlayerController2D player = GameObject.FindWithTag("Player")?.GetComponent<PlayerController2D>();
+        if (player != null)
+        {
+            Debug.Log("[CarHealth] Player detected for ejection.");
 
+            // Optional: Detach from car if parented
+            player.transform.parent = null;
+
+            // Move slightly outside car
+            player.transform.position = transform.position + new Vector3(ejectOffset, 0f, 0f);
+
+            // Apply explosion damage
+            PlayerHealth health = player.GetComponent<PlayerHealth>();
+            if (health != null)
+            {
+                Debug.Log("[CarHealth] Applying explosion damage to player.");
+                health.TakeDamage(explosionDamage);
+            }
+
+            // Optional: add force to player
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                Vector2 ejectDir = (Vector2.right + Vector2.up).normalized;
+                rb.AddForce(ejectDir * 300f);
+            }
+        }
+
+        // =========================
+        // Step 2: Damage nearby objects
+        // =========================
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D hit in hits)
         {
             if (hit.CompareTag("Player"))
-                hit.GetComponent<PlayerHealth>()?.TakeDamage(100);
+            {
+                hit.GetComponent<PlayerHealth>()?.TakeDamage(explosionDamage / 2);
+            }
 
             if (hit.CompareTag("NPC"))
-                hit.GetComponent<NPCHealth>()?.TakeDamage(100);
+                hit.GetComponent<NPCHealth>()?.TakeDamage(explosionDamage);
         }
 
         Destroy(gameObject);
     }
+
 
     // ==============================
     // COLLISION DAMAGE
@@ -159,7 +200,6 @@ public class CarHealth : MonoBehaviour
     public void FullRepair()
     {
         currentHealth = maxHealth;
-
         isCritical = false;
         isExploding = false;
 
