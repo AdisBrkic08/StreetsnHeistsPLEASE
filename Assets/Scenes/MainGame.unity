@@ -810,7 +810,7 @@ MonoBehaviour:
   - {fileID: 576431260}
   police: {fileID: 9141564163182381832, guid: 0d3cad15d40bd6a49a0b0c1de6dd9e19, type: 3}
   spawnTime: 2
-  maxPolice: 20
+  maxPolice: 2
 --- !u!4 &470002336
 Transform:
   m_ObjectHideFlags: 0
