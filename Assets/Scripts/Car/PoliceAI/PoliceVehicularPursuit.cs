@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,37 +11,237 @@ public class PoliceVehicularPursuit : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Transform target;
     [SerializeField] private GameObject policeOfficer;
-    [SerializeField] private float exitCarDistance = 5.5f; // Distance when the officer should hop out and chase the player (if the player is on foot)
+    [SerializeField] private float exitCarDistance = 5.5f;
 
     [Header("Driving")]
     [SerializeField] private float maxSteerInput = 1f;
     [SerializeField] private float steeringSensitivity = 2f;
     [SerializeField] private float slowingAngle = 60f;
 
-    // Scripts
-    private PlayerDriving playerDrivingScript; // Code for variables to see e.g whether the player is driving or not
-
-    //[Header("Other")]
+    // References
+    private PlayerDriving playerDrivingScript;
     private Rigidbody2D rb;
     private NavMeshAgent agent;
 
-    private int direction;
+    // State
     private bool drivable = true;
-    private bool start = true;
-    private bool reverse = false;
-    private bool accelerating = true; // Used to correctly execute the reverse coroutine, the variable should not be taken literally
-    private float reverseTime = 0.5f;
-    private float reversePower = 5f;
-    private float distance;
+    private bool exited = false;
 
-    // Car inputs (AI-controlled)
-    float steerInput;
-    float accelInput = 1f; // Police always tries to accelerate
+    // AI Input
+    private float steerInput;
+    private float accelInput = 1f;
 
     // Speed
-    float currentSpeed;
+    private float currentSpeed;
 
-    // Coroutines
+    // Reverse
+    private bool reverse = false;
+    private bool start = true;
+    private bool accelerating = true;
+
+    [Header("Car Settings")]
+    public float acceleration = 20f;
+    public float maxSpeed = 15f;
+    public float steeringPower = 200f;
+
+    private float reverseTime = 0.5f;
+    private float reversePower = 5f;
+
+
+    // =====================================================
+    // INIT
+    // =====================================================
+
+    void Awake()
+    {
+        playerDrivingScript = FindFirstObjectByType<PlayerDriving>();
+
+        rb = GetComponent<Rigidbody2D>();
+        agent = GetComponent<NavMeshAgent>();
+
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+
+        PlaceOnNavMesh();
+    }
+
+
+    void PlaceOnNavMesh()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            NavMeshHit hit;
+
+            if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
+            {
+                agent.Warp(hit.position);
+            }
+        }
+    }
+
+
+    // =====================================================
+    // UPDATE
+    // =====================================================
+
+    void Update()
+    {
+        if (!drivable || exited) return;
+
+        FindTarget();
+
+        if (!target) return;
+
+        float distance = Vector2.Distance(transform.position, target.position);
+        currentSpeed = rb.linearVelocity.magnitude;
+
+
+        // 🚔 Exit car when close and player is on foot
+        if (!exited &&
+            distance < exitCarDistance &&
+            playerDrivingScript != null &&
+            playerDrivingScript.isDriving == false)
+        {
+            ExitVehicle();
+            return;
+        }
+
+
+        // NavMesh update
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(target.position);
+        }
+
+
+        if (agent.enabled && agent.isOnNavMesh)
+        {
+            HandleSteering();
+        }
+        else
+        {
+            steerInput = 0f;
+        }
+
+        HandleAcceleration();
+    }
+
+
+    // =====================================================
+    // PHYSICS
+    // =====================================================
+
+    void FixedUpdate()
+    {
+        if (!drivable || exited) return;
+        if (reverse) return;
+
+
+        if (agent.enabled)
+            agent.nextPosition = rb.position;
+
+
+        if (currentSpeed <= 0.2f && !start && !reverse && !accelerating)
+        {
+            StartCoroutine(Reverse());
+        }
+
+
+        ApplyEngine(1f);
+        ApplySteering();
+        LimitSpeed();
+
+        start = false;
+
+        if (currentSpeed >= maxSpeed / 2f)
+            accelerating = false;
+    }
+
+
+    // =====================================================
+    // AI
+    // =====================================================
+
+    void FindTarget()
+    {
+        if (target) return;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player)
+            target = player.transform;
+    }
+
+
+    void HandleSteering()
+    {
+        if (!agent.enabled ||
+            !agent.isOnNavMesh ||
+            agent.pathPending ||
+            agent.path.corners.Length < 2)
+        {
+            steerInput = 0f;
+            return;
+        }
+
+        Vector2 nextCorner = agent.path.corners[1];
+        Vector2 toCorner = (nextCorner - rb.position).normalized;
+
+        float angle = Vector2.SignedAngle(transform.up, toCorner);
+
+        steerInput = Mathf.Clamp(
+            angle / steeringSensitivity,
+            -maxSteerInput,
+            maxSteerInput
+        );
+    }
+
+
+    void HandleAcceleration()
+    {
+        float absAngle = Mathf.Abs(steerInput * steeringSensitivity);
+
+        accelInput = absAngle > slowingAngle ? 0.5f : 1f;
+    }
+
+
+    // =====================================================
+    // VEHICLE
+    // =====================================================
+
+    void ApplyEngine(float dir)
+    {
+        Vector2 forward = transform.up;
+
+        rb.AddForce(
+            forward * accelInput * dir * acceleration,
+            ForceMode2D.Force
+        );
+    }
+
+
+    void ApplySteering()
+    {
+        float speedFactor = rb.linearVelocity.magnitude / maxSpeed;
+
+        rb.angularVelocity = steerInput * steeringPower * speedFactor;
+    }
+
+
+    void LimitSpeed()
+    {
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity =
+                rb.linearVelocity.normalized * maxSpeed;
+        }
+    }
+
+
+    // =====================================================
+    // REVERSE
+    // =====================================================
 
     IEnumerator Reverse()
     {
@@ -51,8 +251,6 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
         ApplyEngine(-reversePower);
 
-        Debug.Log("REVERSE");
-
         yield return new WaitForSeconds(reverseTime);
 
         reverse = false;
@@ -60,131 +258,42 @@ public class PoliceVehicularPursuit : MonoBehaviour
         ApplyEngine(reversePower);
     }
 
-    void Awake()
+
+    // =====================================================
+    // EXIT VEHICLE
+    // =====================================================
+
+    void ExitVehicle()
     {
-        playerDrivingScript = FindObjectOfType<PlayerDriving>();
+        exited = true;
+        drivable = false;
 
-        rb = GetComponent<Rigidbody2D>();
-        agent = GetComponent<NavMeshAgent>();
 
-        // IMPORTANT: NavMeshAgent is path-only
-        agent.updatePosition = false;
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
-    }
-
-    void Update()
-    {
-        if (drivable == false) return;
-
-        if (!target)
+        // Spawn officer
+        if (policeOfficer)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                target = player.transform;
-            }
+            Instantiate(
+                policeOfficer,
+                transform.position,
+                Quaternion.identity
+            );
         }
 
-        distance = Vector2.Distance(gameObject.transform.position, target.transform.position);
-        currentSpeed = rb.linearVelocity.magnitude;
 
-        //Debug.Log("Distance: " + distance);
-        //Debug.Log("Speed: " + currentSpeed);
+        // Disable driving
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.simulated = false;
 
-        if (distance < exitCarDistance && playerDrivingScript.isDriving == false) // If the target is nearby, officer jump out and chase
-        {
-            Instantiate(policeOfficer, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), Quaternion.identity);
-            rb.simulated = false;
+
+        if (agent)
+            agent.enabled = false;
+
+
+        if (pursuitScript)
             pursuitScript.enabled = false;
-        }
 
-        // Update agent destination
-        agent.SetDestination(target.position);
 
-        HandleSteering();
-        HandleAcceleration();
+        Debug.Log("[Police AI] Officer exited vehicle");
     }
-
-    void FixedUpdate()
-    {
-        if (reverse) return;
-
-        agent.nextPosition = rb.position; // sync NavMesh
-
-        if (currentSpeed <= 0.21 && start == false && reverse == false && accelerating == false)
-        {
-            //Debug.Log("Speed: " + currentSpeed);
-            //Debug.Log("Start: " + start);
-            //Debug.Log("Reverse: " + reverse);
-            //Debug.Log("Accelerating: " + accelerating);
-            StartCoroutine(Reverse());
-        }
-
-        ApplyEngine(1);
-        ApplySteering();
-        LimitSpeed();
-
-        start = false;
-
-        if (currentSpeed >= maxSpeed / 2)
-        {
-            accelerating = false;
-        }
-    }
-
-
-    #region AI Logic
-    void HandleSteering()
-    {
-        if (agent.pathPending || agent.path.corners.Length < 2)
-        {
-            steerInput = 0f;
-            return;
-        }
-
-        // Next corner on NavMesh path
-        Vector2 nextCorner = agent.path.corners[1];
-        Vector2 toCorner = (nextCorner - rb.position).normalized;
-
-        // Angle between car forward and desired direction
-        float angle = Vector2.SignedAngle(transform.up, toCorner);
-
-        // Convert angle to steering input
-        steerInput = Mathf.Clamp(angle / steeringSensitivity, -maxSteerInput, maxSteerInput);
-    }
-
-    void HandleAcceleration()
-    {
-        // Reduce acceleration on sharp turns
-        float absAngle = Mathf.Abs(steerInput * steeringSensitivity);
-        accelInput = absAngle > slowingAngle ? 0.5f : 1f;
-    }
-    #endregion
-
-    #region Vehicle Physics (adapted from SimpleCarController2D)
-    [Header("Car Settings")]
-    public float acceleration = 20f;
-    public float maxSpeed = 15f;
-    public float steeringPower = 200f;
-
-    void ApplyEngine(float dir)
-    {
-        Vector2 forward = rb.transform.up; // car's local forward
-        rb.AddForce(forward * (accelInput * dir) * acceleration, ForceMode2D.Force);
-    }
-
-
-    void ApplySteering()
-    {
-        float speedFactor = rb.linearVelocity.magnitude / maxSpeed;
-        rb.angularVelocity = steerInput * steeringPower * speedFactor;
-    }
-
-    void LimitSpeed()
-    {
-        if (rb.linearVelocity.magnitude > maxSpeed)
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-    }
-    #endregion
 }

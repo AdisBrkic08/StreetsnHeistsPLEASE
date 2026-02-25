@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6601579844481826768}
   - component: {fileID: 5059455792645747195}
+  - component: {fileID: -5500239302317350305}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -90,3 +91,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-5500239302317350305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282352444932343455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4549741e384b6b45961dc641577e281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter2D
+  bulletPrefab: {fileID: 4788338419311558225, guid: 27e9d0a83ddb3a14caa6ddcbba81df78, type: 3}
+  firePoint: {fileID: 0}
+  bulletForce: 10
+  fireRate: 0.2
+  maxAmmo: 7
+  reloadTime: 1.5
+  recoilForce: 2
+  currentAmmo: 0
+  isReloading: 0
+  canShoot: 1

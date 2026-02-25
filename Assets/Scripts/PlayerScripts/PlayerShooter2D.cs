@@ -28,6 +28,15 @@ public class PlayerShooter2D : MonoBehaviour
     {
         canShoot = value;
     }
+    public void TryShoot()
+    {
+        if (Time.time < nextFireTime)
+            return;
+
+        nextFireTime = Time.time + fireRate;
+
+        Shoot();
+    }
 
     void Start()
     {
@@ -70,7 +79,7 @@ public class PlayerShooter2D : MonoBehaviour
         Vector2 shootDirection = GetShootDirection();
 
         // Spawn bullet
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = shootDirection * bulletForce;
 
@@ -79,7 +88,9 @@ public class PlayerShooter2D : MonoBehaviour
         if (playerRb != null)
             playerRb.AddForce(-shootDirection * recoilForce, ForceMode2D.Impulse);
 
+        if (isReloading) return; // extra safety
 
+        if (currentAmmo <= 0) return;
 
         currentAmmo--;
     }
@@ -104,11 +115,17 @@ public class PlayerShooter2D : MonoBehaviour
 
     IEnumerator Reload()
     {
+        if (isReloading) yield break;
+
         isReloading = true;
         Debug.Log("Reloading...");
+
         yield return new WaitForSeconds(reloadTime);
+
         currentAmmo = maxAmmo;
+
         isReloading = false;
+
         Debug.Log("Reloaded!");
     }
 }
