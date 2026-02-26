@@ -227,7 +227,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7443431652453109789, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -516,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 8211228125295892823, guid: 7c1a95884d2fb1247a71239949253ea9, type: 3}
       propertyPath: playerMoney
       value: 
-      objectReference: {fileID: 909651421}
+      objectReference: {fileID: 0}
     - target: {fileID: 8523832944560493495, guid: 7c1a95884d2fb1247a71239949253ea9, type: 3}
       propertyPath: m_Name
       value: ShopUI
@@ -727,17 +728,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14dd3896940d7b64abbdfa5f2fdac179, type: 3}
---- !u!114 &909651421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7443431652453109789, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
-  m_PrefabInstance: {fileID: 621797653}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf006d3d4f45a14bb00fc5ce1bac728, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoney
 --- !u!1 &1030898028
 GameObject:
   m_ObjectHideFlags: 0

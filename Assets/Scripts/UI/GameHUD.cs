@@ -10,52 +10,44 @@ public class GameHUD : MonoBehaviour
     public TextMeshProUGUI healthText;
 
     [Header("Player References")]
-    public PlayerMoney playerMoney;
     public PlayerHealth playerHealth;
 
     [Header("Settings")]
     public float gameTime = 12 * 60f;
 
-    // Animated cash
     int displayedCash = 0;
     Coroutine cashRoutine;
 
     void Start()
     {
-        if (playerMoney == null)
-            playerMoney = FindFirstObjectByType<PlayerMoney>();
-
         if (playerHealth == null)
             playerHealth = FindFirstObjectByType<PlayerHealth>();
 
-        displayedCash = playerMoney.money;
+        displayedCash = MoneyManager.Instance.money;
+        UpdateHUDNow();
     }
 
     void Update()
     {
         UpdateTimeDisplay();
-        UpdateHUD();
+        UpdateHealth();
+        UpdateCash();
     }
 
-    void UpdateHUD()
+    // ---------------- CASH ----------------
+
+    void UpdateCash()
     {
-        // 💰 Smooth cash animation
-        if (playerMoney != null)
+        int realCash = MoneyManager.Instance.money;
+
+        if (displayedCash != realCash)
         {
-            if (displayedCash != playerMoney.money)
-            {
-                if (cashRoutine != null)
-                    StopCoroutine(cashRoutine);
+            if (cashRoutine != null)
+                StopCoroutine(cashRoutine);
 
-                cashRoutine = StartCoroutine(AnimateCash(displayedCash, playerMoney.money));
-            }
+            cashRoutine = StartCoroutine(
+                AnimateCash(displayedCash, realCash));
         }
-
-        // ❤️ Health
-        if (playerHealth != null)
-            healthText.text = "HEALTH: " + playerHealth.currentHealth.ToString("000");
-        else
-            healthText.text = "HEALTH: ---";
     }
 
     IEnumerator AnimateCash(int from, int to)
@@ -82,9 +74,22 @@ public class GameHUD : MonoBehaviour
 
     public void UpdateHUDNow()
     {
-        if (playerMoney != null)
-            cashText.text = "$" + playerMoney.money.ToString("000000");
+        displayedCash = MoneyManager.Instance.money;
+        cashText.text = "$" + displayedCash.ToString("000000");
     }
+
+    // ---------------- HEALTH ----------------
+
+    void UpdateHealth()
+    {
+        if (playerHealth != null)
+            healthText.text = "HEALTH: " +
+                playerHealth.currentHealth.ToString("000");
+        else
+            healthText.text = "HEALTH: ---";
+    }
+
+    // ---------------- TIME ----------------
 
     void UpdateTimeDisplay()
     {
@@ -96,17 +101,17 @@ public class GameHUD : MonoBehaviour
         timeText.text = $"{hours:00}:{minutes:00}";
     }
 
+    // ---------------- PUBLIC HELPERS ----------------
+
+    public void AddCash(int amount)
+    {
+        MoneyManager.Instance.AddMoney(amount);
+    }
+
     public void SetHealth(int newHealth)
     {
         if (playerHealth != null)
             playerHealth.currentHealth =
                 Mathf.Clamp(newHealth, 0, playerHealth.maxHealth);
     }
-
-    public void AddCash(int amount)
-    {
-        if (playerMoney != null)
-            playerMoney.AddMoney(amount);
-    }
-
 }

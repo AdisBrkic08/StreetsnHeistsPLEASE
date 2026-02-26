@@ -22,6 +22,17 @@ public class PlayerWeaponManager : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
             weapons[i].SetActive(false);
 
+
+        ActivateWeapon(currentIndex);
+
+        for (int i = 0; i < weapons.Length; i++)
+            weapons[i].SetActive(false);
+
+        currentIndex = PlayerPrefs.GetInt("CurrentWeapon", 0);
+
+        if (!IsWeaponOwned(currentIndex))
+            currentIndex = GetFirstOwnedWeapon();
+
         ActivateWeapon(currentIndex);
     }
 
@@ -51,9 +62,15 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (newIndex == currentIndex) return;
         if (newIndex < 0 || newIndex >= weapons.Length) return;
+        if (!IsWeaponOwned(newIndex)) return; // Prevent locked weapon use
 
         weapons[currentIndex].SetActive(false);
+
         currentIndex = newIndex;
+
+        PlayerPrefs.SetInt("CurrentWeapon", currentIndex);
+        PlayerPrefs.Save();
+
         ActivateWeapon(currentIndex);
     }
 
@@ -63,6 +80,29 @@ public class PlayerWeaponManager : MonoBehaviour
         UpdateUI();
     }
 
+    bool IsWeaponOwned(int index)
+    {
+        switch (index)
+        {
+            case 0: return true; // Starter pistol always owned
+            case 1: return PlayerPrefs.GetInt("SMG", 0) == 1;
+            case 2: return PlayerPrefs.GetInt("Shotgun", 0) == 1;
+            case 3: return PlayerPrefs.GetInt("AK", 0) == 1;
+        }
+
+        return false;
+    }
+
+    int GetFirstOwnedWeapon()
+    {
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (IsWeaponOwned(i))
+                return i;
+        }
+
+        return 0;
+    }
     void UpdateUI()
     {
         // Update main icon

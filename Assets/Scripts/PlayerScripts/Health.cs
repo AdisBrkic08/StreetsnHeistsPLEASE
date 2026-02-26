@@ -8,8 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
 
     [Header("Effects")]
-    public GameObject bloodEffectPrefab;       // small blood burst
-    public GameObject deathBloodEffectPrefab;  // big blood burst
+    public GameObject bloodEffectPrefab;
+    public GameObject deathBloodEffectPrefab;
     public CornerDamageFlash damageFlash;
 
     [Header("UI")]
@@ -21,34 +21,32 @@ public class PlayerHealth : MonoBehaviour
     private GameHUD hud;
     private bool isDead = false;
 
-
     void Start()
     {
-        currentHealth = maxHealth;
+        ResetState();
 
-        // Find HUD safely
         hud = Object.FindFirstObjectByType<GameHUD>();
 
         if (deathScreen != null)
             deathScreen.SetActive(false);
     }
 
+    // ================= DAMAGE =================
+
     public void TakeDamage(int amount)
     {
         if (isDead) return;
+
         FindFirstObjectByType<DamageMotionBlur>()?.TriggerDamageBlur();
 
         currentHealth -= amount;
 
-        // Flash screen corners  
         if (damageFlash != null)
             damageFlash.FlashCorners();
 
-        // Small blood burst  
         if (bloodEffectPrefab != null)
             Instantiate(bloodEffectPrefab, transform.position, Quaternion.identity);
 
-        // Update HUD instantly  
         if (hud != null)
             hud.UpdateHUDNow();
 
@@ -56,26 +54,47 @@ public class PlayerHealth : MonoBehaviour
             Die();
     }
 
+    // ================= DEATH =================
+
     void Die()
     {
+        if (isDead) return;
+
         isDead = true;
 
-        // Big blood burst
         if (deathBloodEffectPrefab != null)
             Instantiate(deathBloodEffectPrefab, transform.position, Quaternion.identity);
 
-        // Disable movement, shooting, etc.
+        // Disable movement / shooting / etc
         foreach (var comp in componentsToDisable)
+        {
             if (comp != null)
                 comp.enabled = false;
+        }
 
-        // Show death UI
         if (deathScreen != null)
             deathScreen.SetActive(true);
     }
 
+    // ================= RESPawn =================
+
     public void Respawn()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // ================= RESET STATE =================
+
+    void ResetState()
+    {
+        currentHealth = maxHealth;
+        isDead = false;
+
+        // Re-enable components after scene reload
+        foreach (var comp in componentsToDisable)
+        {
+            if (comp != null)
+                comp.enabled = true;
+        }
     }
 }

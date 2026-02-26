@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class MoneyPickup : MonoBehaviour
 {
-    public int value = 50; 
+    public int value = 50;
     public float lifetime = 10f;
+
     private bool collected = false;
 
     void Start()
     {
-        Destroy(gameObject, lifetime); // auto-despawn if not picked up
+        // Auto destroy if not collected
+        Destroy(gameObject, lifetime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -17,14 +19,14 @@ public class MoneyPickup : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            var playerMoney = other.GetComponent<PlayerMoney>();
-            if (playerMoney != null)
+            // Add money directly to global manager
+            if (MoneyManager.Instance != null)
             {
-                playerMoney.AddMoney(value);
-                collected = true;
-                Destroy(gameObject);
+                MoneyManager.Instance.AddMoney(value);
             }
+
+            collected = true;
+            Destroy(gameObject);
         }
     }
-
 }

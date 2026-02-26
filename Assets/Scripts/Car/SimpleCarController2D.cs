@@ -42,6 +42,11 @@ public class SimpleCarController2D : MonoBehaviour
     [HideInInspector] public float steeringPowerMultiplier = 1f;
     [HideInInspector] public float accelerationMultiplier = 1f;
 
+    [Header("Money Reward System")]
+    public float speedThreshold = 6f;
+    public int cashPerSecond = 5;
+    float earnTimer;
+
     private Rigidbody2D rb;
     float steerInput;
     float accelInput;
@@ -67,6 +72,7 @@ public class SimpleCarController2D : MonoBehaviour
 
         HandleSpeedbreakerInput();
         HandleNitrousInput();
+        HandleMoneyReward();
     }
 
     void FixedUpdate()
@@ -75,6 +81,29 @@ public class SimpleCarController2D : MonoBehaviour
         ApplySteering();
         ApplyGrip();
         LimitSpeed();
+    }
+
+    void HandleMoneyReward()
+    {
+        // Only reward in gameplay scene
+        if (rb == null) return;
+
+        float speed = Mathf.Min(rb.linearVelocity.magnitude, 20f);
+
+        if (speed >= speedThreshold)
+        {
+            earnTimer += Time.deltaTime;
+
+            if (earnTimer >= 1f)
+            {
+                MoneyManager.Instance.AddMoney(cashPerSecond);
+                earnTimer = 0f;
+            }
+        }
+        else
+        {
+            earnTimer = 0f;
+        }
     }
 
     #region Engine & Movement
