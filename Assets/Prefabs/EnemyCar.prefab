@@ -179,6 +179,7 @@ MonoBehaviour:
   maxSteerInput: 1
   steeringSensitivity: 0.1
   slowingAngle: 5
+  lifeTimeAfterOfficerExit: 10
   acceleration: 50
   maxSpeed: 5
   steeringPower: 130
