@@ -57,7 +57,7 @@ public class CheatCodeSystem : MonoBehaviour
             currentInput = "";
         }
 
-        if (input.Contains("flameon"))
+        if (input.Contains("itsjustadream"))
         {
             ExplodeAllCars();
             currentInput = "";
