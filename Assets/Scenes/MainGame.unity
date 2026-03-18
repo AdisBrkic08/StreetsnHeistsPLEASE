@@ -9482,9 +9482,25 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 4788338419311558225, guid: 4d9d4a1cc0ce96b4e9bda6664c4b5173, type: 3}
+    - target: {fileID: 3851807644285849841, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851807644285849841, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: sprintMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4343208542589971407, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047406450630746553, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5047406450630746553, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
+      propertyPath: sprintMultiplier
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5066906360130152067, guid: c364e864aa1d5884ca8e1c8fda66a162, type: 3}
       propertyPath: m_Enabled
@@ -9710,7 +9726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2d1bec4e656aa47989fe44ad7386f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarRepairZone
-  minSpeed: 2
+  minSpeed: 4
   cooldown: 5
   repairCost: 50
 --- !u!61 &1112985936

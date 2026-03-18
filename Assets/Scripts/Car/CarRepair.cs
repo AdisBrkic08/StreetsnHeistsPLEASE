@@ -9,13 +9,6 @@ public class CarRepairZone : MonoBehaviour
 
     float lastRepairTime = -999f;
 
-    PlayerMoney playerMoney;
-
-    void Start()
-    {
-        playerMoney = FindFirstObjectByType<PlayerMoney>();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("PlayerVehicle")) return;
@@ -25,21 +18,20 @@ public class CarRepairZone : MonoBehaviour
 
         if (rb == null || carHealth == null) return;
 
-
         float speed = rb.linearVelocity.magnitude;
 
         if (speed < minSpeed) return;
 
         if (Time.time < lastRepairTime + cooldown) return;
 
-        // ❗ Check money
-        if (playerMoney == null)
+        // ✅ Use MoneyManager instead
+        if (MoneyManager.Instance == null)
         {
-            Debug.LogWarning("No PlayerMoney found!");
+            Debug.LogWarning("MoneyManager not found!");
             return;
         }
 
-        if (!playerMoney.SpendMoney(repairCost))
+        if (!MoneyManager.Instance.SpendMoney(repairCost))
         {
             Debug.Log("Not enough money for repair!");
             return;
