@@ -6,6 +6,7 @@ public class MoneyManager : MonoBehaviour
 
     public int money;
 
+
     void Awake()
     {
         // Singleton setup
