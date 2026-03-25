@@ -561,7 +561,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -3.06, z: 0}
-  m_LocalScale: {x: 1.3648366, y: 1.3648366, z: 1.3648366}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1340317016}
@@ -664,11 +664,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.7
+      value: 72.100006
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -39.43
+      value: -30.21
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -712,15 +712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxSpeed
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
-      propertyPath: steeringPower
-      value: 250
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
@@ -1367,11 +1363,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 81.48
+      value: 67.19
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -71.3
+      value: -53.39
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1415,15 +1411,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxSpeed
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
-      propertyPath: steeringPower
-      value: 300
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
@@ -1619,11 +1611,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 79.46
+      value: 65.17
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -71.3
+      value: -53.39
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1667,15 +1659,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxSpeed
-      value: 14
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
-      propertyPath: steeringPower
-      value: 300
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
@@ -10014,11 +10002,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.7
+      value: 72.100006
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -44.594
+      value: -34.41
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10062,11 +10050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxSpeed
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 18
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
@@ -10405,11 +10393,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.7
+      value: 72.100006
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -41.72
+      value: -32.29
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10457,7 +10445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
@@ -89845,7 +89833,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.54707, y: -0.08695, z: 0}
-  m_LocalScale: {x: 1.3648366, y: 1.3648366, z: 1.3648366}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 617081920}
@@ -90052,7 +90040,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.4498, y: 3.44113, z: 0}
-  m_LocalScale: {x: 1.3648366, y: 1.3648366, z: 1.3648366}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -90096,11 +90084,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.7
+      value: 72.100006
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -47.08
+      value: -36.23
       objectReference: {fileID: 0}
     - target: {fileID: 3409835104916496138, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: m_LocalPosition.z
@@ -90144,15 +90132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxSpeed
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: acceleration
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 8712469997009121983, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
-      propertyPath: steeringPower
-      value: 100
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9016621216072688973, guid: 0ebc60136df7eda47aba1c7c38fdea96, type: 3}
       propertyPath: maxHealth
