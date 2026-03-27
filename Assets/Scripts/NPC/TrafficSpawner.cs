@@ -1,30 +1,47 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class TrafficSpawner : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Prefabs")]
     public GameObject[] carPrefabs;
-    public float spawnRadius = 20f;   // How close player must be to a path to spawn a car
-    public float despawnRadius = 30f; // Distance at which cars disappear to save memory
-    public float spawnInterval = 3f;  // Seconds between spawn attempts
-    public int maxCars = 10;          // Global limit
+
+    [Header("Spawn Settings")]
+    public float spawnRadius = 25f;
+    public float despawnRadius = 45f;
+    public float spawnInterval = 1.5f;
+    public int maxCars = 15;
 
     private Transform player;
     private List<Path> allPaths = new List<Path>();
     private List<GameObject> activeCars = new List<GameObject>();
     private float timer;
 
+    struct WaypointData { public Path path; public int index; }
+
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        // Find all path scripts in the scene
-        allPaths.AddRange(FindObjectsByType<Path>(FindObjectsSortMode.None));
+        FindPlayer();
+        // Find all paths in the scene
+        allPaths.AddRange(Object.FindObjectsByType<Path>(FindObjectsSortMode.None));
+
+        if (allPaths.Count == 0) Debug.LogError("TrafficSpawner: No Path scripts found in scene!");
+    }
+
+    void FindPlayer()
+    {
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null) player = p.transform;
     }
 
     void Update()
     {
+        if (player == null)
+        {
+            FindPlayer(); // Try to find player again if they were missing
+            return;
+        }
+
         timer += Time.deltaTime;
         if (timer >= spawnInterval)
         {
@@ -39,29 +56,44 @@ public class TrafficSpawner : MonoBehaviour
     {
         if (activeCars.Count >= maxCars) return;
 
+        List<WaypointData> nearbyWaypoints = new List<WaypointData>();
+
         foreach (Path path in allPaths)
         {
-            // Check if player is near the start of this path
-            float dist = Vector3.Distance(player.position, path.waypoints[0].position);
+            if (path.waypoints == null) continue;
 
-            if (dist < spawnRadius)
+            for (int i = 0; i < path.waypoints.Count; i++)
             {
-                SpawnCarOnPath(path);
-                break; // Spawn one car at a time
+                float dist = Vector3.Distance(player.position, path.waypoints[i].position);
+                // We want to spawn them slightly away from the player so they don't pop in
+                if (dist < spawnRadius && dist > 10f)
+                {
+                    nearbyWaypoints.Add(new WaypointData { path = path, index = i });
+                }
             }
+        }
+
+        if (nearbyWaypoints.Count > 0)
+        {
+            WaypointData selected = nearbyWaypoints[Random.Range(0, nearbyWaypoints.Count)];
+            SpawnCarAtWaypoint(selected);
         }
     }
 
-    void SpawnCarOnPath(Path targetPath)
+    void SpawnCarAtWaypoint(WaypointData data)
     {
-        GameObject carType = carPrefabs[Random.Range(0, carPrefabs.Length)];
-        GameObject newCar = Instantiate(carType, targetPath.waypoints[0].position, Quaternion.identity);
+        if (carPrefabs.Length == 0) return;
 
-        // Tell the RandomWalker which path to use
+        GameObject carType = carPrefabs[Random.Range(0, carPrefabs.Length)];
+        Vector3 spawnPos = data.path.waypoints[data.index].position;
+
+        GameObject newCar = Instantiate(carType, spawnPos, Quaternion.identity);
+
         RandomWalker walker = newCar.GetComponent<RandomWalker>();
         if (walker != null)
         {
-            walker.externalPath = targetPath; // We'll update RandomWalker to accept this
+            walker.externalPath = data.path;
+            walker.SetStartingWaypoint(data.index);
         }
 
         activeCars.Add(newCar);
@@ -73,8 +105,7 @@ public class TrafficSpawner : MonoBehaviour
         {
             if (activeCars[i] == null) { activeCars.RemoveAt(i); continue; }
 
-            float dist = Vector3.Distance(player.position, activeCars[i].transform.position);
-            if (dist > despawnRadius)
+            if (Vector3.Distance(player.position, activeCars[i].transform.position) > despawnRadius)
             {
                 Destroy(activeCars[i]);
                 activeCars.RemoveAt(i);

@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82caa5ed4595b740b3624411b4c1ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCarController2D
-  acceleration: 30
-  maxSpeed: 12
+  acceleration: 16
+  maxSpeed: 16
   steeringPower: 200
   linearDamping: 1
   handbrakeKey: 32
@@ -426,6 +426,10 @@ MonoBehaviour:
   waypointTolerance: 1
   rotationSpeed: 3
   spriteRotationOffset: -90
+  detectionDistance: 3
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
   isAIActive: 1
 --- !u!1 &6189035263592918210
 GameObject:
