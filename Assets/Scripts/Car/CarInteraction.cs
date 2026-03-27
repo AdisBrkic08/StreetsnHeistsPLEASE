@@ -4,61 +4,54 @@ public class CarInteraction : MonoBehaviour
 {
     [Header("Car References")]
     public SimpleCarController2D carController;
+    public RandomWalker aiWalker; // Reference to the AI script
     public CarBomb carBomb;
-    public CarLights carLights; // Reference to lights script
+    public CarLights carLights;
     public DrivingStyleSystem styleSystem;
 
-
     [Header("Settings")]
-    [SerializeField] GameObject playerChar;
     public KeyCode interactKey = KeyCode.E;
     public Vector2 exitOffset = new Vector2(1.2f, 0f);
 
-    bool playerNearby;
-    bool isPlayerDriving;
-    [HideInInspector] public bool playerInRange;
+    [Header("Status")]
+    public bool playerInRange; // Matches CarEnterTrigger.cs
+    public bool isPlayerDriving;
 
-    // Other
     private PlayerDriving playerDrivingScript;
-    GameObject player;
+    private GameObject player;
 
     void Start()
     {
         playerDrivingScript = FindFirstObjectByType<PlayerDriving>();
 
-        if (carController == null)
-            carController = GetComponent<SimpleCarController2D>();
+        // Auto-assign references if they are missing
+        if (carController == null) carController = GetComponent<SimpleCarController2D>();
+        if (aiWalker == null) aiWalker = GetComponent<RandomWalker>();
 
-        if (carBomb == null)
-            carBomb = GetComponent<CarBomb>();
-
-        if (!styleSystem)
-            styleSystem = GetComponent<DrivingStyleSystem>();
-
-        if (carLights != null)
-            carLights.lightsOn = false;
-
+        // Ensure car starts disabled (AI or Player will enable it)
         carController.enabled = false;
-    }
 
+        if (carLights != null) carLights.lightsOn = false;
+    }
 
     void Update()
     {
-        // 🚗 Exit while driving
+        // 🚗 EXIT Logic
         if (isPlayerDriving && Input.GetKeyDown(interactKey))
         {
             ExitCar();
             return;
         }
 
-        // 🚶 Enter car if nearby
-        if (!isPlayerDriving && playerNearby && Input.GetKeyDown(interactKey))
+        // 🚶 ENTER Logic
+        // We use playerInRange which is set by your CarEnterTrigger script
+        if (!isPlayerDriving && playerInRange && Input.GetKeyDown(interactKey))
         {
             EnterCar();
         }
 
-        // Always move the player to the vehicle (police pursuit purposes)
-        if (isPlayerDriving)
+        // Keep player stuck to the car while driving
+        if (isPlayerDriving && player != null)
         {
             player.transform.position = transform.position;
         }
@@ -66,109 +59,88 @@ public class CarInteraction : MonoBehaviour
 
     void EnterCar()
     {
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player");
+
         isPlayerDriving = true;
-        playerDrivingScript.isDriving = true;
+        if (playerDrivingScript) playerDrivingScript.isDriving = true;
 
-        // Disable player scripts
+        // 1. Tell the AI to stop moving the car
+        if (aiWalker) aiWalker.isAIActive = false;
+
+        // 2. Enable the manual car controller
+        carController.enabled = true;
+
+        // 3. Disable Player logic/physics
         player.GetComponent<PlayerController2D>().enabled = false;
-        player.GetComponent<PlayerShooter2D>().SetCanShoot(false);
 
-        // Hide player sprite
-        SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-        if (sr) sr.enabled = false;
+        // Use a null-check (?) in case player doesn't have a shooter script
+        player.GetComponent<PlayerShooter2D>()?.SetCanShoot(false);
 
-        // 🔒 Freeze player physics
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb)
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
-            rb.simulated = false;   // ★ THIS kills the ghost clone
+            rb.simulated = false;
         }
 
-        // Move player into car
-        player.transform.position = transform.position;
-
-        // Enable car
-        carController.enabled = true;
-
-        // Camera follows car
+        // 4. Visuals and Camera
+        SetPlayerVisible(player, false);
         CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
         if (cam) cam.target = transform;
-
-        void SetPlayerVisible(GameObject player, bool visible)
-        {
-            foreach (var r in player.GetComponentsInChildren<Renderer>())
-            {
-                r.enabled = visible;
-            }
-        }
-
-        SetPlayerVisible(player, false);
-
-
     }
-
 
     void ExitCar()
     {
         isPlayerDriving = false;
-        playerDrivingScript.isDriving = false;
+        if (playerDrivingScript) playerDrivingScript.isDriving = false;
 
+        // 1. Stop manual control
         carController.enabled = false;
 
-        // Restore player
-        SpriteRenderer sr = player.GetComponent<SpriteRenderer>();
-        if (sr) sr.enabled = true;
+        // 2. Optional: If you want the AI to take over again, uncomment this:
+        // if (aiWalker) aiWalker.isAIActive = true;
 
-        PlayerController2D pc = player.GetComponent<PlayerController2D>();
-        if (pc) pc.enabled = true;
+        // 3. Restore Player
+        player.GetComponent<PlayerController2D>().enabled = true;
+        player.GetComponent<PlayerShooter2D>()?.SetCanShoot(true);
 
-        PlayerShooter2D shooter = player.GetComponent<PlayerShooter2D>();
-        if (shooter) shooter.SetCanShoot(true);
-
-        // 🔓 Restore physics
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-        if (rb)
-            rb.simulated = true;
+        if (rb) rb.simulated = true;
 
-        // Place player beside car
-        player.transform.position = transform.position - transform.right * 1.2f;
+        // Move player to the side of the car
+        player.transform.position = transform.position - (transform.right * exitOffset.x);
 
-        // Camera back to player
+        // 4. Visuals and Camera
+        SetPlayerVisible(player, true);
         CameraFollow2D cam = Camera.main.GetComponent<CameraFollow2D>();
         if (cam) cam.target = player.transform;
-
-        void SetPlayerVisible(GameObject player, bool visible)
-        {
-            foreach (var r in player.GetComponentsInChildren<Renderer>())
-            {
-                r.enabled = visible;
-            }
-        }
-
-        SetPlayerVisible(player, true);
-
-
     }
 
+    // Helper to hide/show player and all child parts (arms, guns, etc)
+    void SetPlayerVisible(GameObject target, bool visible)
+    {
+        foreach (var r in target.GetComponentsInChildren<Renderer>())
+        {
+            r.enabled = visible;
+        }
+    }
 
+    // Backup Triggers (in case you don't use the separate Trigger script)
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        playerNearby = true;
-        player = other.gameObject;
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            player = other.gameObject;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
-
-        if (!isPlayerDriving)
+        if (other.CompareTag("Player"))
         {
-            playerNearby = false;
-            player = null;
+            playerInRange = false;
         }
     }
 }

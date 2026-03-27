@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 93047205081420600}
   - component: {fileID: 6222623926117284306}
   m_Layer: 7
-  m_Name: Car (1)
+  m_Name: Car (5)
   m_TagString: PlayerVehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 9d41368e77ef396429e45dfa18752a3a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: debdbe2a13a1af14c8e2581a29187267, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
