@@ -47,8 +47,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -334000983
   m_Radius: 1.28
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 16
+  m_Acceleration: 26
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -179,6 +179,10 @@ MonoBehaviour:
   maxSteerInput: 1
   steeringSensitivity: 0.1
   slowingAngle: 5
+  useCatchUp: 1
+  minDistance: 10
+  maxDistance: 50
+  catchUpMultiplier: 2.5
   lifeTimeAfterOfficerExit: 10
   acceleration: 50
   maxSpeed: 5
