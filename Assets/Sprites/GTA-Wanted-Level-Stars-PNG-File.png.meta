@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 9c06a98bbfbe5e64882b8304cf8fe327
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5634603454287247829
+    second: GTA-Wanted-Level-Stars-PNG-File_0
+  - first:
+      213: 6442846796115117749
+    second: GTA-Wanted-Level-Stars-PNG-File_1
+  - first:
+      213: -1371589881220764174
+    second: GTA-Wanted-Level-Stars-PNG-File_2
+  - first:
+      213: -1811559031189656115
+    second: GTA-Wanted-Level-Stars-PNG-File_3
+  - first:
+      213: -6161237348940268572
+    second: GTA-Wanted-Level-Stars-PNG-File_4
+  - first:
+      213: -7763168147943526497
+    second: GTA-Wanted-Level-Stars-PNG-File_5
+  - first:
+      213: 5558494365830969629
+    second: GTA-Wanted-Level-Stars-PNG-File_6
+  - first:
+      213: 8241859721968180127
+    second: GTA-Wanted-Level-Stars-PNG-File_7
+  - first:
+      213: 894876279225339892
+    second: GTA-Wanted-Level-Stars-PNG-File_8
+  - first:
+      213: -7685903776033050017
+    second: GTA-Wanted-Level-Stars-PNG-File_9
+  - first:
+      213: -7268849703645102801
+    second: GTA-Wanted-Level-Stars-PNG-File_10
+  - first:
+      213: -1277408082087152319
+    second: GTA-Wanted-Level-Stars-PNG-File_11
+  - first:
+      213: -6092595815954748124
+    second: GTA-Wanted-Level-Stars-PNG-File_12
+  - first:
+      213: 724606849892914358
+    second: GTA-Wanted-Level-Stars-PNG-File_13
+  - first:
+      213: -6360612372085523641
+    second: GTA-Wanted-Level-Stars-PNG-File_14
+  - first:
+      213: -1575018040066917576
+    second: GTA-Wanted-Level-Stars-PNG-File_15
+  - first:
+      213: 7560704130013659463
+    second: GTA-Wanted-Level-Stars-PNG-File_16
+  - first:
+      213: 4093391700058399731
+    second: GTA-Wanted-Level-Stars-PNG-File_17
+  - first:
+      213: 5329725866916584261
+    second: GTA-Wanted-Level-Stars-PNG-File_18
+  - first:
+      213: -3245326348600239822
+    second: GTA-Wanted-Level-Stars-PNG-File_19
+  - first:
+      213: 3099952331888946853
+    second: GTA-Wanted-Level-Stars-PNG-File_20
+  - first:
+      213: -8871506780916323750
+    second: GTA-Wanted-Level-Stars-PNG-File_21
+  - first:
+      213: -3735578116602876886
+    second: GTA-Wanted-Level-Stars-PNG-File_22
+  - first:
+      213: 1448884390601980940
+    second: GTA-Wanted-Level-Stars-PNG-File_23
+  - first:
+      213: -6874096388668807734
+    second: GTA-Wanted-Level-Stars-PNG-File_24
+  - first:
+      213: 5439599459117204931
+    second: GTA-Wanted-Level-Stars-PNG-File_25
+  - first:
+      213: -3958981788069427969
+    second: GTA-Wanted-Level-Stars-PNG-File_26
+  - first:
+      213: 2003906956458031481
+    second: GTA-Wanted-Level-Stars-PNG-File_27
+  - first:
+      213: -3285581766983362277
+    second: GTA-Wanted-Level-Stars-PNG-File_28
+  - first:
+      213: -7774487352498318794
+    second: GTA-Wanted-Level-Stars-PNG-File_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 836
+        width: 152
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9fafefcf1223e40800000000000000
+      internalID: 5634603454287247829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_1
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 836
+        width: 154
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b684b08607996950800000000000000
+      internalID: 6442846796115117749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_2
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 836
+        width: 154
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fde050254227fce0800000000000000
+      internalID: -1371589881220764174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_3
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 836
+        width: 154
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcd2a40c8ac0cd6e0800000000000000
+      internalID: -1811559031189656115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_4
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 836
+        width: 152
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ebbb875643ee7aa0800000000000000
+      internalID: -6161237348940268572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 667
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9fe23253bfa34490800000000000000
+      internalID: -7763168147943526497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_6
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 667
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d197d51fc2db32d40800000000000000
+      internalID: 5558494365830969629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_7
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 667
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9b5388ffb7f06270800000000000000
+      internalID: 8241859721968180127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_8
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 667
+        width: 153
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ff46251c3d3b6c00800000000000000
+      internalID: 894876279225339892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_9
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 667
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5277b3cc3f265590800000000000000
+      internalID: -7685903776033050017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 503
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2db780e4bbdf1b90800000000000000
+      internalID: -7268849703645102801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_11
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 503
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1457bf90e1cb54ee0800000000000000
+      internalID: -1277408082087152319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_12
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 503
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42d6cf5a260c27ba0800000000000000
+      internalID: -6092595815954748124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_13
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 503
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b49ea147125e0a00800000000000000
+      internalID: 724606849892914358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_14
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 503
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b33ef5fb09ab7a0800000000000000
+      internalID: -6360612372085523641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 337
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83bbaf6ff69642ae0800000000000000
+      internalID: -1575018040066917576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_16
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 337
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7410b4119540de860800000000000000
+      internalID: 7560704130013659463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_17
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 337
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f363804016aec830800000000000000
+      internalID: 4093391700058399731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_18
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 337
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54b16c7107df6f940800000000000000
+      internalID: 5329725866916584261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_19
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 337
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 239977361e846f2d0800000000000000
+      internalID: -3245326348600239822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 171
+        width: 152
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae62eab83e350b20800000000000000
+      internalID: 3099952331888946853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_21
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 171
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5a6305069312e480800000000000000
+      internalID: -8871506780916323750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_22
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 171
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2ca921be7f882cc0800000000000000
+      internalID: -3735578116602876886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_23
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 171
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0c707e3da87b1410800000000000000
+      internalID: 1448884390601980940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_24
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 171
+        width: 152
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac5a99941cd4a90a0800000000000000
+      internalID: -6874096388668807734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 152
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c5861943e65d7b40800000000000000
+      internalID: 5439599459117204931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_26
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 154
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff481e11a0fde09c0800000000000000
+      internalID: -3958981788069427969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_27
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 0
+        width: 154
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9797d9e72ce4fcb10800000000000000
+      internalID: 2003906956458031481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_28
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 0
+        width: 154
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b19d47a6ac44762d0800000000000000
+      internalID: -3285581766983362277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GTA-Wanted-Level-Stars-PNG-File_29
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 0
+        width: 152
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6321293a1f87b1490800000000000000
+      internalID: -7774487352498318794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GTA-Wanted-Level-Stars-PNG-File_0: 5634603454287247829
+      GTA-Wanted-Level-Stars-PNG-File_1: 6442846796115117749
+      GTA-Wanted-Level-Stars-PNG-File_10: -7268849703645102801
+      GTA-Wanted-Level-Stars-PNG-File_11: -1277408082087152319
+      GTA-Wanted-Level-Stars-PNG-File_12: -6092595815954748124
+      GTA-Wanted-Level-Stars-PNG-File_13: 724606849892914358
+      GTA-Wanted-Level-Stars-PNG-File_14: -6360612372085523641
+      GTA-Wanted-Level-Stars-PNG-File_15: -1575018040066917576
+      GTA-Wanted-Level-Stars-PNG-File_16: 7560704130013659463
+      GTA-Wanted-Level-Stars-PNG-File_17: 4093391700058399731
+      GTA-Wanted-Level-Stars-PNG-File_18: 5329725866916584261
+      GTA-Wanted-Level-Stars-PNG-File_19: -3245326348600239822
+      GTA-Wanted-Level-Stars-PNG-File_2: -1371589881220764174
+      GTA-Wanted-Level-Stars-PNG-File_20: 3099952331888946853
+      GTA-Wanted-Level-Stars-PNG-File_21: -8871506780916323750
+      GTA-Wanted-Level-Stars-PNG-File_22: -3735578116602876886
+      GTA-Wanted-Level-Stars-PNG-File_23: 1448884390601980940
+      GTA-Wanted-Level-Stars-PNG-File_24: -6874096388668807734
+      GTA-Wanted-Level-Stars-PNG-File_25: 5439599459117204931
+      GTA-Wanted-Level-Stars-PNG-File_26: -3958981788069427969
+      GTA-Wanted-Level-Stars-PNG-File_27: 2003906956458031481
+      GTA-Wanted-Level-Stars-PNG-File_28: -3285581766983362277
+      GTA-Wanted-Level-Stars-PNG-File_29: -7774487352498318794
+      GTA-Wanted-Level-Stars-PNG-File_3: -1811559031189656115
+      GTA-Wanted-Level-Stars-PNG-File_4: -6161237348940268572
+      GTA-Wanted-Level-Stars-PNG-File_5: -7763168147943526497
+      GTA-Wanted-Level-Stars-PNG-File_6: 5558494365830969629
+      GTA-Wanted-Level-Stars-PNG-File_7: 8241859721968180127
+      GTA-Wanted-Level-Stars-PNG-File_8: 894876279225339892
+      GTA-Wanted-Level-Stars-PNG-File_9: -7685903776033050017
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

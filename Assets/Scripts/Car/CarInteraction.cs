@@ -61,6 +61,12 @@ public class CarInteraction : MonoBehaviour
     {
         if (player == null) player = GameObject.FindGameObjectWithTag("Player");
 
+        if (WantedManager.Instance != null)
+        {
+            // Severity 1 for simple hijack
+            HeatManager.Instance.ReportCrime(50f);
+            Debug.Log("Crime Reported: Grand Theft Auto!");
+        }
         isPlayerDriving = true;
         if (playerDrivingScript) playerDrivingScript.isDriving = true;
 

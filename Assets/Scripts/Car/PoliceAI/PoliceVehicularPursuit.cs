@@ -19,13 +19,16 @@ public class PoliceVehicularPursuit : MonoBehaviour
     [SerializeField] private float steeringSensitivity = 2f;
     [SerializeField] private float slowingAngle = 60f;
 
+    [Header("Anti-Stacking")]
+    private Vector3 laneOffset; // Stops cops from driving in a single line
+
     [Header("Catch-Up (Rubber Banding)")]
     [SerializeField] private bool useCatchUp = true;
-    [SerializeField] private float minDistance = 10f;  // Normal speed zone
-    [SerializeField] private float maxDistance = 50f;  // Super fast zone
-    [SerializeField] private float catchUpMultiplier = 2.5f; // How much faster they get when far away
-    private float baseMaxSpeed;      // Stores original maxSpeed
-    private float baseAcceleration;  // Stores original acceleration
+    [SerializeField] private float minDistance = 10f;
+    [SerializeField] private float maxDistance = 50f;
+    [SerializeField] private float catchUpMultiplier = 2.5f;
+    private float baseMaxSpeed;
+    private float baseAcceleration;
 
     [Header("Other")]
     [SerializeField] private float lifeTimeAfterOfficerExit;
@@ -63,13 +66,15 @@ public class PoliceVehicularPursuit : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
 
-        // Store original values from the inspector
         baseMaxSpeed = maxSpeed;
         baseAcceleration = acceleration;
 
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        // Give each cop a random "lane" (Left, Right, or Center-Behind)
+        laneOffset = new Vector3(Random.Range(-3f, 3f), Random.Range(-2f, 0f), 0);
     }
 
     void Update()
@@ -80,35 +85,35 @@ public class PoliceVehicularPursuit : MonoBehaviour
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null) target = player.transform;
+            else return;
         }
 
         distance = Vector2.Distance(transform.position, target.position);
         currentSpeed = rb.linearVelocity.magnitude;
 
-        // Apply Catch-Up Logic
         if (useCatchUp) ApplyCatchUpLogic();
 
-        if (distance < exitCarDistance && playerDrivingScript.isDriving == false)
+        // Exit car logic
+        if (distance < exitCarDistance && playerDrivingScript != null && playerDrivingScript.isDriving == false)
         {
             Instantiate(policeOfficer, transform.position, Quaternion.identity);
             rb.simulated = false;
             if (pursuitScript) pursuitScript.enabled = false;
             Destroy(gameObject, lifeTimeAfterOfficerExit);
+            return;
         }
 
-        agent.SetDestination(target.position);
+        // Calculate a destination that isn't DIRECTLY on top of the player
+        Vector3 targetDestination = target.TransformPoint(laneOffset);
+        agent.SetDestination(targetDestination);
+
         HandleSteering();
         HandleAcceleration();
     }
 
     void ApplyCatchUpLogic()
     {
-        // Calculate a 0 to 1 value based on distance
-        // 0 = Close (Normal Speed), 1 = Far (Maximum Catch-up)
         float t = Mathf.InverseLerp(minDistance, maxDistance, distance);
-
-        // Dynamically scale maxSpeed and acceleration
-        // As distance increases, speed increases up to (base * multiplier)
         maxSpeed = Mathf.Lerp(baseMaxSpeed, baseMaxSpeed * catchUpMultiplier, t);
         acceleration = Mathf.Lerp(baseAcceleration, baseAcceleration * catchUpMultiplier, t);
     }

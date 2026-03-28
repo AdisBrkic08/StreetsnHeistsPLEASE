@@ -50,6 +50,11 @@ public class NPCHealth : MonoBehaviour
             lockOn.Unlock();
         }
 
+        if (WantedManager.Instance != null)
+        {
+            // Severity 2 for murder (faster star gain)
+            HeatManager.Instance.ReportCrime(100f);
+        }
 
         Destroy(gameObject);
     }
