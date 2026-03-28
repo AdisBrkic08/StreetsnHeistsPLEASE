@@ -21,27 +21,21 @@ public class CarHealth : MonoBehaviour
     private GameObject smokeInstance;
 
     [Header("Explosion Settings")]
-    public float explosionRadius = 2.5f;
+    public float explosionRadius = 5f; // Increased for realism
     public int explosionDamage = 100;
-    public float ejectOffset = 1f; // How far player is ejected
+    public float ejectForce = 500f;
 
     void Start()
     {
         currentHealth = maxHealth;
-        Debug.Log($"[CarHealth] Spawned with health: {currentHealth}");
     }
 
-    // ==============================
-    // DAMAGE
-    // ==============================
     public void TakeDamage(int amount)
     {
         if (isExploding) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        Debug.Log($"[CarHealth] Health: {currentHealth}/{maxHealth}");
 
         UpdateSmoke();
 
@@ -51,60 +45,30 @@ public class CarHealth : MonoBehaviour
         }
     }
 
-    // ==============================
-    // SMOKE HANDLING
-    // ==============================
     void UpdateSmoke()
     {
-        // Start smoking when below 50%
-        if (currentHealth <= maxHealth * 0.5f && smokeInstance == null)
-        {
-            SpawnSmoke();
-        }
-
-        // Stop smoke if repaired
-        if (currentHealth > maxHealth * 0.5f && smokeInstance != null)
-        {
-            RemoveSmoke();
-        }
+        if (currentHealth <= maxHealth * 0.5f && smokeInstance == null) SpawnSmoke();
+        if (currentHealth > maxHealth * 0.5f && smokeInstance != null) RemoveSmoke();
     }
 
     void SpawnSmoke()
     {
         if (smokeEffectPrefab == null) return;
-
-        smokeInstance = Instantiate(
-            smokeEffectPrefab,
-            transform.position,
-            Quaternion.identity,
-            transform
-        );
+        smokeInstance = Instantiate(smokeEffectPrefab, transform.position, Quaternion.identity, transform);
     }
 
     void RemoveSmoke()
     {
-        if (smokeInstance != null)
-        {
-            Destroy(smokeInstance);
-            smokeInstance = null;
-        }
+        if (smokeInstance != null) { Destroy(smokeInstance); smokeInstance = null; }
     }
 
-    // ==============================
-    // CRITICAL STATE
-    // ==============================
     void EnterCriticalState()
     {
+        if (isCritical) return;
         isCritical = true;
 
-        Debug.Log("[CarHealth] CRITICAL! Explosion countdown started.");
-
-        // Force smoke if not already
-        if (smokeInstance == null)
-            SpawnSmoke();
-
-        if (warningBeep != null)
-            warningBeep.Play();
+        if (smokeInstance == null) SpawnSmoke();
+        if (warningBeep != null) warningBeep.Play();
 
         StartCoroutine(ExplosionCountdown());
     }
@@ -115,87 +79,89 @@ public class CarHealth : MonoBehaviour
         Explode();
     }
 
-    // ==============================
-    // EXPLOSION
-    // ==============================
     void Explode()
     {
         if (isExploding) return;
-
         isExploding = true;
-
-        Debug.Log("[CarHealth] BOOM! Car exploded.");
 
         RemoveSmoke();
 
-        // Spawn explosion effect
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-        // =========================
-        // Step 1: Find player anywhere
-        // =========================
-        PlayerController2D player = GameObject.FindWithTag("Player")?.GetComponent<PlayerController2D>();
-        if (player != null)
+        // --- FIXED EJECTION & DAMAGE LOGIC ---
+
+        // Find ALL objects in blast radius
+        Collider2D[] objectsInBlast = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+
+        foreach (Collider2D hit in objectsInBlast)
         {
-            Debug.Log("[CarHealth] Player detected for ejection.");
+            // Don't damage the car itself
+            if (hit.gameObject == gameObject) continue;
 
-            // Optional: Detach from car if parented
-            player.transform.parent = null;
-
-            // Move slightly outside car
-            player.transform.position = transform.position + new Vector3(ejectOffset, 0f, 0f);
-
-            // Apply explosion damage
-            PlayerHealth health = player.GetComponent<PlayerHealth>();
-            if (health != null)
+            // 1. Handle Player
+            if (hit.CompareTag("Player"))
             {
-                Debug.Log("[CarHealth] Applying explosion damage to player.");
-                health.TakeDamage(explosionDamage);
+                // Unparent immediately so they aren't destroyed with the car
+                hit.transform.SetParent(null);
+
+                // Apply Damage ONCE
+                PlayerHealth pHealth = hit.GetComponent<PlayerHealth>();
+                if (pHealth != null) pHealth.TakeDamage(explosionDamage);
+
+                // Push player away from blast center (The "Eject")
+                Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    Vector2 blastDir = (hit.transform.position - transform.position).normalized;
+                    // Add an upward "pop" for 2D feel
+                    rb.AddForce((blastDir + Vector2.up * 0.5f) * ejectForce);
+                }
             }
 
-            // Optional: add force to player
-            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            // 2. Handle NPCs
+            else if (hit.CompareTag("NPC"))
             {
-                Vector2 ejectDir = (Vector2.right + Vector2.up).normalized;
-                rb.AddForce(ejectDir * 300f);
+                // Use your NPC health script name here
+                // hit.GetComponent<NPCHealth>()?.TakeDamage(explosionDamage);
+            }
+
+            // 3. Chain Reaction (Other Cars)
+            else if (hit.CompareTag("PoliceVehicle") || hit.gameObject.GetComponent<CarHealth>())
+            {
+                if (hit.gameObject != gameObject)
+                    hit.GetComponent<CarHealth>()?.TakeDamage(explosionDamage);
             }
         }
 
-        // =========================
-        // Step 2: Damage nearby objects
-        // =========================
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-        foreach (Collider2D hit in hits)
+        // Final safety: Tell the driving script the player is no longer inside
+        // (Prevents the "dragged back" glitch)
+        PlayerDriving driving = FindFirstObjectByType<PlayerDriving>();
+        if (driving != null && driving.isDriving)
         {
-            if (hit.CompareTag("Player"))
-            {
-                hit.GetComponent<PlayerHealth>()?.TakeDamage(explosionDamage / 2);
-            }
-
-            if (hit.CompareTag("NPC"))
-                hit.GetComponent<NPCHealth>()?.TakeDamage(explosionDamage);
+            // driving.ForceExit(); // Call your exit function here if you have one
         }
 
         Destroy(gameObject);
     }
 
-
-    // ==============================
-    // COLLISION DAMAGE
-    // ==============================
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.relativeVelocity.magnitude > 5f)
+        if (collision.relativeVelocity.magnitude > 6f)
         {
-            int dmg = Mathf.RoundToInt(collision.relativeVelocity.magnitude * 5f);
+            int dmg = Mathf.RoundToInt(collision.relativeVelocity.magnitude * 4f);
             TakeDamage(dmg);
         }
     }
 
+    // Drawing the radius in editor so you can see how big the BOOM is
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
     // ==============================
-    // REPAIR
+    // REPAIR (Fixes CS1061 Error)
     // ==============================
     public void FullRepair()
     {
@@ -203,11 +169,13 @@ public class CarHealth : MonoBehaviour
         isCritical = false;
         isExploding = false;
 
+        // Clean up the visuals
         RemoveSmoke();
 
+        // Stop the "about to blow up" sound
         if (warningBeep != null)
             warningBeep.Stop();
 
-        Debug.Log("Car fully repaired");
+        Debug.Log("Car fully repaired via FullRepair()");
     }
 }

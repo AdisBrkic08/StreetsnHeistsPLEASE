@@ -180,8 +180,8 @@ MonoBehaviour:
   steeringSensitivity: 0.1
   slowingAngle: 5
   useCatchUp: 1
-  minDistance: 10
-  maxDistance: 50
+  minDistance: 5
+  maxDistance: 100
   catchUpMultiplier: 2.5
   lifeTimeAfterOfficerExit: 10
   acceleration: 50

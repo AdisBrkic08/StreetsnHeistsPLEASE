@@ -10080,8 +10080,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1067937665}
     - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
       propertyPath: orthographic size
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.3138918
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.33890688
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635821813914454275, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.37106913
       objectReference: {fileID: 0}
     - target: {fileID: 8033653891324684638, guid: 2ff6b36bae063b940959af129e7692ff, type: 3}
       propertyPath: m_LocalPosition.x
@@ -89134,8 +89154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f14b8f7ad05844f8b64816929bbf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeatUIScript
-  filledStar: {fileID: 5634603454287247829, guid: 9c06a98bbfbe5e64882b8304cf8fe327, type: 3}
-  emptyStar: {fileID: -7685903776033050017, guid: 9c06a98bbfbe5e64882b8304cf8fe327, type: 3}
+  filledStar: {fileID: -7685903776033050017, guid: 9c06a98bbfbe5e64882b8304cf8fe327, type: 3}
+  emptyStar: {fileID: 5558494365830969629, guid: 9c06a98bbfbe5e64882b8304cf8fe327, type: 3}
   starImages:
   - {fileID: 730798087}
   - {fileID: 1266060603}

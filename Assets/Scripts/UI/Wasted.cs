@@ -67,19 +67,26 @@ public class WastedSystem : MonoBehaviour
 
     void RespawnPlayer()
     {
-        if (playerHealth != null && medicalCenter != null)
+        if (playerHealth != null)
         {
+            // 1. Reset Health
             playerHealth.currentHealth = playerHealth.maxHealth;
 
-            // Update HUD
+            // 2. IMPORTANT: Reset the 'isDead' state in PlayerHealth
+            // We'll create a ResetPlayer() function in PlayerHealth to handle this
+            playerHealth.ResetPlayer();
+
+            // 3. Move player
+            if (medicalCenter != null)
+                playerHealth.transform.position = medicalCenter.position;
+
+            // 4. Update HUD
             GameHUD hud = Object.FindFirstObjectByType<GameHUD>();
             if (hud != null)
                 hud.UpdateHUDNow();
 
-            // Move player
-            playerHealth.transform.position = medicalCenter.position;
-
-            Debug.Log("[WastedSystem] Player respawned at medical center!");
+            playerHealth.transform.SetParent(null); // Detach from car before moving to Hospital
+            Debug.Log("[WastedSystem] Player respawned and invincibility removed!");
         }
     }
 

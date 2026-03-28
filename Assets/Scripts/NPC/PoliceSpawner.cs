@@ -5,35 +5,35 @@ public class PoliceSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] spawners;
     [SerializeField] private GameObject policePrefab;
-    [SerializeField] private float baseSpawnTime = 5f;
-    [SerializeField] private int maxPolice = 5;
-    [SerializeField] private string policeTag = "PoliceVehicle"; // Ensure this matches your prefab tag
+
+    [Header("Spawn Timing")]
+    [SerializeField] private float baseSpawnTime = 6f;
+
+    [Header("Dynamic Limits")]
+    [SerializeField] private int policePerStar = 2; // Each star adds 2 to the limit
+    [SerializeField] private int absoluteMaxPolice = 15; // Hard cap for performance
 
     private bool spawnDebounce = false;
 
     void Update()
     {
-        // 1. Check HeatManager
         if (HeatManager.Instance == null) return;
 
         int currentStars = HeatManager.Instance.heatLevel;
         if (currentStars <= 0) return;
 
-        // 2. Check Police Count
-        GameObject[] existingPolice = GameObject.FindGameObjectsWithTag(policeTag);
-        int policeCount = existingPolice.Length;
+        // --- DYNAMIC MAX POLICE CALCULATION ---
+        // 1 Star = 2 Cops, 2 Stars = 4 Cops, etc.
+        int currentMaxPolice = Mathf.Min(currentStars * policePerStar, absoluteMaxPolice);
 
-        // 3. Logic Check
-        if (spawnDebounce) return;
+        // Count current police in the scene
+        int policeCount = GameObject.FindGameObjectsWithTag("PoliceVehicle").Length;
 
-        if (policeCount >= maxPolice)
-        {
-            // Debug.Log("Max police reached: " + policeCount); // Optional spammy log
-            return;
-        }
+        if (spawnDebounce || policeCount >= currentMaxPolice) { return; }
 
-        // 4. Start Spawn
+        // Higher stars still spawn faster too!
         float dynamicSpawnTime = baseSpawnTime / currentStars;
+
         StartCoroutine(SpawnCop(dynamicSpawnTime));
     }
 
@@ -41,23 +41,11 @@ public class PoliceSpawner : MonoBehaviour
     {
         spawnDebounce = true;
 
-        if (spawners.Length == 0)
+        if (spawners.Length > 0 && policePrefab != null)
         {
-            Debug.LogError("🚨 SPAWNER ERROR: You haven't assigned any Spawner objects in the Inspector!");
-            yield break;
+            int index = UnityEngine.Random.Range(0, spawners.Length);
+            Instantiate(policePrefab, spawners[index].transform.position, Quaternion.identity);
         }
-
-        if (policePrefab == null)
-        {
-            Debug.LogError("🚨 SPAWNER ERROR: Police Prefab is missing in the Inspector!");
-            yield break;
-        }
-
-        // Pick a spawner and spawn
-        int index = UnityEngine.Random.Range(0, spawners.Length);
-        GameObject newPolice = Instantiate(policePrefab, spawners[index].transform.position, Quaternion.identity);
-
-        Debug.Log("🚓 POLICE SPAWNED at: " + spawners[index].name);
 
         yield return new WaitForSeconds(waitTime);
         spawnDebounce = false;
