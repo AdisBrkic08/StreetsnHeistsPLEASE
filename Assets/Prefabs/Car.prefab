@@ -304,6 +304,8 @@ MonoBehaviour:
   speedbreakerLocked: 0
   steeringPowerMultiplier: 1
   accelerationMultiplier: 1
+  speedThreshold: 6
+  cashPerSecond: 5
 --- !u!114 &1663928978446942241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,12 +319,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarInteraction
   carController: {fileID: 8712469997009121983}
-  carBomb: {fileID: 1989523889056554596}
+  aiWalker: {fileID: 0}
   carLights: {fileID: 2885252794079835666}
-  playerChar: {fileID: 0}
   interactKey: 101
   exitOffset: {x: 1.2, y: 0}
   playerInRange: 0
+  isPlayerDriving: 0
 --- !u!114 &5193308844246773390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,9 +382,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarHealth
   maxHealth: 750
   currentHealth: 0
-  smokePrefab: {fileID: 0}
-  smokePoint: {fileID: 0}
+  criticalHealth: 20
+  explosionDelay: 2.5
+  smokeEffectPrefab: {fileID: 2851051345894769710, guid: 7065f2e4878eb604b98b74538185f3d8, type: 3}
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
+  warningBeep: {fileID: 0}
+  explosionRadius: 5
+  explosionDamage: 100
 --- !u!1 &3806142655513727355
 GameObject:
   m_ObjectHideFlags: 0
