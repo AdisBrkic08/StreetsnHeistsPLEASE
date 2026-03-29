@@ -268,7 +268,7 @@ PrefabInstance:
     - target: {fileID: 2079466493341320739, guid: 14dd3896940d7b64abbdfa5f2fdac179, type: 3}
       propertyPath: speedbreaker
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1350617839}
     - target: {fileID: 4354867396666417697, guid: 14dd3896940d7b64abbdfa5f2fdac179, type: 3}
       propertyPath: playerMoney
       value: 
@@ -88654,6 +88654,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1676554996}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &1350617839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8932879109779988089, guid: 7e8ecdd23a7c6524884368135214f1b8, type: 3}
+  m_PrefabInstance: {fileID: 240617846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a78ccd547e8994386eddadd1c7bf87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Speedbreaker
 --- !u!1 &1378311470
 GameObject:
   m_ObjectHideFlags: 0
@@ -90015,7 +90026,7 @@ MonoBehaviour:
   spawnRadius: 20
   despawnRadius: 30
   spawnInterval: 3
-  maxCars: 20
+  maxCars: 30
 --- !u!4 &1993390518
 Transform:
   m_ObjectHideFlags: 0

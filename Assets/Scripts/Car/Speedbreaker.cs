@@ -7,103 +7,72 @@ public class Speedbreaker : MonoBehaviour
 
     [Header("Time Settings")]
     public float slowTimeScale = 0.3f;
-    public float normalTimeScale = 1f;
     public float transitionSpeed = 5f;
-
-    [Header("Handling Boost")]
-    public SimpleCarController2D car;
-    public float steeringMultiplier = 1.8f;
-    public float accelerationMultiplier = 1.3f;
 
     [Header("Energy")]
     public float maxEnergy = 5f;
     public float drainRate = 1f;
     public float rechargeRate = 0.7f;
+    public float cooldownTime = 4f;
 
-    [Header("Cooldown Lock")]
-    public float cooldownTime = 4f;      // Time before reuse
-    float cooldownTimer = 0f;
-    bool locked;
+    public SimpleCarController2D car;
+    private float energy;
+    private float cooldownTimer;
+    private bool active;
+    private bool locked;
 
-    float energy;
-    bool active;
+    void Awake() => car = GetComponent<SimpleCarController2D>();
 
-    void Start()
+    void Start() => energy = maxEnergy;
+
+    void OnEnable() { ResetState(); }
+    void OnDisable() { ResetState(); }
+
+    void ResetState()
     {
-        energy = maxEnergy;
-        if (car == null) car = GetComponent<SimpleCarController2D>();
+        active = false;
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+        if (car != null) { car.steeringPowerMultiplier = 1f; car.accelerationMultiplier = 1f; }
     }
 
     void Update()
     {
-        if (!car.enabled) return;
+        if (car == null || !car.isDriving) return;
 
-        HandleCooldown();
-
-        // 🔘 Toggle input
-        if (Input.GetKeyDown(speedbreakerKey) && !locked && energy > 0f)
+        if (locked)
         {
-            active = !active;
+            cooldownTimer -= Time.unscaledDeltaTime;
+            if (cooldownTimer <= 0) locked = false;
         }
 
-        // Drain / Recharge
+        if (Input.GetKeyDown(speedbreakerKey) && !locked && energy > 0.1f) active = !active;
+
         if (active)
+        {
             energy -= Time.unscaledDeltaTime * drainRate;
+            if (energy <= 0) { active = false; locked = true; cooldownTimer = cooldownTime; }
+        }
         else
+        {
             energy += Time.unscaledDeltaTime * rechargeRate;
+        }
 
         energy = Mathf.Clamp(energy, 0, maxEnergy);
-
-        // Auto shut off when empty
-        if (energy <= 0f && active)
-        {
-            active = false;
-            StartCooldown();
-        }
-
-        HandleTime();
-        HandleHandling();
+        HandleTimeAndHandling();
     }
 
-
-    void HandleCooldown()
+    void HandleTimeAndHandling()
     {
-        if (!locked) return;
-
-        cooldownTimer -= Time.unscaledDeltaTime;
-        if (cooldownTimer <= 0f)
-            locked = false;
-    }
-
-    void StartCooldown()
-    {
-        locked = true;
-        cooldownTimer = cooldownTime;
-    }
-
-    void HandleTime()
-    {
-        float target = active ? slowTimeScale : normalTimeScale;
-        Time.timeScale = Mathf.Lerp(Time.timeScale, target, Time.unscaledDeltaTime * transitionSpeed);
+        float targetTime = active ? slowTimeScale : 1f;
+        Time.timeScale = Mathf.Lerp(Time.timeScale, targetTime, Time.unscaledDeltaTime * transitionSpeed);
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        car.steeringPowerMultiplier = active ? 1.8f : 1f;
+        car.accelerationMultiplier = active ? 1.3f : 1f;
     }
 
-    void HandleHandling()
-    {
-        if (active)
-        {
-            car.steeringPowerMultiplier = steeringMultiplier;
-            car.accelerationMultiplier = accelerationMultiplier;
-        }
-        else
-        {
-            car.steeringPowerMultiplier = 1f;
-            car.accelerationMultiplier = 1f;
-        }
-    }
-
-    // --- Optional accessors for UI later ---
     public float EnergyPercent => energy / maxEnergy;
-    public float CooldownPercent => locked ? cooldownTimer / cooldownTime : 0f;
+    public float CooldownPercent => locked ? (cooldownTimer / cooldownTime) : 0f;
     public bool IsLocked => locked;
 }
