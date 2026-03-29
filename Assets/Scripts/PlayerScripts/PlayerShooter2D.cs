@@ -21,7 +21,7 @@ public class PlayerShooter2D : MonoBehaviour
     [Header("Status (Debug)")]
     public int currentAmmo;
     public bool isReloading = false;
-    public bool canShoot = true;       // gets turned off while in car
+    public bool canShoot = true;        // gets turned off while in car
 
     private float nextFireTime = 0f;
     public void SetCanShoot(bool value)
@@ -72,7 +72,6 @@ public class PlayerShooter2D : MonoBehaviour
 
     void Shoot()
     {
-
         if (anim != null)
             anim.SetTrigger("shoot");
 
@@ -80,6 +79,12 @@ public class PlayerShooter2D : MonoBehaviour
 
         // Spawn bullet
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        // --- THE OWNER ASSIGNMENT PART ---
+        DamageObject dmg = bullet.GetComponent<DamageObject>();
+        if (dmg != null) dmg.owner = gameObject;
+        // ---------------------------------
+
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.linearVelocity = shootDirection * bulletForce;
 

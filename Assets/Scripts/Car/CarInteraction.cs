@@ -23,7 +23,10 @@ public class CarInteraction : MonoBehaviour
         playerDrivingScript = FindFirstObjectByType<PlayerDriving>();
         if (carController == null) carController = GetComponent<SimpleCarController2D>();
         if (aiWalker == null) aiWalker = GetComponent<RandomWalker>();
+
+        // Ensure car is off at start
         carController.enabled = false;
+        carController.isDriving = false; // Added for the fix
     }
 
     void Update()
@@ -31,7 +34,6 @@ public class CarInteraction : MonoBehaviour
         if (isPlayerDriving && Input.GetKeyDown(interactKey)) { ExitCar(); return; }
         if (!isPlayerDriving && playerInRange && Input.GetKeyDown(interactKey)) { EnterCar(); }
 
-        // Sticky player position while driving
         if (isPlayerDriving && player != null)
         {
             player.transform.position = transform.position;
@@ -42,13 +44,15 @@ public class CarInteraction : MonoBehaviour
     {
         if (!isPlayerDriving) return;
 
-        // This is called by CarHealth just before explosion
         isPlayerDriving = false;
         if (playerDrivingScript) playerDrivingScript.isDriving = false;
 
+        // --- FIX: Kill car engine on force exit ---
+        if (carController) carController.isDriving = false;
+
         if (player != null)
         {
-            player.transform.SetParent(null); // Critical: Detach from car
+            player.transform.SetParent(null);
             player.GetComponent<PlayerController2D>().enabled = true;
 
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
@@ -73,7 +77,10 @@ public class CarInteraction : MonoBehaviour
         if (playerDrivingScript) playerDrivingScript.isDriving = true;
 
         if (aiWalker) aiWalker.isAIActive = false;
+
+        // --- FIX: Enable car engine control ---
         carController.enabled = true;
+        carController.isDriving = true;
 
         player.GetComponent<PlayerController2D>().enabled = false;
         player.GetComponent<PlayerShooter2D>()?.SetCanShoot(false);
@@ -91,7 +98,10 @@ public class CarInteraction : MonoBehaviour
         isPlayerDriving = false;
         if (playerDrivingScript) playerDrivingScript.isDriving = false;
 
+        // --- FIX: Disable car engine control ---
         carController.enabled = false;
+        carController.isDriving = false;
+
         player.GetComponent<PlayerController2D>().enabled = true;
         player.GetComponent<PlayerShooter2D>()?.SetCanShoot(true);
 

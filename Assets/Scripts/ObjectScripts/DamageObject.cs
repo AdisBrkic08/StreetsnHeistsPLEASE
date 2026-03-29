@@ -3,38 +3,46 @@ using UnityEngine;
 public class DamageObject : MonoBehaviour
 {
     public int damageAmount = 10;
-    public float damageInterval = 1f;   // damage every X seconds
-    public bool continuousDamage = false;
+    public bool destroyOnHit = true;
 
-    private float nextDamageTime = 0f;
+    // This stops the bullet from killing the person who shot it
+    [HideInInspector] public GameObject owner;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!continuousDamage)
+        // 1. If we hit the person who fired this, do nothing
+        if (other.gameObject == owner) return;
+
+        // 2. If we hit the Player
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
+            PlayerHealth ph = other.GetComponent<PlayerHealth>();
+            if (ph != null)
             {
-                PlayerHealth ph = other.GetComponent<PlayerHealth>();
-                if (ph != null)
-                    ph.TakeDamage(damageAmount);
+                ph.TakeDamage(damageAmount);
+                if (destroyOnHit) Destroy(gameObject);
             }
         }
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-
-        if (continuousDamage && other.CompareTag("Player"))
+        // 3. If we hit an NPC
+        else if (other.CompareTag("NPC"))
         {
-            if (Time.time >= nextDamageTime)
+            NPCHealth nh = other.GetComponent<NPCHealth>();
+            if (nh != null)
             {
-                PlayerHealth ph = other.GetComponent<PlayerHealth>();
-                if (ph != null)
-                    ph.TakeDamage(damageAmount);
+                // ONLY damage NPCs if the player shot them 
+                // (Prevents police from shooting each other)
+                if (owner != null && owner.CompareTag("Player"))
+                {
+                    nh.TakeDamage(damageAmount);
+                }
 
-                nextDamageTime = Time.time + damageInterval;
+                if (destroyOnHit) Destroy(gameObject);
             }
+        }
+        // 4. Hit a wall
+        else if (other.gameObject.isStatic)
+        {
+            if (destroyOnHit) Destroy(gameObject);
         }
     }
 }

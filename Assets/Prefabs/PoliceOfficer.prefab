@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: 869798504957931471}
   - component: {fileID: 1745563494258498873}
   - component: {fileID: 8996583202007970330}
-  m_Layer: 0
+  - component: {fileID: 7852171812971286139}
+  - component: {fileID: -8574100945390838081}
+  m_Layer: 10
   m_Name: PoliceOfficer
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -148,6 +150,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
   bulletPrefab: {fileID: 4788338419311558225, guid: 336f22e03243bb34d88dde94a0692fb7, type: 3}
+  bulletSpeed: 10
+  fireRate: 0.6
+  range: 12
+  stopDistance: 4.5
 --- !u!114 &1745563494258498873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,10 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCHealth
   maxHealth: 50
+  gracePeriod: 2
   bloodEffectPrefab: {fileID: 3990126338642708996, guid: 66439c32d43970a4fa17e37e301696e6, type: 3}
   deathBloodEffectPrefab: {fileID: 0}
   moneyPrefab: {fileID: 1290267807885583645, guid: 055a60d1c3f9f794fbaf9a5c0bcaaab6, type: 3}
-  moneyAmount: 500
 --- !u!60 &8996583202007970330
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -215,6 +221,47 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &7852171812971286139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891809445460552584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047930b957f0bc740af89f816bc86ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoliceHumanAI
+  stopDistance: 5
+  retreatDistance: 3
+--- !u!50 &-8574100945390838081
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891809445460552584}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3581335403097730832
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5706506003612450153}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

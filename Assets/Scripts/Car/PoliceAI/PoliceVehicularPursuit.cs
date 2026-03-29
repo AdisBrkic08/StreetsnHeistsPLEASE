@@ -19,10 +19,7 @@ public class PoliceVehicularPursuit : MonoBehaviour
     [SerializeField] private float steeringSensitivity = 2f;
     [SerializeField] private float slowingAngle = 60f;
 
-    [Header("Anti-Stacking")]
-    private Vector3 laneOffset; // Stops cops from driving in a single line
-
-    [Header("Catch-Up (Rubber Banding)")]
+    [Header("Catch-Up")]
     [SerializeField] private bool useCatchUp = true;
     [SerializeField] private float minDistance = 10f;
     [SerializeField] private float maxDistance = 50f;
@@ -31,7 +28,7 @@ public class PoliceVehicularPursuit : MonoBehaviour
     private float baseAcceleration;
 
     [Header("Other")]
-    [SerializeField] private float lifeTimeAfterOfficerExit;
+    [SerializeField] private float lifeTimeAfterOfficerExit = 10f;
 
     private PlayerDriving playerDrivingScript;
     private Rigidbody2D rb;
@@ -49,17 +46,6 @@ public class PoliceVehicularPursuit : MonoBehaviour
     float accelInput = 1f;
     float currentSpeed;
 
-    IEnumerator Reverse()
-    {
-        reverse = true;
-        start = true;
-        accelerating = true;
-        ApplyEngine(-reversePower);
-        yield return new WaitForSeconds(reverseTime);
-        reverse = false;
-        ApplyEngine(reversePower);
-    }
-
     void Awake()
     {
         playerDrivingScript = FindFirstObjectByType<PlayerDriving>();
@@ -72,14 +58,11 @@ public class PoliceVehicularPursuit : MonoBehaviour
         agent.updatePosition = false;
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-
-        // Give each cop a random "lane" (Left, Right, or Center-Behind)
-        laneOffset = new Vector3(Random.Range(-3f, 3f), Random.Range(-2f, 0f), 0);
     }
 
     void Update()
     {
-        if (drivable == false) return;
+        if (!drivable) return;
 
         if (!target)
         {
@@ -93,22 +76,34 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
         if (useCatchUp) ApplyCatchUpLogic();
 
-        // Exit car logic
-        if (distance < exitCarDistance && playerDrivingScript != null && playerDrivingScript.isDriving == false)
+        if (distance < exitCarDistance && playerDrivingScript != null && !playerDrivingScript.isDriving)
         {
-            Instantiate(policeOfficer, transform.position, Quaternion.identity);
-            rb.simulated = false;
-            if (pursuitScript) pursuitScript.enabled = false;
-            Destroy(gameObject, lifeTimeAfterOfficerExit);
-            return;
+            SpawnOfficerAndCleanup();
         }
 
-        // Calculate a destination that isn't DIRECTLY on top of the player
-        Vector3 targetDestination = target.TransformPoint(laneOffset);
-        agent.SetDestination(targetDestination);
-
+        agent.SetDestination(target.position);
         HandleSteering();
         HandleAcceleration();
+    }
+
+    void SpawnOfficerAndCleanup()
+    {
+        drivable = false;
+
+        // Spawn to the side
+        Vector3 spawnPos = transform.position + (transform.right * 2f);
+
+        // CRITICAL: Set parent to null so the officer is independent of the car
+        GameObject officer = Instantiate(policeOfficer, spawnPos, Quaternion.identity, null);
+        officer.tag = "NPC";
+
+        // Physics Cleanup
+        rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
+        if (pursuitScript) pursuitScript.enabled = false;
+
+        // The car will vanish, but the officer (now independent) will stay
+        Destroy(gameObject, lifeTimeAfterOfficerExit);
     }
 
     void ApplyCatchUpLogic()
@@ -120,66 +115,37 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (reverse) return;
+        if (reverse || !drivable) return;
         agent.nextPosition = rb.position;
-
-        if (currentSpeed <= 0.21 && start == false && reverse == false && accelerating == false)
-        {
-            StartCoroutine(Reverse());
-        }
-
+        if (currentSpeed <= 0.21 && !start && !reverse && !accelerating) StartCoroutine(ReverseRoutine());
         ApplyEngine(1);
         ApplySteering();
         LimitSpeed();
-
         start = false;
         if (currentSpeed >= maxSpeed / 2) accelerating = false;
     }
 
-    #region AI Logic
+    IEnumerator ReverseRoutine() { reverse = true; ApplyEngine(-reversePower); yield return new WaitForSeconds(reverseTime); reverse = false; }
+
+    #region AI Math
     void HandleSteering()
     {
-        if (agent.pathPending || agent.path.corners.Length < 2)
-        {
-            steerInput = 0f;
-            return;
-        }
-
+        if (agent.pathPending || agent.path.corners.Length < 2) { steerInput = 0f; return; }
         Vector2 nextCorner = agent.path.corners[1];
         Vector2 toCorner = (nextCorner - rb.position).normalized;
         float angle = Vector2.SignedAngle(transform.up, toCorner);
         steerInput = Mathf.Clamp(angle / steeringSensitivity, -maxSteerInput, maxSteerInput);
     }
 
-    void HandleAcceleration()
-    {
-        float absAngle = Mathf.Abs(steerInput * steeringSensitivity);
-        accelInput = absAngle > slowingAngle ? 0.5f : 1f;
-    }
-    #endregion
+    void HandleAcceleration() { float absAngle = Mathf.Abs(steerInput * steeringSensitivity); accelInput = absAngle > slowingAngle ? 0.5f : 1f; }
 
-    #region Vehicle Physics
     [Header("Car Settings")]
     public float acceleration = 20f;
     public float maxSpeed = 15f;
     public float steeringPower = 200f;
 
-    void ApplyEngine(float dir)
-    {
-        Vector2 forward = transform.up;
-        rb.AddForce(forward * (accelInput * dir) * acceleration, ForceMode2D.Force);
-    }
-
-    void ApplySteering()
-    {
-        float speedFactor = rb.linearVelocity.magnitude / maxSpeed;
-        rb.angularVelocity = steerInput * steeringPower * speedFactor;
-    }
-
-    void LimitSpeed()
-    {
-        if (rb.linearVelocity.magnitude > maxSpeed)
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-    }
+    void ApplyEngine(float dir) { rb.AddForce(transform.up * (accelInput * dir) * acceleration, ForceMode2D.Force); }
+    void ApplySteering() { float speedFactor = rb.linearVelocity.magnitude / maxSpeed; rb.angularVelocity = steerInput * steeringPower * speedFactor; }
+    void LimitSpeed() { if (rb.linearVelocity.magnitude > maxSpeed) rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed; }
     #endregion
 }

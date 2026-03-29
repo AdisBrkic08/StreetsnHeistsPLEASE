@@ -15,7 +15,8 @@ public class WastedSystem : MonoBehaviour
     public float fadeOutTime = 1f;
 
     private bool isWasted = false;
-
+    public delegate void WastedAction();
+    public static event WastedAction OnPlayerWasted;
     void Update()
     {
         if (!isWasted && playerHealth != null && playerHealth.currentHealth <= 0)
@@ -69,25 +70,35 @@ public class WastedSystem : MonoBehaviour
     {
         if (playerHealth != null)
         {
-            // 1. Reset Health
-            playerHealth.currentHealth = playerHealth.maxHealth;
+            // 1. Reset Heat/Wanted Level
+            if (HeatManager.Instance != null)
+            {
+                HeatManager.Instance.heatLevel = 0;
+                HeatManager.Instance.currentScore = 0;
+                Debug.Log("[WastedSystem] Heat Level Reset to 0.");
+            }
 
-            // 2. IMPORTANT: Reset the 'isDead' state in PlayerHealth
-            // We'll create a ResetPlayer() function in PlayerHealth to handle this
+            // 2. Clear out existing police cars so the area is safe
+            GameObject[] police = GameObject.FindGameObjectsWithTag("PoliceVehicle");
+            foreach (GameObject cop in police)
+            {
+                Destroy(cop);
+            }
+
+            // 3. Reset Player Health and State
             playerHealth.ResetPlayer();
+            playerHealth.transform.SetParent(null); // Detach from any wreckage
 
-            // 3. Move player
+            // 4. Move player to Hospital
             if (medicalCenter != null)
                 playerHealth.transform.position = medicalCenter.position;
 
-            // 4. Update HUD
+            // 5. Update HUD
             GameHUD hud = Object.FindFirstObjectByType<GameHUD>();
             if (hud != null)
                 hud.UpdateHUDNow();
 
-            playerHealth.transform.SetParent(null); // Detach from car before moving to Hospital
-            Debug.Log("[WastedSystem] Player respawned and invincibility removed!");
+            if (OnPlayerWasted != null) OnPlayerWasted();
         }
     }
-
 }

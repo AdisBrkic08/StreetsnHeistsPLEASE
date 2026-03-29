@@ -3,11 +3,16 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class SimpleCarController2D : MonoBehaviour
 {
+    // --- NEW VARIABLE FOR THE FIX ---
+    [Header("Player Control")]
+    public bool isDriving = false; // Set this to TRUE when player enters, FALSE when player exits
+    // --------------------------------
+
     [Header("Base Handling")]
     public float acceleration = 20f;
     public float maxSpeed = 15f;
     public float steeringPower = 200f;
-    public float linearDamping = 1f;      // replaces deprecated drag
+    public float linearDamping = 1f;
 
     [Header("Handbrake Drift")]
     public KeyCode handbrakeKey = KeyCode.Space;
@@ -66,6 +71,18 @@ public class SimpleCarController2D : MonoBehaviour
 
     void Update()
     {
+        // --- THE FIX ---
+        // If the player isn't in this car, reset inputs and stop reading keyboard
+        if (!isDriving)
+        {
+            steerInput = 0f;
+            accelInput = 0f;
+            handbraking = false;
+            speedbreakerActive = false;
+            nitrousActive = false;
+            return;
+        }
+
         steerInput = Input.GetAxis("Horizontal");
         accelInput = Input.GetAxis("Vertical");
         handbraking = Input.GetKey(handbrakeKey);
@@ -77,6 +94,15 @@ public class SimpleCarController2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Don't apply physics forces if nobody is driving (unless you want it to roll)
+        if (!isDriving)
+        {
+            // Optional: apply some extra friction so the car stops faster when you jump out
+            rb.linearDamping = 3f;
+            return;
+        }
+
+        rb.linearDamping = linearDamping; // Reset to normal when driving
         ApplyEngine();
         ApplySteering();
         ApplyGrip();
@@ -85,8 +111,7 @@ public class SimpleCarController2D : MonoBehaviour
 
     void HandleMoneyReward()
     {
-        // Only reward in gameplay scene
-        if (rb == null) return;
+        if (rb == null || !isDriving) return; // Only earn money if driving
 
         float speed = Mathf.Min(rb.linearVelocity.magnitude, 20f);
 
@@ -111,10 +136,8 @@ public class SimpleCarController2D : MonoBehaviour
     {
         float accel = accelInput * acceleration * accelerationMultiplier;
 
-        // Handbrake boost
         if (handbraking) accel *= driftBoost;
 
-        // Nitrous
         if (nitrousActive && currentNitrous > 0f)
         {
             accel *= nitrousMultiplier;
@@ -165,10 +188,9 @@ public class SimpleCarController2D : MonoBehaviour
     {
         if (!speedbreakerLocked && Input.GetKeyDown(speedbreakerKey) && currentSpeedbreakerEnergy > 0f)
         {
-            speedbreakerActive = !speedbreakerActive; // toggle
+            speedbreakerActive = !speedbreakerActive;
         }
 
-        // Energy drain/recharge
         if (speedbreakerActive)
         {
             currentSpeedbreakerEnergy -= Time.unscaledDeltaTime * speedbreakerDrainRate;
@@ -220,10 +242,7 @@ public class SimpleCarController2D : MonoBehaviour
     }
     #endregion
 
-    #region UI Helpers
-    // Optional: Use these to link to UI bars
     public float SpeedbreakerEnergyPercent => currentSpeedbreakerEnergy / maxSpeedbreakerEnergy;
     public float SpeedbreakerCooldownPercent => speedbreakerLocked ? speedbreakerCooldownTimer / speedbreakerCooldownTime : 0f;
     public float NitrousPercent => currentNitrous / maxNitrous;
-    #endregion
 }
