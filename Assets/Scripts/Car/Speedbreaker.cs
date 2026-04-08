@@ -20,13 +20,17 @@ public class Speedbreaker : MonoBehaviour
     public float drainRate = 1f;
     public float rechargeRate = 0.7f;
 
-    [Header("Cooldown Lock")]
-    public float cooldownTime = 4f;      // Time before reuse
+    [Header("Cooldown")]
+    public float cooldownTime = 4f;
     float cooldownTimer = 0f;
     bool locked;
 
     float energy;
     bool active;
+
+    public float EnergyPercent => energy / maxEnergy;
+    public float CooldownPercent => locked ? cooldownTimer / cooldownTime : 0f;
+    public bool IsLocked => locked;
 
     void Start()
     {
@@ -36,17 +40,17 @@ public class Speedbreaker : MonoBehaviour
 
     void Update()
     {
-        if (!car.enabled) return;
+        if (!car.enabled || !car.isDriving)
+        {
+            if (active) ResetSpeedbreaker();
+            return;
+        }
 
         HandleCooldown();
 
-        // 🔘 Toggle input
         if (Input.GetKeyDown(speedbreakerKey) && !locked && energy > 0f)
-        {
             active = !active;
-        }
 
-        // Drain / Recharge
         if (active)
             energy -= Time.unscaledDeltaTime * drainRate;
         else
@@ -54,7 +58,6 @@ public class Speedbreaker : MonoBehaviour
 
         energy = Mathf.Clamp(energy, 0, maxEnergy);
 
-        // Auto shut off when empty
         if (energy <= 0f && active)
         {
             active = false;
@@ -65,14 +68,23 @@ public class Speedbreaker : MonoBehaviour
         HandleHandling();
     }
 
+    public void ResetSpeedbreaker()
+    {
+        active = false;
+        Time.timeScale = normalTimeScale;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        if (car != null)
+        {
+            car.steeringPowerMultiplier = 1f;
+            car.accelerationMultiplier = 1f;
+        }
+    }
 
     void HandleCooldown()
     {
         if (!locked) return;
-
         cooldownTimer -= Time.unscaledDeltaTime;
-        if (cooldownTimer <= 0f)
-            locked = false;
+        if (cooldownTimer <= 0f) locked = false;
     }
 
     void StartCooldown()
@@ -90,35 +102,7 @@ public class Speedbreaker : MonoBehaviour
 
     void HandleHandling()
     {
-        if (active)
-        {
-            car.steeringPowerMultiplier = steeringMultiplier;
-            car.accelerationMultiplier = accelerationMultiplier;
-        }
-        else
-        {
-            car.steeringPowerMultiplier = 1f;
-            car.accelerationMultiplier = 1f;
-        }
+        car.steeringPowerMultiplier = active ? steeringMultiplier : 1f;
+        car.accelerationMultiplier = active ? accelerationMultiplier : 1f;
     }
-
-    public void ResetSpeedbreaker()
-    {
-        active = false;
-        Time.timeScale = normalTimeScale;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
-
-        if (car != null)
-        {
-            car.steeringPowerMultiplier = 1f;
-            car.accelerationMultiplier = 1f;
-        }
-    }
-
-
-
-    // --- Optional accessors for UI later ---
-    public float EnergyPercent => energy / maxEnergy;
-    public float CooldownPercent => locked ? cooldownTimer / cooldownTime : 0f;
-    public bool IsLocked => locked;
 }
