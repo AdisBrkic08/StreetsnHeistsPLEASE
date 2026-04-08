@@ -9520,6 +9520,7 @@ GameObject:
   - component: {fileID: 1021748914}
   - component: {fileID: 1021748913}
   - component: {fileID: 1021748912}
+  - component: {fileID: 1021748915}
   m_Layer: 5
   m_Name: SpeedbreakerBarFill (1)
   m_TagString: Untagged
@@ -9599,6 +9600,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021748910}
   m_CullTransparentMesh: 1
+--- !u!114 &1021748915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021748910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1595b46dc2907c458941bb044946d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RetroUIFlash
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  pulseSpeed: 15
+  minIntensity: 0.7
 --- !u!1 &1028513034
 GameObject:
   m_ObjectHideFlags: 0
@@ -10408,6 +10424,7 @@ GameObject:
   - component: {fileID: 1223958979}
   - component: {fileID: 1223958981}
   - component: {fileID: 1223958980}
+  - component: {fileID: 1223958982}
   m_Layer: 5
   m_Name: SpeedbreakerBarFill (2)
   m_TagString: Untagged
@@ -10472,6 +10489,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223958978}
   m_CullTransparentMesh: 1
+--- !u!114 &1223958982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223958978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1595b46dc2907c458941bb044946d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RetroUIFlash
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  pulseSpeed: 15
+  minIntensity: 0.7
 --- !u!1 &1266060601
 GameObject:
   m_ObjectHideFlags: 0
