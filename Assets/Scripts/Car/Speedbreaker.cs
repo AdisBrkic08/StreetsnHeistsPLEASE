@@ -102,6 +102,21 @@ public class Speedbreaker : MonoBehaviour
         }
     }
 
+    public void ResetSpeedbreaker()
+    {
+        active = false;
+        Time.timeScale = normalTimeScale;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        if (car != null)
+        {
+            car.steeringPowerMultiplier = 1f;
+            car.accelerationMultiplier = 1f;
+        }
+    }
+
+
+
     // --- Optional accessors for UI later ---
     public float EnergyPercent => energy / maxEnergy;
     public float CooldownPercent => locked ? cooldownTimer / cooldownTime : 0f;

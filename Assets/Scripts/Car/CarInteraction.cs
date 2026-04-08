@@ -46,6 +46,7 @@ public class CarInteraction : MonoBehaviour
 
         isPlayerDriving = false;
         if (playerDrivingScript) playerDrivingScript.isDriving = false;
+        GetComponent<Speedbreaker>()?.ResetSpeedbreaker();
 
         // --- FIX: Kill car engine on force exit ---
         if (carController) carController.isDriving = false;
@@ -101,6 +102,7 @@ public class CarInteraction : MonoBehaviour
         // --- FIX: Disable car engine control ---
         carController.enabled = false;
         carController.isDriving = false;
+        GetComponent<Speedbreaker>()?.ResetSpeedbreaker();
 
         player.GetComponent<PlayerController2D>().enabled = true;
         player.GetComponent<PlayerShooter2D>()?.SetCanShoot(true);
