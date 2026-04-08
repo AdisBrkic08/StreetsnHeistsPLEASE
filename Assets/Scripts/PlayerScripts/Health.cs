@@ -67,37 +67,32 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
-        // 1. Handle "Dragged back to car" glitch: 
-        // Force the player to exit the car immediately so they don't get stuck in the explosion loop
+        // Handle car exit
         if (playerDrivingScript != null && playerDrivingScript.isDriving)
         {
-            // You might need to call your specific "ExitCar" function here
-            // This prevents the car's destruction from "eating" the player object
             playerDrivingScript.enabled = false;
         }
 
-        // 2. Reset Heat/Wanted Level on death
+        // Reset Heat
         if (HeatManager.Instance != null)
         {
             HeatManager.Instance.heatLevel = 0;
             HeatManager.Instance.currentScore = 0;
         }
 
-        // 3. Effects
+        // Effects
         if (deathBloodEffectPrefab != null)
             Instantiate(deathBloodEffectPrefab, transform.position, Quaternion.identity);
 
-        // 4. Disable Components
+        // Disable components (Movement, Shooting, etc.)
         foreach (var comp in componentsToDisable)
         {
             if (comp != null) comp.enabled = false;
         }
 
-        // 5. Show UI
-        if (deathScreen != null)
-            deathScreen.SetActive(true);
+        // NOTE: We don't show the deathScreen here anymore because 
+        // the WastedSystem script will detect currentHealth <= 0 and trigger DoWasted()
 
-        // Make sure cursor is visible so you can click "Respawn"
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

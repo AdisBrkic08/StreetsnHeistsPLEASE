@@ -14,6 +14,9 @@ public class WastedSystem : MonoBehaviour
     public float displayTime = 2f;
     public float fadeOutTime = 1f;
 
+    [Header("Visual Effects")]
+    public GameObject greyVolume; // Drag your DeathVolume here
+
     private bool isWasted = false;
     public delegate void WastedAction();
     public static event WastedAction OnPlayerWasted;
@@ -29,43 +32,52 @@ public class WastedSystem : MonoBehaviour
     {
         isWasted = true;
 
+        // 1. FREEZE TIME
+        // This stops all movement, physics, and NPC AI
+        Time.timeScale = 0f;
+
+        // TURN ON THE GREY EFFECT
+        if (greyVolume != null) greyVolume.SetActive(true);
+
         // Show overlay
         wastedOverlay.SetActive(true);
         CanvasGroup cg = wastedOverlay.GetComponent<CanvasGroup>();
         if (cg == null)
         {
             cg = wastedOverlay.AddComponent<CanvasGroup>();
-            cg.alpha = 0f;
         }
+        cg.alpha = 0f;
 
-        // Fade in
+        // 2. FADE IN (Use unscaledDeltaTime because time is frozen!)
         float t = 0f;
         while (t < fadeInTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime; // Important: use unscaled!
             cg.alpha = Mathf.Clamp01(t / fadeInTime);
             yield return null;
         }
 
-        // Wait for display
-        yield return new WaitForSeconds(displayTime);
+        // 3. WAIT (Use WaitForSecondsRealtime because time is frozen!)
+        yield return new WaitForSecondsRealtime(displayTime);
 
-        // Fade out
+        // 4. FADE OUT
         t = 0f;
         while (t < fadeOutTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             cg.alpha = Mathf.Clamp01(1 - (t / fadeOutTime));
             yield return null;
         }
 
         wastedOverlay.SetActive(false);
 
+        // 5. UNFREEZE TIME
+        Time.timeScale = 1f;
+
         // Respawn player
         RespawnPlayer();
         isWasted = false;
     }
-
     void RespawnPlayer()
     {
         if (playerHealth != null)
@@ -77,6 +89,9 @@ public class WastedSystem : MonoBehaviour
                 HeatManager.Instance.currentScore = 0;
                 Debug.Log("[WastedSystem] Heat Level Reset to 0.");
             }
+
+            // TURN OFF THE GREY EFFECT
+            if (greyVolume != null) greyVolume.SetActive(false);
 
             // 2. Clear out existing police cars so the area is safe
             GameObject[] police = GameObject.FindGameObjectsWithTag("PoliceVehicle");
