@@ -1,55 +1,33 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class SpeedbreakerUI : MonoBehaviour
 {
-    private Speedbreaker currentSpeedbreaker; // We find this automatically
+    public Speedbreaker speedbreaker;
     public Image fillBar;
     public Image cooldownOverlay;
 
+    void Start()
+    {
+        if (speedbreaker == null)
+            speedbreaker = Object.FindFirstObjectByType<Speedbreaker>();
+    }
+
     void Update()
     {
-        // 🔍 DYNAMIC SEARCH: If we don't have a speedbreaker, or the player switched cars
-        if (currentSpeedbreaker == null || !currentSpeedbreaker.car.isDriving)
-        {
-            FindActiveSpeedbreaker();
-        }
+        if (speedbreaker == null) return;
 
-        if (currentSpeedbreaker == null)
-        {
-            if (fillBar) fillBar.fillAmount = 0;
-            if (cooldownOverlay) cooldownOverlay.gameObject.SetActive(false);
-            return;
-        }
+        fillBar.fillAmount = speedbreaker.EnergyPercent;
 
-        // Update the Energy Bar
-        fillBar.fillAmount = currentSpeedbreaker.EnergyPercent;
-
-        // Update the Cooldown Overlay
-        if (currentSpeedbreaker.IsLocked)
+        if (speedbreaker.IsLocked)
         {
             cooldownOverlay.gameObject.SetActive(true);
-            cooldownOverlay.fillAmount = currentSpeedbreaker.CooldownPercent;
+            cooldownOverlay.fillAmount = 0.5f;
+
         }
         else
         {
             cooldownOverlay.gameObject.SetActive(false);
-        }
-    }
-
-    void FindActiveSpeedbreaker()
-    {
-        // Find all cars in the scene
-        CarInteraction[] allCars = Object.FindObjectsByType<CarInteraction>(FindObjectsSortMode.None);
-
-        foreach (CarInteraction car in allCars)
-        {
-            // If this is the car the player is in, grab its speedbreaker
-            if (car.isPlayerDriving)
-            {
-                currentSpeedbreaker = car.GetComponent<Speedbreaker>();
-                break;
-            }
         }
     }
 }
