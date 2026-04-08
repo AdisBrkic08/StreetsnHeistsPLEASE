@@ -13,12 +13,8 @@ public class TargetLockOn : MonoBehaviour
     private GameObject currentTargetIcon;
     private Transform currentTarget;
 
-    Camera cam;
-
     void Start()
     {
-        cam = Camera.main;
-
         if (targetIconPrefab != null)
         {
             currentTargetIcon = Instantiate(targetIconPrefab);
@@ -28,6 +24,15 @@ public class TargetLockOn : MonoBehaviour
 
     void Update()
     {
+        // AUTO-PATCH: If target is destroyed or out of range, unlock
+        if (currentTarget != null)
+        {
+            if (currentTarget.gameObject == null || Vector3.Distance(transform.position, currentTarget.position) > lockRange + 2f)
+            {
+                Unlock();
+            }
+        }
+
         HandleLockOn();
         UpdateIconPosition();
     }
@@ -35,49 +40,39 @@ public class TargetLockOn : MonoBehaviour
     public void Unlock()
     {
         currentTarget = null;
-
-        if (currentTargetIcon != null)
-            currentTargetIcon.SetActive(false);
+        if (currentTargetIcon != null) currentTargetIcon.SetActive(false);
     }
-
 
     void HandleLockOn()
     {
         if (Input.GetKeyDown(lockKey))
         {
-            // If already locked → unlock and hide icon
-            if (currentTarget != null)
-            {
-                Unlock();
-                return;
-            }
+            if (currentTarget != null) { Unlock(); return; }
 
-            // Otherwise lock to nearest NPC
             NPCHealth[] npcs = FindObjectsByType<NPCHealth>(FindObjectsSortMode.None);
-            NPCHealth closest = npcs
+            var validNpcs = npcs.Where(n => n != null && n.gameObject.activeInHierarchy);
+            NPCHealth closest = validNpcs
                 .OrderBy(n => Vector3.Distance(transform.position, n.transform.position))
                 .FirstOrDefault();
 
             if (closest != null && Vector3.Distance(transform.position, closest.transform.position) <= lockRange)
             {
                 currentTarget = closest.transform;
-                currentTargetIcon.SetActive(true);
+                if (currentTargetIcon != null) currentTargetIcon.SetActive(true);
             }
         }
-
     }
 
     void UpdateIconPosition()
     {
         if (currentTarget == null || currentTargetIcon == null)
+        {
+            if (currentTargetIcon != null && currentTargetIcon.activeSelf) currentTargetIcon.SetActive(false);
             return;
+        }
 
-        Vector3 pos = currentTarget.position + new Vector3(0, 1.6f, 0); // raise above head
-        currentTargetIcon.transform.position = pos;
+        currentTargetIcon.transform.position = currentTarget.position + new Vector3(0, 1.6f, 0);
     }
 
-    public Transform GetCurrentTarget()
-    {
-        return currentTarget;
-    }
+    public Transform GetCurrentTarget() => currentTarget;
 }
