@@ -76,7 +76,7 @@ Material:
     - _NoiseStrength: 0.01
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ScanlineIntensity: 0.5
+    - _ScanlineIntensity: 0.9
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
