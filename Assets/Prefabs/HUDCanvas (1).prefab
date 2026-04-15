@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7562091889778021743}
   - component: {fileID: 8566698773381060556}
   - component: {fileID: 154701323427483278}
-  - component: {fileID: 6564397920485738745}
   m_Layer: 5
   m_Name: HUDCanvas (1)
   m_TagString: Untagged
@@ -112,24 +111,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6564397920485738745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45962402154057429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deeeb8bc84454054b98ef169bc3bfefa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameHUD
-  cashText: {fileID: 515749251683314772}
-  timeText: {fileID: 5755861541242747233}
-  healthText: {fileID: 2128792778308961246}
-  playerMoney: {fileID: 0}
-  playerHealth: {fileID: 0}
-  gameTime: 720
 --- !u!1 &1122904313462543204
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9005141872730689301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -437,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2680426250616069769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -489,8 +470,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2a69d63d301492d4caa3cf92b41b93f7, type: 2}
-  m_sharedMaterial: {fileID: 4755398451272840255, guid: 2a69d63d301492d4caa3cf92b41b93f7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -625,8 +606,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: $0000000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2a69d63d301492d4caa3cf92b41b93f7, type: 2}
-  m_sharedMaterial: {fileID: 4755398451272840255, guid: 2a69d63d301492d4caa3cf92b41b93f7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

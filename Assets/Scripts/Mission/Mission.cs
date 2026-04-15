@@ -1,32 +1,21 @@
-// MissionManager.cs
 using UnityEngine;
-using System.Collections.Generic;
 
-public class Mission
+public class MissionTarget : MonoBehaviour
 {
-    public string id;
-    public string description;
-    public bool active;
-    public bool completed;
-}
+    private MissionManager manager;
 
-public class MissionManager : MonoBehaviour
-{
-    public List<Mission> missions = new List<Mission>();
-
-    public void StartMission(string id)
+    void Start()
     {
-        var m = missions.Find(x => x.id == id);
-        if (m != null) m.active = true;
+        // Automatically finds the MissionManager in your scene
+        manager = Object.FindAnyObjectByType<MissionManager>();
     }
-    public void CompleteMission(string id)
+
+    // This runs when the NPC is killed/destroyed
+    void OnDestroy()
     {
-        var m = missions.Find(x => x.id == id);
-        if (m != null)
+        if (manager != null)
         {
-            m.completed = true;
-            m.active = false;
-            // give rewards, trigger next mission etc.
+            manager.TargetKilled();
         }
     }
 }
