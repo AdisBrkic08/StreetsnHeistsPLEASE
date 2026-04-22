@@ -4,9 +4,9 @@ using TMPro;
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("UI Slots (Set these ONCE in the Hierarchy)")]
-    public GameObject descriptionPanel;   // The UI background
-    public TextMeshProUGUI descriptionText; // The actual TextMeshPro component
+    [Header("UI Slots")]
+    public GameObject descriptionPanel;
+    public TextMeshProUGUI descriptionText;
     public GameObject timerPanel;
     public TextMeshProUGUI timerText;
     public GameObject MissionPassed;
@@ -17,6 +17,18 @@ public class MissionManager : MonoBehaviour
     private bool isMissionRunning = false;
     private float timeRemaining;
 
+    void Update()
+    {
+        // THIS IS THE LOCK
+        // If a mission is running, we force the heat level every frame
+        if (isMissionRunning && currentData != null && HeatManager.Instance != null)
+        {
+            // This prevents the stars from going UP (when killing) 
+            // or DOWN (when hiding)
+            HeatManager.Instance.heatLevel = currentData.wantedLevelToSet;
+        }
+    }
+
     public void ActivateMission(MissionData data, GameObject trigger)
     {
         if (isMissionRunning) return;
@@ -25,9 +37,7 @@ public class MissionManager : MonoBehaviour
         currentData = data;
         currentTriggerObject = trigger;
 
-        // --- THE MAGIC LINE ---
-        // This takes the "Description" you wrote in the MissionData file
-        // and puts it into the UI Text component in your scene.
+        // Display unique description from Data file
         if (descriptionText != null && descriptionPanel != null)
         {
             descriptionText.text = data.description;
@@ -35,7 +45,7 @@ public class MissionManager : MonoBehaviour
             Invoke("HideDescription", 6f);
         }
 
-        // Handle Mission Types
+        // Setup Mission Logic
         if (data.type == MissionType.EliminateTarget)
         {
             if (data.targetPrefab != null)
@@ -49,7 +59,6 @@ public class MissionManager : MonoBehaviour
         }
 
         if (currentTriggerObject != null) currentTriggerObject.SetActive(false);
-        if (HeatManager.Instance != null) HeatManager.Instance.heatLevel = data.wantedLevelToSet;
     }
 
     IEnumerator SurvivalTimer()
@@ -58,13 +67,8 @@ public class MissionManager : MonoBehaviour
         {
             if (!isMissionRunning) yield break;
 
-            // Lock Stars: If player loses cops, force them back to 3 (or whatever is in Data)
-            if (HeatManager.Instance != null && HeatManager.Instance.heatLevel < currentData.wantedLevelToSet)
-            {
-                HeatManager.Instance.heatLevel = currentData.wantedLevelToSet;
-            }
-
             timeRemaining -= Time.deltaTime;
+
             if (timerText != null)
             {
                 int minutes = Mathf.FloorToInt(timeRemaining / 60);
@@ -86,9 +90,13 @@ public class MissionManager : MonoBehaviour
     {
         isMissionRunning = false;
         StopAllCoroutines();
+
         if (MissionPassed != null) MissionPassed.SetActive(true);
         if (timerPanel != null) timerPanel.SetActive(false);
+
+        // Reset heat to 0 after winning
         if (HeatManager.Instance != null) HeatManager.Instance.heatLevel = 0;
+
         Invoke("HidePassedUI", 4f);
     }
 
@@ -102,6 +110,9 @@ public class MissionManager : MonoBehaviour
             if (descriptionPanel != null) descriptionPanel.SetActive(false);
             if (timerPanel != null) timerPanel.SetActive(false);
             if (currentTriggerObject != null) currentTriggerObject.SetActive(true);
+
+            // Optional: Keep the heat or reset it on fail? 
+            // Usually, GTA keeps the heat if you fail by dying.
         }
     }
 

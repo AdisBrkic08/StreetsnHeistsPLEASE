@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mission1
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionName: Buisiness With The Dealer
-  descriptionText: 
+  description: Kill the drug dealer who is hiding somewhere around the streets!!
   type: 0
   survivalTime: 0
   wantedLevelToSet: 0
