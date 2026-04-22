@@ -277,9 +277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e82caa5ed4595b740b3624411b4c1ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCarController2D
+  isDriving: 0
   acceleration: 8
   maxSpeed: 9
-  steeringPower: 200
+  steeringPower: 130
   linearDamping: 1
   handbrakeKey: 32
   handbrakeGrip: 0.25
@@ -321,7 +322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarInteraction
   carController: {fileID: 8038602726853678458}
   aiWalker: {fileID: 6222623926117284306}
-  carLights: {fileID: 0}
   interactKey: 101
   exitOffset: {x: 1.2, y: 0}
   playerInRange: 0
