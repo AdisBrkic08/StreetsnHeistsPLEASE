@@ -4,107 +4,107 @@ using TMPro;
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("UI References")]
-    [SerializeField] private GameObject missionDescriptionUI;
-    [SerializeField] private GameObject MissionPassed; // Drag your MissionPassed object here
-
-    [Header("Animation Settings")]
-    [SerializeField] private float targetScale = 6f;
-    [SerializeField] private float displayDuration = 3f;
+    [Header("UI Slots (Set these ONCE in the Hierarchy)")]
+    public GameObject descriptionPanel;   // The UI background
+    public TextMeshProUGUI descriptionText; // The actual TextMeshPro component
+    public GameObject timerPanel;
+    public TextMeshProUGUI timerText;
+    public GameObject MissionPassed;
 
     private MissionData currentData;
     private GameObject currentTargetNPC;
     private GameObject currentTriggerObject;
     private bool isMissionRunning = false;
-
-    void Awake()
-    {
-        if (missionDescriptionUI != null) missionDescriptionUI.SetActive(false);
-
-        // Ensure MissionPassed starts disabled and visible scale
-        if (MissionPassed != null)
-        {
-            MissionPassed.SetActive(false);
-            MissionPassed.transform.localScale = new Vector3(targetScale, targetScale, 1);
-        }
-    }
+    private float timeRemaining;
 
     public void ActivateMission(MissionData data, GameObject trigger)
     {
         if (isMissionRunning) return;
 
-        Debug.Log("Mission Started: " + data.missionName);
         isMissionRunning = true;
         currentData = data;
         currentTriggerObject = trigger;
 
-        if (currentData.targetPrefab != null)
+        // --- THE MAGIC LINE ---
+        // This takes the "Description" you wrote in the MissionData file
+        // and puts it into the UI Text component in your scene.
+        if (descriptionText != null && descriptionPanel != null)
         {
-            currentTargetNPC = Instantiate(currentData.targetPrefab, currentData.spawnPosition, Quaternion.identity);
-            currentTargetNPC.name = "Mission_Target";
+            descriptionText.text = data.description;
+            descriptionPanel.SetActive(true);
+            Invoke("HideDescription", 6f);
         }
 
-        if (missionDescriptionUI != null) missionDescriptionUI.SetActive(true);
+        // Handle Mission Types
+        if (data.type == MissionType.EliminateTarget)
+        {
+            if (data.targetPrefab != null)
+                currentTargetNPC = Instantiate(data.targetPrefab, data.spawnPosition, Quaternion.identity);
+        }
+        else if (data.type == MissionType.SurviveTime)
+        {
+            timeRemaining = data.survivalTime;
+            if (timerPanel != null) timerPanel.SetActive(true);
+            StartCoroutine(SurvivalTimer());
+        }
+
         if (currentTriggerObject != null) currentTriggerObject.SetActive(false);
+        if (HeatManager.Instance != null) HeatManager.Instance.heatLevel = data.wantedLevelToSet;
+    }
+
+    IEnumerator SurvivalTimer()
+    {
+        while (timeRemaining > 0)
+        {
+            if (!isMissionRunning) yield break;
+
+            // Lock Stars: If player loses cops, force them back to 3 (or whatever is in Data)
+            if (HeatManager.Instance != null && HeatManager.Instance.heatLevel < currentData.wantedLevelToSet)
+            {
+                HeatManager.Instance.heatLevel = currentData.wantedLevelToSet;
+            }
+
+            timeRemaining -= Time.deltaTime;
+            if (timerText != null)
+            {
+                int minutes = Mathf.FloorToInt(timeRemaining / 60);
+                int seconds = Mathf.FloorToInt(timeRemaining % 60);
+                timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
+            yield return null;
+        }
+        CompleteMission();
     }
 
     public void TargetKilled()
     {
-        Debug.Log("TargetKilled signal received by MissionManager!");
-
-        if (isMissionRunning)
-        {
-            Debug.Log("Mission Success! Attempting to show MissionPassed UI.");
-            isMissionRunning = false;
-
-            if (MissionPassed != null)
-            {
-                // FORCE ACTIVE TRUE
-                MissionPassed.SetActive(true);
-                Debug.Log("MissionPassed.SetActive(true) called successfully.");
-
-                StartCoroutine(SimpleUIAnimation());
-            }
-            else
-            {
-                Debug.LogError("MissionPassed object is MISSING in the Inspector!");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Target died, but isMissionRunning was already false.");
-        }
+        if (isMissionRunning && currentData.type == MissionType.EliminateTarget)
+            CompleteMission();
     }
 
-    IEnumerator SimpleUIAnimation()
+    void CompleteMission()
     {
-        // Set scale to 0 first to pop it in
-        MissionPassed.transform.localScale = Vector3.zero;
-
-        float elapsed = 0;
-        float duration = 0.4f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float s = Mathf.Lerp(0, targetScale, elapsed / duration);
-            MissionPassed.transform.localScale = new Vector3(s, s, 1);
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(displayDuration);
-
-        MissionPassed.SetActive(false);
-        Debug.Log("MissionPassed UI auto-hidden after duration.");
+        isMissionRunning = false;
+        StopAllCoroutines();
+        if (MissionPassed != null) MissionPassed.SetActive(true);
+        if (timerPanel != null) timerPanel.SetActive(false);
+        if (HeatManager.Instance != null) HeatManager.Instance.heatLevel = 0;
+        Invoke("HidePassedUI", 4f);
     }
 
     public void FailMission()
     {
-        Debug.Log("Mission Failed due to player death.");
-        isMissionRunning = false;
-        if (currentTargetNPC != null) Destroy(currentTargetNPC);
-        if (missionDescriptionUI != null) missionDescriptionUI.SetActive(false);
-        if (MissionPassed != null) MissionPassed.SetActive(false);
-        if (currentTriggerObject != null) currentTriggerObject.SetActive(true);
+        if (isMissionRunning)
+        {
+            isMissionRunning = false;
+            StopAllCoroutines();
+            if (currentTargetNPC != null) Destroy(currentTargetNPC);
+            if (descriptionPanel != null) descriptionPanel.SetActive(false);
+            if (timerPanel != null) timerPanel.SetActive(false);
+            if (currentTriggerObject != null) currentTriggerObject.SetActive(true);
+        }
     }
+
+    void HideDescription() => descriptionPanel.SetActive(false);
+    void HidePassedUI() => MissionPassed.SetActive(false);
 }
