@@ -1,90 +1,110 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class MissionManager : MonoBehaviour
 {
-    [Header("UI Elements")]
+    [Header("UI References")]
     [SerializeField] private GameObject missionDescriptionUI;
-    [SerializeField] private RectTransform missionPassedRect;
-    [SerializeField] private CanvasGroup missionPassedFade;
+    [SerializeField] private GameObject MissionPassed; // Drag your MissionPassed object here
 
     [Header("Animation Settings")]
-    [SerializeField] private float targetScale = 6f; // SET THIS TO 6 IN INSPECTOR
-    [SerializeField] private float displayDuration = 4f; // How long it stays visible
+    [SerializeField] private float targetScale = 6f;
+    [SerializeField] private float displayDuration = 3f;
 
-    [Header("Mission Settings")]
-    [SerializeField] private GameObject npcPrefab;
-    [SerializeField] private Transform spawnPoint;
-
+    private MissionData currentData;
+    private GameObject currentTargetNPC;
+    private GameObject currentTriggerObject;
     private bool isMissionRunning = false;
 
     void Awake()
     {
         if (missionDescriptionUI != null) missionDescriptionUI.SetActive(false);
 
-        if (missionPassedRect != null)
+        // Ensure MissionPassed starts disabled and visible scale
+        if (MissionPassed != null)
         {
-            missionPassedRect.gameObject.SetActive(false);
-            missionPassedRect.localScale = Vector3.zero;
+            MissionPassed.SetActive(false);
+            MissionPassed.transform.localScale = new Vector3(targetScale, targetScale, 1);
         }
-        if (missionPassedFade != null) missionPassedFade.alpha = 0;
     }
 
-    public void ActivateMission()
+    public void ActivateMission(MissionData data, GameObject trigger)
     {
-        if (!isMissionRunning)
-        {
-            isMissionRunning = true;
-            if (npcPrefab != null && spawnPoint != null)
-                Instantiate(npcPrefab, spawnPoint.position, Quaternion.identity);
+        if (isMissionRunning) return;
 
-            if (missionDescriptionUI != null) missionDescriptionUI.SetActive(true);
-            Invoke("HideDescription", 5f);
+        Debug.Log("Mission Started: " + data.missionName);
+        isMissionRunning = true;
+        currentData = data;
+        currentTriggerObject = trigger;
+
+        if (currentData.targetPrefab != null)
+        {
+            currentTargetNPC = Instantiate(currentData.targetPrefab, currentData.spawnPosition, Quaternion.identity);
+            currentTargetNPC.name = "Mission_Target";
         }
+
+        if (missionDescriptionUI != null) missionDescriptionUI.SetActive(true);
+        if (currentTriggerObject != null) currentTriggerObject.SetActive(false);
     }
 
     public void TargetKilled()
     {
+        Debug.Log("TargetKilled signal received by MissionManager!");
+
         if (isMissionRunning)
         {
+            Debug.Log("Mission Success! Attempting to show MissionPassed UI.");
             isMissionRunning = false;
-            StartCoroutine(AnimateMissionPassed());
+
+            if (MissionPassed != null)
+            {
+                // FORCE ACTIVE TRUE
+                MissionPassed.SetActive(true);
+                Debug.Log("MissionPassed.SetActive(true) called successfully.");
+
+                StartCoroutine(SimpleUIAnimation());
+            }
+            else
+            {
+                Debug.LogError("MissionPassed object is MISSING in the Inspector!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Target died, but isMissionRunning was already false.");
         }
     }
 
-    IEnumerator AnimateMissionPassed()
+    IEnumerator SimpleUIAnimation()
     {
-        missionPassedRect.gameObject.SetActive(true);
-        float animDuration = 0.5f;
-        float elapsed = 0f;
+        // Set scale to 0 first to pop it in
+        MissionPassed.transform.localScale = Vector3.zero;
 
-        // 1. ANIMATE IN (Scale up to targetScale)
-        while (elapsed < animDuration)
+        float elapsed = 0;
+        float duration = 0.4f;
+
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float percent = elapsed / animDuration;
-
-            // Notice: We multiply by targetScale here!
-            missionPassedRect.localScale = Vector3.Lerp(Vector3.zero, new Vector3(targetScale, targetScale, 1), percent);
-
-            if (missionPassedFade != null) missionPassedFade.alpha = percent;
+            float s = Mathf.Lerp(0, targetScale, elapsed / duration);
+            MissionPassed.transform.localScale = new Vector3(s, s, 1);
             yield return null;
         }
 
-        // 2. WAIT (The text stays on screen)
         yield return new WaitForSeconds(displayDuration);
 
-        // 3. ANIMATE OUT (Fade away)
-        elapsed = 0f;
-        while (elapsed < 1f)
-        {
-            elapsed += Time.deltaTime;
-            if (missionPassedFade != null) missionPassedFade.alpha = 1 - elapsed;
-            yield return null;
-        }
-
-        missionPassedRect.gameObject.SetActive(false);
+        MissionPassed.SetActive(false);
+        Debug.Log("MissionPassed UI auto-hidden after duration.");
     }
 
-    void HideDescription() => missionDescriptionUI.SetActive(false);
+    public void FailMission()
+    {
+        Debug.Log("Mission Failed due to player death.");
+        isMissionRunning = false;
+        if (currentTargetNPC != null) Destroy(currentTargetNPC);
+        if (missionDescriptionUI != null) missionDescriptionUI.SetActive(false);
+        if (MissionPassed != null) MissionPassed.SetActive(false);
+        if (currentTriggerObject != null) currentTriggerObject.SetActive(true);
+    }
 }

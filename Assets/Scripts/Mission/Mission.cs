@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class MissionTarget : MonoBehaviour
+public class MissionTrigger : MonoBehaviour
 {
+    public MissionData missionData;
     private MissionManager manager;
 
     void Start()
     {
-        // Automatically finds the MissionManager in your scene
-        manager = Object.FindAnyObjectByType<MissionManager>();
+        manager = Object.FindFirstObjectByType<MissionManager>();
     }
 
-    // This runs when the NPC is killed/destroyed
-    void OnDestroy()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (manager != null)
+        if (other.CompareTag("Player") && manager != null)
         {
-            manager.TargetKilled();
+            manager.ActivateMission(missionData, this.gameObject);
         }
     }
 }

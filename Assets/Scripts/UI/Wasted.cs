@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class WastedSystem : MonoBehaviour
 {
     [Header("References")]
-    public GameObject wastedOverlay;  // UI Image (PNG/JPG)
-    public Transform medicalCenter;   // Respawn location
+    public GameObject wastedOverlay;
+    public Transform medicalCenter;
     public PlayerHealth playerHealth;
 
     [Header("Settings")]
@@ -15,11 +15,12 @@ public class WastedSystem : MonoBehaviour
     public float fadeOutTime = 1f;
 
     [Header("Visual Effects")]
-    public GameObject greyVolume; // Drag your DeathVolume here
+    public GameObject greyVolume;
 
     private bool isWasted = false;
     public delegate void WastedAction();
     public static event WastedAction OnPlayerWasted;
+
     void Update()
     {
         if (!isWasted && playerHealth != null && playerHealth.currentHealth <= 0)
@@ -31,36 +32,26 @@ public class WastedSystem : MonoBehaviour
     IEnumerator DoWasted()
     {
         isWasted = true;
-
-        // 1. FREEZE TIME
-        // This stops all movement, physics, and NPC AI
         Time.timeScale = 0f;
 
-        // TURN ON THE GREY EFFECT
         if (greyVolume != null) greyVolume.SetActive(true);
 
-        // Show overlay
         wastedOverlay.SetActive(true);
         CanvasGroup cg = wastedOverlay.GetComponent<CanvasGroup>();
-        if (cg == null)
-        {
-            cg = wastedOverlay.AddComponent<CanvasGroup>();
-        }
+        if (cg == null) cg = wastedOverlay.AddComponent<CanvasGroup>();
+
         cg.alpha = 0f;
 
-        // 2. FADE IN (Use unscaledDeltaTime because time is frozen!)
         float t = 0f;
         while (t < fadeInTime)
         {
-            t += Time.unscaledDeltaTime; // Important: use unscaled!
+            t += Time.unscaledDeltaTime;
             cg.alpha = Mathf.Clamp01(t / fadeInTime);
             yield return null;
         }
 
-        // 3. WAIT (Use WaitForSecondsRealtime because time is frozen!)
         yield return new WaitForSecondsRealtime(displayTime);
 
-        // 4. FADE OUT
         t = 0f;
         while (t < fadeOutTime)
         {
@@ -70,14 +61,12 @@ public class WastedSystem : MonoBehaviour
         }
 
         wastedOverlay.SetActive(false);
-
-        // 5. UNFREEZE TIME
         Time.timeScale = 1f;
 
-        // Respawn player
         RespawnPlayer();
         isWasted = false;
     }
+
     void RespawnPlayer()
     {
         if (playerHealth != null)
@@ -87,22 +76,26 @@ public class WastedSystem : MonoBehaviour
             {
                 HeatManager.Instance.heatLevel = 0;
                 HeatManager.Instance.currentScore = 0;
-                Debug.Log("[WastedSystem] Heat Level Reset to 0.");
             }
 
-            // TURN OFF THE GREY EFFECT
             if (greyVolume != null) greyVolume.SetActive(false);
 
-            // 2. Clear out existing police cars so the area is safe
+            // 2. Clear out police
             GameObject[] police = GameObject.FindGameObjectsWithTag("PoliceVehicle");
-            foreach (GameObject cop in police)
+            foreach (GameObject cop in police) Destroy(cop);
+
+            // --- MISSION RESET LOGIC ---
+            // This finds your MissionManager and tells it the player failed
+            MissionManager mission = Object.FindFirstObjectByType<MissionManager>();
+            if (mission != null)
             {
-                Destroy(cop);
+                mission.FailMission();
             }
+            // ---------------------------
 
             // 3. Reset Player Health and State
             playerHealth.ResetPlayer();
-            playerHealth.transform.SetParent(null); // Detach from any wreckage
+            playerHealth.transform.SetParent(null);
 
             // 4. Move player to Hospital
             if (medicalCenter != null)
@@ -110,8 +103,7 @@ public class WastedSystem : MonoBehaviour
 
             // 5. Update HUD
             GameHUD hud = Object.FindFirstObjectByType<GameHUD>();
-            if (hud != null)
-                hud.UpdateHUDNow();
+            if (hud != null) hud.UpdateHUDNow();
 
             if (OnPlayerWasted != null) OnPlayerWasted();
         }

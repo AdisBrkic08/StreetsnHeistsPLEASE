@@ -310,6 +310,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2444510794571190975, guid: 14dd3896940d7b64abbdfa5f2fdac179, type: 3}
+      propertyPath: m_Name
+      value: Description1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2444510794571190975, guid: 14dd3896940d7b64abbdfa5f2fdac179, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -6893,7 +6897,7 @@ MonoBehaviour:
     connectedWaypointsIndices: 060000000800000009000000
   - position: {x: 28.930906, y: -15.248886, z: 0}
     connectedWaypointsIndices: 070000000e000000
-  - position: {x: -4.2500114, y: -56.939358, z: 0}
+  - position: {x: -4.2500114, y: -57.939358, z: 0}
     connectedWaypointsIndices: 070000000a000000
   - position: {x: -4.375584, y: -47.685104, z: 0}
     connectedWaypointsIndices: 090000000b000000
@@ -6933,9 +6937,9 @@ MonoBehaviour:
     connectedWaypointsIndices: 1a0000001c000000
   - position: {x: -6.517115, y: 0.19841027, z: 0}
     connectedWaypointsIndices: 1b0000001d000000
-  - position: {x: 26.219076, y: 0.3068706, z: 0}
+  - position: {x: 27.219076, y: 0.3068706, z: 0}
     connectedWaypointsIndices: 1c0000001e000000
-  - position: {x: 26.327362, y: -28.786688, z: 0}
+  - position: {x: 27.327362, y: -28.786688, z: 0}
     connectedWaypointsIndices: 1d0000001f000000
   - position: {x: -4.2912707, y: -28.737709, z: 0}
     connectedWaypointsIndices: 1e00000020000000
@@ -6943,13 +6947,13 @@ MonoBehaviour:
     connectedWaypointsIndices: 1f00000021000000
   - position: {x: -43.85798, y: 28.773277, z: 0}
     connectedWaypointsIndices: 2000000022000000
-  - position: {x: -43.718853, y: 3.1520228, z: 0}
+  - position: {x: -43.718853, y: 2.1520228, z: 0}
     connectedWaypointsIndices: 2100000023000000
-  - position: {x: 25.947035, y: 2.3579166, z: 0}
+  - position: {x: 26.947035, y: 2.3579166, z: 0}
     connectedWaypointsIndices: 2200000024000000
-  - position: {x: 26.031347, y: 26.148182, z: 0}
+  - position: {x: 27.031347, y: 27.148182, z: 0}
     connectedWaypointsIndices: 2300000025000000
-  - position: {x: -4.170561, y: 25.726368, z: 0}
+  - position: {x: -4.170561, y: 26.726368, z: 0}
     connectedWaypointsIndices: 2400000026000000
   - position: {x: -4.001938, y: -12.405902, z: 0}
     connectedWaypointsIndices: 2500000027000000
@@ -6983,7 +6987,7 @@ GameObject:
   - component: {fileID: 960930753}
   - component: {fileID: 960930755}
   m_Layer: 0
-  m_Name: exstra detaile
+  m_Name: Extra Details
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94987,10 +94991,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1523818820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4fa388ea7b1a542a6dd3e346b1ab06, type: 3}
+  m_Script: {fileID: 11500000, guid: edbcb73f82a61c041a8af19422a5639b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MissionAutoStart
-  missionManager: {fileID: 1937494002}
+  m_EditorClassIdentifier: Assembly-CSharp::MissionTrigger
+  missionData: {fileID: 11400000, guid: d95637913508fb44c9c5e8f3752e23ab, type: 2}
 --- !u!1 &1583268805
 GameObject:
   m_ObjectHideFlags: 0
@@ -95463,37 +95467,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!1 &1820094451
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1820094452}
-  m_Layer: 0
-  m_Name: SpawnLocation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1820094452
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820094451}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.853486, y: 56, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1937494003}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1874411488
 GameObject:
   m_ObjectHideFlags: 0
@@ -95727,7 +95700,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1937494003}
   - component: {fileID: 1937494002}
-  - component: {fileID: 1937494004}
   m_Layer: 0
   m_Name: MissionManager
   m_TagString: Untagged
@@ -95748,12 +95720,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissionManager
   missionDescriptionUI: {fileID: 1148151409}
-  missionPassedRect: {fileID: 383529864}
-  missionPassedFade: {fileID: 383529868}
+  MissionPassed: {fileID: 383529863}
   targetScale: 6
-  displayDuration: 4
-  npcPrefab: {fileID: 7221342650819672902, guid: ae6ee98ab907b594a934cb165e201cf8, type: 3}
-  spawnPoint: {fileID: 1820094452}
+  displayDuration: 3
 --- !u!4 &1937494003
 Transform:
   m_ObjectHideFlags: 0
@@ -95768,23 +95737,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1523818822}
-  - {fileID: 1820094452}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1937494004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937494001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcc77c361add4c448cba2999b6e7723, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MissionStartTrigger
-  missionUIContainer: {fileID: 1148151409}
-  missionManager: {fileID: 1937494002}
 --- !u!1 &1993390516
 GameObject:
   m_ObjectHideFlags: 0
