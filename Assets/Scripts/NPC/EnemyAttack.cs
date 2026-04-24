@@ -62,7 +62,11 @@ public class EnemyAttack : MonoBehaviour
 
         // --- THE OWNER FIX ---
         DamageObject dmgScript = bullet.GetComponent<DamageObject>();
-        if (dmgScript != null) dmgScript.owner = gameObject;
+        if (dmgScript != null)
+        {
+            dmgScript.owner = gameObject;
+            dmgScript.bullet = bullet;
+        }
 
         // Rotate bullet to face player
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

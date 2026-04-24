@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4549741e384b6b45961dc641577e281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter2D
-  bulletPrefab: {fileID: 4788338419311558225, guid: 336f22e03243bb34d88dde94a0692fb7, type: 3}
+  bulletPrefab: {fileID: 4788338419311558225, guid: 4d9d4a1cc0ce96b4e9bda6664c4b5173, type: 3}
   firePoint: {fileID: 7472136483948026767}
   bulletForce: 10
   fireRate: 0.2

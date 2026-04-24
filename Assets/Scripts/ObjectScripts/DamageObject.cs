@@ -4,12 +4,14 @@ public class DamageObject : MonoBehaviour
 {
     public int damageAmount = 10;
     public bool destroyOnHit = true;
+    public GameObject bullet;
 
     // This stops the bullet from killing the person who shot it
     [HideInInspector] public GameObject owner;
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Bullet tag: " + bullet.tag);
         // 1. If we hit the person who fired this, do nothing
         if (other.gameObject == owner) return;
 
@@ -24,7 +26,7 @@ public class DamageObject : MonoBehaviour
             }
         }
         // 3. If we hit an NPC
-        else if (other.CompareTag("NPC"))
+        else if (other.CompareTag("NPC") && bullet.CompareTag("PlayerBullet"))
         {
             NPCHealth nh = other.GetComponent<NPCHealth>();
             if (nh != null)
