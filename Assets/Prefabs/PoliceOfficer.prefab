@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 5706506003612450153}
   m_Layer: 10
   m_Name: FirePoint
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

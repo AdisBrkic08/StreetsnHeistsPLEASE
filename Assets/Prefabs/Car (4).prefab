@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCarController2D
   isDriving: 0
-  acceleration: 18
+  acceleration: 14
   maxSpeed: 12
   steeringPower: 130
   linearDamping: 1
