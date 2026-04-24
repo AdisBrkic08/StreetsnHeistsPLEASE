@@ -94,10 +94,33 @@ public class MissionManager : MonoBehaviour
         if (MissionPassed != null) MissionPassed.SetActive(true);
         if (timerPanel != null) timerPanel.SetActive(false);
 
-        // Reset heat to 0 after winning
-        if (HeatManager.Instance != null) HeatManager.Instance.heatLevel = 0;
+        // 1. Reset the stars to 0
+        if (HeatManager.Instance != null)
+        {
+            HeatManager.Instance.heatLevel = 0;
+        }
+
+        // 2. DESPAWN ALL COPS
+        DespawnAllPolice();
 
         Invoke("HidePassedUI", 4f);
+        Debug.Log("Mission Passed and Cops Despawned!");
+    }
+
+    void DespawnAllPolice()
+    {
+        // We look for any object with the "Police" tag
+        // Make sure your Cop Prefabs are tagged as "Police" in the Inspector!
+        GameObject[] policeUnits = GameObject.FindGameObjectsWithTag("Police");
+
+        foreach (GameObject cop in policeUnits)
+        {
+            // Option A: Just delete them instantly
+            Destroy(cop);
+
+            // Option B: If you have a particle effect for despawning, 
+            // you could instantiate it here before destroying.
+        }
     }
 
     public void FailMission()
