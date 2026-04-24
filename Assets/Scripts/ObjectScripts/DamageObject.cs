@@ -3,7 +3,7 @@ using UnityEngine;
 public class DamageObject : MonoBehaviour
 {
     public int damageAmount = 10;
-    public int carDamageAmount = 400;
+    public int carDamageAmount = 25;
     public bool destroyOnHit = true;
     public GameObject bullet;
 
