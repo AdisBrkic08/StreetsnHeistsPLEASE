@@ -78,6 +78,7 @@ public class PoliceVehicularPursuit : MonoBehaviour
 
         if (distance < exitCarDistance && playerDrivingScript != null && !playerDrivingScript.isDriving)
         {
+            Debug.Log("Officer is within exit car distance");
             SpawnOfficerAndCleanup();
         }
 
@@ -96,6 +97,8 @@ public class PoliceVehicularPursuit : MonoBehaviour
         // CRITICAL: Set parent to null so the officer is independent of the car
         GameObject officer = Instantiate(policeOfficer, spawnPos, Quaternion.identity, null);
         officer.tag = "NPC";
+
+        Debug.Log("OFFICER JUMP OUT");
 
         // Physics Cleanup
         rb.linearVelocity = Vector2.zero;

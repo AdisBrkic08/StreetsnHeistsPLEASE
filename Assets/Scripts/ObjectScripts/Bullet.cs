@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     {
         // Check for NPC
         NPCHealth npc = other.GetComponent<NPCHealth>();
-        if (npc != null)
+        if (npc != null && gameObject.CompareTag("PlayerBullet"))
         {
             npc.TakeDamage(damage);
             Destroy(gameObject); // bullet disappears
