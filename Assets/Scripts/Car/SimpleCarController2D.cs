@@ -13,6 +13,7 @@ public class SimpleCarController2D : MonoBehaviour
     public float maxSpeed = 15f;
     public float steeringPower = 200f;
     public float linearDamping = 1f;
+    public float slowingLinearDamping = 3f; // Linear damping but when there is no input or when the car has been exited out of
 
     [Header("Handbrake Drift")]
     public KeyCode handbrakeKey = KeyCode.Space;
@@ -94,15 +95,25 @@ public class SimpleCarController2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log("steer input: " + steerInput);
+        Debug.Log("accel input: " + accelInput);
+
         // Don't apply physics forces if nobody is driving (unless you want it to roll)
         if (!isDriving)
         {
             // Optional: apply some extra friction so the car stops faster when you jump out
-            rb.linearDamping = 3f;
+            rb.linearDamping = slowingLinearDamping;
             return;
         }
 
-        rb.linearDamping = linearDamping; // Reset to normal when driving
+        if (steerInput == 0 && accelInput == 0)
+        {
+            rb.linearDamping = slowingLinearDamping; // Apply extra friction when no input is detected
+        } 
+        else
+        {
+            rb.linearDamping = linearDamping; // Reset to normal when driving
+        }
         ApplyEngine();
         ApplySteering();
         ApplyGrip();
