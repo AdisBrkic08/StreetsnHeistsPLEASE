@@ -3,6 +3,7 @@ using UnityEngine;
 public class DamageObject : MonoBehaviour
 {
     public int damageAmount = 10;
+    public int carDamageAmount = 400;
     public bool destroyOnHit = true;
     public GameObject bullet;
 
@@ -45,6 +46,13 @@ public class DamageObject : MonoBehaviour
         else if (other.gameObject.isStatic)
         {
             if (destroyOnHit) Destroy(gameObject);
+        }
+
+        // 5. Hit a player vehicle
+        else if (other.gameObject.CompareTag("PlayerVehicle"))
+        {
+            CarHealth ch = other.GetComponent<CarHealth>();
+            ch.TakeDamage(carDamageAmount);
         }
     }
 }
