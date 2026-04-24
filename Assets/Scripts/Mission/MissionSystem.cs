@@ -89,7 +89,7 @@ public class MissionManager : MonoBehaviour
     void CompleteMission()
     {
         isMissionRunning = false;
-        StopAllCoroutines();
+        StopAllCoroutines(); // Stop the mission timer
 
         if (MissionPassed != null) MissionPassed.SetActive(true);
         if (timerPanel != null) timerPanel.SetActive(false);
@@ -100,27 +100,38 @@ public class MissionManager : MonoBehaviour
             HeatManager.Instance.heatLevel = 0;
         }
 
-        // 2. DESPAWN ALL COPS
-        DespawnAllPolice();
+        // 2. Start the "Clean Sweep" for 5 seconds
+        StartCoroutine(CleanSweepPolice(10f));
 
         Invoke("HidePassedUI", 4f);
-        Debug.Log("Mission Passed and Cops Despawned!");
     }
 
-    void DespawnAllPolice()
+    IEnumerator CleanSweepPolice(float duration)
     {
-        // We look for any object with the "Police" tag
-        // Make sure your Cop Prefabs are tagged as "Police" in the Inspector!
-        GameObject[] policeUnits = GameObject.FindGameObjectsWithTag("Police");
+        float elapsed = 0f;
 
-        foreach (GameObject cop in policeUnits)
+        while (elapsed < duration)
         {
-            // Option A: Just delete them instantly
-            Destroy(cop);
+            elapsed += Time.deltaTime;
 
-            // Option B: If you have a particle effect for despawning, 
-            // you could instantiate it here before destroying.
+            // 1. Clean up everything tagged "NPC" (This includes your Cops)
+            GameObject[] npcUnits = GameObject.FindGameObjectsWithTag("NPC");
+            foreach (GameObject npc in npcUnits)
+            {
+                if (npc != null) Destroy(npc);
+            }
+
+            // 2. Clean up everything tagged "PoliceVehicle"
+            GameObject[] policeVehicles = GameObject.FindGameObjectsWithTag("PoliceVehicle");
+            foreach (GameObject vehicle in policeVehicles)
+            {
+                if (vehicle != null) Destroy(vehicle);
+            }
+
+            yield return null;
         }
+
+        Debug.Log("Clean sweep finished: NPCs and PoliceVehicles cleared.");
     }
 
     public void FailMission()
