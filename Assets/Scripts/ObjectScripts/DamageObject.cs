@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class DamageObject : MonoBehaviour
 {
-    public int damageAmount = 10;
-    public int carDamageAmount = 25;
-    public bool destroyOnHit = true;
+    private int damageAmount = 10;
+    private int carDamageAmount = 25;
+    private bool destroyOnHit = true;
     public GameObject bullet;
 
     // This stops the bullet from killing the person who shot it
@@ -49,10 +49,18 @@ public class DamageObject : MonoBehaviour
         }
 
         // 5. Hit a player vehicle
-        else if (other.gameObject.CompareTag("PlayerVehicle"))
+        if (other.gameObject.CompareTag("PlayerVehicle"))
         {
+            Debug.Log("Hit player vehicle");
             CarHealth ch = other.GetComponent<CarHealth>();
             ch.TakeDamage(carDamageAmount);
+            if (destroyOnHit) Destroy(gameObject);
+        }
+
+        //6. Hit a police vehicle
+        else if (other.gameObject.CompareTag("PoliceVehicle"))
+        {
+            if (destroyOnHit) Destroy(gameObject);
         }
     }
 }
