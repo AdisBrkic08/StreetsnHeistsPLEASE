@@ -18,4 +18,4 @@ MonoBehaviour:
   survivalTime: 0
   wantedLevelToSet: 0
   targetPrefab: {fileID: 7221342650819672902, guid: ae6ee98ab907b594a934cb165e201cf8, type: 3}
-  spawnPosition: {x: 39.45985, y: 0.6508808, z: 0}
+  spawnPosition: {x: 86.52826, y: 11.87424, z: 0}

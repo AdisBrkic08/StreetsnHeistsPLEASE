@@ -127,7 +127,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 56.36, y: -9.38, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6272693238632835550}
@@ -278,10 +278,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCarController2D
   isDriving: 0
-  acceleration: 14
-  maxSpeed: 12
-  steeringPower: 130
+  acceleration: 29
+  maxSpeed: 22
+  steeringPower: 180
   linearDamping: 1
+  slowingLinearDamping: 3
   handbrakeKey: 32
   handbrakeGrip: 0.25
   driftBoost: 1.3
