@@ -6,7 +6,7 @@ public class WantedManager : MonoBehaviour
     public static WantedManager Instance;
 
     [Header("Wanted Stats")]
-    public int wantedLevel = 0; // 0 to 5 stars
+    public int wantedLevel = 0;
     public int crimesCommitted = 0;
     public int crimesNeededForNextStar = 2;
 
@@ -15,6 +15,9 @@ public class WantedManager : MonoBehaviour
     public float spawnDistance = 30f;
     public float spawnInterval = 5f;
     private float spawnTimer;
+
+    // --- NEW LOGIC FOR CAR HIJACKING ---
+    private int lastHijackedCarID = -1;
 
     private Transform player;
     private List<Path> allPaths = new List<Path>();
@@ -32,15 +35,19 @@ public class WantedManager : MonoBehaviour
         if (wantedLevel <= 0) return;
 
         spawnTimer += Time.deltaTime;
-        if (spawnTimer >= (spawnInterval / wantedLevel)) // Faster spawns at higher stars
+        if (spawnTimer >= (spawnInterval / wantedLevel))
         {
             SpawnPoliceNearPlayer();
             spawnTimer = 0;
         }
     }
 
-    public void ReportCrime(int severity)
+    // UPDATED: Added carInstanceID parameter (default to -1 for non-car crimes)
+    public void ReportCrime(int severity, GameObject vehicle = null)
     {
+       
+
+        // Standard crime logic
         crimesCommitted += severity;
         if (crimesCommitted >= crimesNeededForNextStar && wantedLevel < 5)
         {
@@ -50,11 +57,10 @@ public class WantedManager : MonoBehaviour
         }
     }
 
+    // ... (Keep your SpawnPoliceNearPlayer and other methods the same)
     void SpawnPoliceNearPlayer()
     {
-        // Find a random waypoint near the player to spawn a cop
         List<Vector3> validSpawnPoints = new List<Vector3>();
-
         foreach (Path path in allPaths)
         {
             foreach (var wp in path.waypoints)

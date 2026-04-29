@@ -384,9 +384,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarHealth
   maxHealth: 750
   currentHealth: 0
-  criticalHealth: 30
-  explosionDelay: 3
+  criticalHealth: 75
+  explosionDelay: 5
+  fireHealthThreshold: 150
   smokeEffectPrefab: {fileID: 2851051345894769710, guid: 7065f2e4878eb604b98b74538185f3d8, type: 3}
+  fireEffectPrefab: {fileID: 2851051345894769710, guid: 6f07411ed8adc724685f0ec03732c04d, type: 3}
   explosionPrefab: {fileID: 2250680856380889911, guid: e97caa984167f4d469ce9faa63ec27de, type: 3}
   warningBeep: {fileID: 0}
   explosionRadius: 2.5
