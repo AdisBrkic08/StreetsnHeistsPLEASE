@@ -183,6 +183,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b939e0e76cd4554eb07ac0b9d2b5ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageObject
-  damageAmount: 10
-  damageInterval: 1
-  continuousDamage: 0
+  bullet: {fileID: 4788338419311558225}
+  owner: {fileID: 0}

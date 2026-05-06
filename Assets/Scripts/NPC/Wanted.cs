@@ -26,6 +26,9 @@ public class WantedManager : MonoBehaviour
 
     void Start()
     {
+        // This forces the game to run at 60 FPS to help stop the stuttering
+        Application.targetFrameRate = 60;
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
         allPaths.AddRange(FindObjectsByType<Path>(FindObjectsSortMode.None));
     }
