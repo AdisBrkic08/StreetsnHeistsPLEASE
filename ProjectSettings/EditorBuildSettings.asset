@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Adis.unity
     guid: 57130fe2d209ed142996b13cb14044ad
   - enabled: 1
-    path: Assets/Scenes/MainGame.unity
+    path: Assets/Scenes/OldMainGame.unity
     guid: 8dd9da1d30d66ab45ae069daf1a786ea
   - enabled: 1
     path: Assets/Scenes/GunStoreUI.unity

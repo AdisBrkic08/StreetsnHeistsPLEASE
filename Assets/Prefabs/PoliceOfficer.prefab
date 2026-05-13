@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 869798504957931471}
   - component: {fileID: 1745563494258498873}
   - component: {fileID: 8996583202007970330}
-  - component: {fileID: 7852171812971286139}
   - component: {fileID: -8574100945390838081}
   m_Layer: 10
   m_Name: PoliceOfficer
@@ -34,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.96084, y: 23.90485, z: 0}
-  m_LocalScale: {x: 0.8436904, y: 0.8436904, z: 0.8436904}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0.8436904}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5706506003612450153}
@@ -221,20 +220,6 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
---- !u!114 &7852171812971286139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891809445460552584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047930b957f0bc740af89f816bc86ad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PoliceHumanAI
-  stopDistance: 5
-  retreatDistance: 3
 --- !u!50 &-8574100945390838081
 Rigidbody2D:
   serializedVersion: 5

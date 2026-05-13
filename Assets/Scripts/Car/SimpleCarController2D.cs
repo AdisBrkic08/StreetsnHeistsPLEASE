@@ -142,6 +142,21 @@ public class SimpleCarController2D : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if we hit something hard (high velocity)
+        if (collision.relativeVelocity.magnitude > 5f)
+        {
+            // Find the camera and tell it to shake
+            CameraShake shake = Camera.main.GetComponent<CameraShake>();
+            if (shake != null)
+            {
+                // TriggerShake(duration, magnitude)
+                shake.TriggerShake(0.15f, 0.4f);
+            }
+        }
+    }
+
     #region Engine & Movement
     void ApplyEngine()
     {
